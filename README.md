@@ -11,15 +11,22 @@ https://trello.com/b/d2i2OwzW/storymap
 description of product:
 	
 	Goals:
-		
-		Let people present their work in a more efficient and understandable way 
-		with different tools, presentation options.
-		Make software easy as much as possible for users.
+    
+		Create a new and original presentation software.
+        A tool that people can use to present their work in a efficient and understandable way. 
+		A software that offer different edit tools and presentation options.
+		Make software as easy as possible for users.     
+       
 		
 	Unique Selling Points:
 		
-		Simple and light with, but with all necessary tools for customers 
-		who want to make it very quickly and easy.
+		Simple and light, but with all necessary tools for customers 
+		who want to make a beautiful presentation quickly. 
+        
+        Too many options create a lot headache. Be smart, go sushi!
+        
+        A software for people in all ages.
+       
 		
 development process board : https://trello.com/b/xMPAiDzi/sushilovers
 
