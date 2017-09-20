@@ -21,3 +21,5 @@ description of product:
 		Simple and light with, but with all necessary tools for customers 
 		who want to make it very quickly and easy.
 		
+development process board : https://trello.com/b/xMPAiDzi/sushilovers
+
