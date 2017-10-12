@@ -27,3 +27,14 @@ jinho:
 	I want to be able to change themes such as dark, beach, modern, and sky so that i can make my presentation not boring
 	and easy to catch.
 	I want to have different modes when i show my presentation to other people so that they can only focus on my presentation.
+
+arnaud:
+	As a financial worker, i have to show lot of graphics and diagrams to co-workers and clients.
+	I want to show the health of the enterprise and the variations of the budget.
+	I want to show in a good way, how to make the enterprise growing-up.
+	I want to be able to be understandable easily with some pictures and videos.
+	
+	As a project manager, i always have to present the main purpose of a project and the customer needs.
+	I want to enumerate all the tasks we need to do.
+	I want to show the time, the budget and the constraints to respect to my team.
+
