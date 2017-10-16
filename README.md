@@ -30,3 +30,5 @@ description of product:
 		
 development process board : https://trello.com/b/xMPAiDzi/sushilovers
 
+Heroku application : https://app-presentation-sushi-lovers.herokuapp.com
+
