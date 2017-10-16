@@ -29,6 +29,7 @@ jinho:
 	I want to have different modes when i show my presentation to other people so that they can only focus on my presentation.
 
 arnaud:
+
 	As a financial worker, i have to show lot of graphics and diagrams to co-workers and clients.
 	I want to show the health of the enterprise and the variations of the budget.
 	I want to show in a good way, how to make the enterprise growing-up.
