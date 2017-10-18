@@ -36,6 +36,7 @@ app.get('/user', function(req, res) {
 
 
 app.listen(app.get('port'), function () {
+	console.log("server just started!");
 	console.log('Example app listening on port 5000!');
 });
 /////////////////////////////////////////
