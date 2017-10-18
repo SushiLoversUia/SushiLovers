@@ -84,5 +84,7 @@ app.use(function(req, res, next) {
 /* Listening PORT */
    
 app.listen(process.env.PORT || 8080, function () {
+  
+  console.log("i am the best");
   console.log('My app listening on port 8080!');
 });
