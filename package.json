@@ -1,0 +1,19 @@
+{
+  "name": "server1",
+  "version": "1.0.0",
+  "description": "\"Team members.\" Arnaud Soler  Henning Holm Jin-ho Park https://github.com/SushiLoversUia/SushiLovers",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SushiLoversUia/SushiLovers.git"
+  },
+  "author": "Henning Holm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SushiLoversUia/SushiLovers/issues"
+  },
+  "homepage": "https://github.com/SushiLoversUia/SushiLovers#readme"
+}
