@@ -9,7 +9,8 @@ Schema for presentation:
 			{
 			 "idp":{"type":"int"},
 			 "namePres":{"type":"string"},
-			 "owner":{"type":"string"}
+			 "owner":{"type":"string"},
+			 "creationDate":{"type":"date"}
 			}
 		]
 	}
@@ -47,7 +48,7 @@ Schema for account:
 			"userPassw":{"type":"string"},
 			"frstName":{"type":"string"},
 			"lstName":{"type":"string"},
-			"birthDate":{"type":"date"}
+			"birthday":{"type":"date"}
 			}
 		]
 	}
