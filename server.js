@@ -53,14 +53,19 @@ app.post('/api/users', function(req,res) {
     var lstname = req.body.lstname;
     var bdate = req.body.bdate;
     
-    client.query('INSERT INTO account(userid,userpassw,frstname,lstname,birthdate) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fstname + '\',\'' + lstname + '\',\'' + bdate + '\');', (err, res) => {
+    var dummyData = "[{\"userid\":\"" + userid + "\",\"userpassw\":\"" + passw + "\",\"frstname\":\"" + fstname + "\"";
+    dummyData += ",\"lstname\":\"" + lstname + "\",\"birthdate\":\"" + bdate + "\"}]";
+    
+    res.send(dummyData);
+    
+    /*client.query('INSERT INTO account(userid,userpassw,frstname,lstname,birthdate) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fstname + '\',\'' + lstname + '\',\'' + bdate + '\');', (err, res) => {
         if (err) throw err;
         console.log('Successful adding user : ' + userid + ' password : ' + passw);
         console.log('First name : ' + fstname + ' Last name : ' + lstname);
         console.log('Birthdate : ' + bdate);
         
         client.end();
-    });
+    });*/
 });
 
 /*  "/api/user/:id"
@@ -78,18 +83,19 @@ app.get('/api/user/:id', function(req,res) {
 });
 
 app.put('/api/user/:id', function(req,res) {
-    res.json("{heyhey:coucou}");
+    res.send("The user : " + req.params.id + " has been updated");
 });
 
 app.delete('/api/user/:id', function(req,res) {
     
-    client.query('DELETE FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
+    /*client.query('DELETE FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
         if (err) throw err;
         
         res.json(result.rows);
         
         client.end();
-    });
+    });*/
+    res.send("The user : " + req.params.id + " has been deleted");
 });
 
 /*  "/api/presentation/:id"
@@ -107,17 +113,18 @@ app.get('/api/presentation/:id', function(req,res) {
 });
 
 app.put('/api/presentation/:id', function(req,res) {
-    res.json("{heyhey:coucou}");
+    res.send("The presentation : " + req.params.id + " has been updated");
 });
 
 app.delete('/api/presentation/:id', function(req,res) {
-    client.query('DELETE FROM presentation WHERE idp=' + req.params.id + ';', (err, result) => {
+    /*client.query('DELETE FROM presentation WHERE idp=' + req.params.id + ';', (err, result) => {
         if (err) throw err;
         
         res.json(result.rows);
         
         client.end();
-    });
+    });*/
+    res.send("The presentation : " + req.params.id + " has been deleted");
 });
 
 /*  "/api/slide/:id"
@@ -135,17 +142,18 @@ app.get('/api/slide/:id', function(req,res) {
 });
 
 app.put('/api/slide/:id', function(req,res) {
-    res.json("{heyhey:coucou}");
+    res.send("The slide : " + req.params.id + " has been updated");
 });
 
 app.delete('/api/slide/:id', function(req,res) {
-    client.query('DELETE FROM slide WHERE ids=' + req.params.id + ';', (err, result) => {
+    /*client.query('DELETE FROM slide WHERE ids=' + req.params.id + ';', (err, result) => {
         if (err) throw err;
         
         res.json(result.rows);
         
         client.end();
-    });
+    });*/
+    res.send("The slide : " + req.params.id + " has been deleted");
 });
 
 /* Default adress */
