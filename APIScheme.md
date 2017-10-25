@@ -32,7 +32,7 @@ Example:
 {
     presentation:[
     	{"idp":1, "namePres":"My Presentation", "owner":"Arnaud"}
-    ]
+    ],
     slide[
     	{"ids":1, "index":1, "content":"There is something in this slide", "notes":"Here is my notes"}
     ]
