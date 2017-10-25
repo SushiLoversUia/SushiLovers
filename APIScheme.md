@@ -1,10 +1,11 @@
 DataStructure
 -------------------
 
+```json
 Schema for presentation:
 {
 	"presentation": {
-		"type":"array"
+		"type":"array",
 		"items":[
 			{
 			 "idp":{"type":"int"},
@@ -13,9 +14,9 @@ Schema for presentation:
 			 "creationDate":{"type":"date"}
 			}
 		]
-	}
+	},
 	"slides": {
-		"type":"array"
+		"type":"array",
 		"items":[
 			{
 			 "ids":{"type":"int"},
@@ -40,7 +41,7 @@ Example:
 Schema for account:
 {
 	"account": {
-		"type":"array"
+		"type":"array",
 		"items":[
 			{
 			"ida":{"type":"int"},
@@ -60,3 +61,4 @@ Example:
         {"ida":1, "userId":"userexample", "userPassw":"password", "frstName":"Arnaud", "lstName":"Soler", "birthDate":03-07-1995}
     ]
 }
+```
