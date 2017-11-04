@@ -1,4 +1,3 @@
-
 /* Init */
 
 const express = require('express')
