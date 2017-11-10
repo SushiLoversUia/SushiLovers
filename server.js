@@ -25,6 +25,8 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
 });
 
+
+
 app.get('/another', function(req, res) {
     res.redirect('another.html');
 });
@@ -46,6 +48,7 @@ app.get('/api/users', function(req,res) {
 
 /* exemple : http://localhost:8080/api/user?id=heyhey&pwd=passweurd&fstname=Arnaud&lstname=Soler&bdate=03-07-1995 */
 app.post('/api/users', function(req,res) {
+    
     var userid = req.body.id;
     var passw = req.body.pwd;
     var fstname = req.body.fstname;
