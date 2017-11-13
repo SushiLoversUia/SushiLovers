@@ -1,11 +1,18 @@
 {
+<<<<<<< HEAD
   "name": "server1",
   "version": "1.0.0",
   "description": "\"Team members.\" Arnaud Soler  Henning Holm Jin-ho Park https://github.com/SushiLoversUia/SushiLovers",
+=======
+  "name": "server-proposal-arnaud",
+  "version": "1.0.0",
+  "description": "",
+>>>>>>> cc26b8a8ab1e482f3597d683c494d1753cd99cca
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+<<<<<<< HEAD
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SushiLoversUia/SushiLovers.git"
@@ -16,4 +23,8 @@
     "url": "https://github.com/SushiLoversUia/SushiLovers/issues"
   },
   "homepage": "https://github.com/SushiLoversUia/SushiLovers#readme"
+=======
+  "author": "Arnaud",
+  "license": "ISC"
+>>>>>>> cc26b8a8ab1e482f3597d683c494d1753cd99cca
 }

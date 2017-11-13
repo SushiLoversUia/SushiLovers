@@ -1,0 +1,126 @@
+body{
+  color: #3d3939;
+  font-family: 'Nunito Semibold';
+  text-align: center;
+  margin: 0;
+}
+
+#mainContent{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(14, 1fr);
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+
+.nav {
+  font-size: 1.2em;
+  color: #fff;
+  border-left: 2px solid black;
+
+}
+
+.header {
+    background: #4d6c8a;
+    grid-column: 1 / 13;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-areas: "documentation open save. . . . login"
+
+}
+
+#save{
+  grid-area: save;
+}
+
+#documentation{
+  grid-area: documentation;
+}
+#login{
+  grid-area: login;
+
+}
+
+#open{
+  grid-area: open;
+
+}
+
+
+
+
+.section {
+    padding: 30px;
+    border: 2px solid black ;
+}
+
+canvas{
+  width: 100%;
+  height: 100%;
+  background-color: #fbfbfb;
+  border:3px solid black;
+}
+
+
+
+.left{
+    background: linear-gradient(#862727, #f26c41);
+    grid-column: 1 / 3;
+    grid-row: 2 / 13;
+
+}
+
+.tool {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(6 ,1fr);
+  padding:0;
+}
+
+#toolbox {
+  border-bottom: 2px solid black;
+  padding: 20px;
+  font-size: 1.5em;
+  color: #fff;
+
+}
+
+#last {
+    border-bottom: 0px
+}
+
+
+.center{
+    background: radial-gradient(#c7c7c7, #424242);
+    grid-column: 3 / 11;
+    grid-row: 2 / 13;
+}
+
+.right{
+    background: linear-gradient(#862727, #f26c41);
+    grid-column: 11 / 13;
+    grid-row: 2 / 13;
+}
+
+.footer {
+    background: #4d6c8a;
+    grid-column: 1 / 13;
+    grid-row: 13 / 15;
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+}
+
+
+.miniature {
+
+  background: #fbfbfb;
+  width: 70px;
+  height: 40px;
+  margin: 0 auto;
+  border: 1px solid black ;
+}
