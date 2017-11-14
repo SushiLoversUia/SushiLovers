@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>text in-out template</title>
+</head>
+
+<body>
+    <input id="txtIn" value="Type something" />    
+    <button id="btn">Click me!</button>
+    <h1 id="txtOut">The result</h1>  
+</body>
+    
+<script>
+    
+    // init ------------------------------------------ 
+    var txtIn  = document.getElementById("txtIn");
+    var txtOut = document.getElementById("txtOut");
+    var btn    = document.getElementById("btn");
+    
+    btn.onclick = btnOnClick;    
+
+    // btnOnClick ----------------------------------
+    function btnOnClick() {
+
+      txtOut.innerHTML = txtIn.value;    
+      
+    }
+    
+</script>
+    
+</html>
+<!-- 
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>task2-d</title>
+</head>
+
+<body>
+    <input id="name" value="Type name" />
+    </br>
+    <input id="age" value="Type age" />
+    </br>
+    <input id="occupation" value="Type occupation" />
+    </br>
+    <button onclick ="btnOnClick()">add info!</button>
+</body>
+
+<script>
+    // d) Create a program where you can type in a name, age and occupation. When you click on the Add person-button, the information should be put into an object, which again should be added (pushed) to an array. The info in the array should be displayed in a list. The list should be updated each time you add a new person.
+    
+    function btnOnClick() {
+        console.log("easdasdasd");
+        let name = document.getElementById("name").value;
+        let age = document.getElementById("age").value;
+        let occupation = document.getElementById("occupation").value;
+
+        let html = `
+        <h2>${name}</h2>
+        <h3>Age : ${age}</h3>
+        <h3>occupation : ${occupation}</h3>
+        <hr>
+        `;
+        document.body.innerHTML += html;
+        //   txtOut.innerHTML = txtIn.value;    
+        return true;
+    }
+
+</script>
+
+</html>
+
+
+ -->
