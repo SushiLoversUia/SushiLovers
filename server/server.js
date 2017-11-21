@@ -10,6 +10,7 @@ const app = express();
 /* Using public folder */
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '../client'));
 
 // global for all routes -------------------------
 app.use(function(req, res, next) {
@@ -21,6 +22,7 @@ app.use(function(req, res, next) {
 /* Example of use */
 
 app.get('/', function(req, res) {
+    res.redirect('another.html');
 });
 
 app.get('/another', function(req, res) {
