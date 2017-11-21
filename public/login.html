@@ -3,8 +3,8 @@
 <html>
     <head>
         <title>Presentation application</title>
+        <meta charset="utf-8"/>
         <link rel="stylesheet" href="css/stylelog.css"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <script src="superfetch2.js"></script>
     </head>
 
@@ -12,65 +12,64 @@
         <div class="login-page">
             <div class="form">
                 <h1 id="title-regis">Presentation Application Account</h1>
-                <form class="login-form">
-                    <input id="username" type="text" placeholder="username"/>
-                    <input id="password" type="password" placeholder="password"/>
+                    <input id="inpLoginname" type="text" placeholder="username"/>
+                    <input id="inpPassword" type="password" placeholder="password" onkeypress="isItEnter(event)"/>
                     <button onClick="login()">login</button>
                     <p class="message">Not registered? <a href="signup.html">Create an account</a></p>
-                </form>
             </div>
         </div>
     </body>
     
     <script>
         
-        //button click ---------------------------------
         
+        var inpLoginname = document.getElementById("inpLoginname");
+        var inpPassword = document.getElementById("inpPassword");
+        
+        //isItEnter : function to login the user if he press enter on the field input password
+        function isItEnter(e) {
+            if(e.keyCode == 13)
+                login();
+            return;
+        }
+        
+        //button click ---------------------------------
         function login() {
-            var username = document.getElementById("username");
-            var password = document.getElementById("password");
-            console.log(username.value);
-            console.log(password.value);
-            if (username.value != "" && password.value != "") {
-
+            
+            if(inpLoginname.value != "" && inpPassword.value != "")
+            {
                 var upload = JSON.stringify({
-                    loginname:username.value, 
-                    password:password.value
+                    loginname: inpLoginname.value, 
+                    password: inpPassword.value
                 });
-                console.log(upload);
-                var url = "http://localhost:8080/api/users/auth/";
+
+                var url = "http://localhost:8080/api/users/auth";
 
                 var cfg = {
                     method: "POST",            
                     body: upload,
-                    headers:{
-                                "content-type":"application/json"
-                            }
-                    
                 }
-                console.log(url);
+                
                 superfetch(url, "json", succ, error, cfg);
             }
             else
             {
                 alert("A required field is empty");
             }
+            
+ 
         }
-        
         //success --------------------------------------
         function succ(data) {
-
             console.log(data);
-            console.log("Suce ma bite");
             //save logindata/token to localStorage 
             localStorage.setItem("logindata", JSON.stringify(data));
+            //redirect user to the main page
+            window.location.href="another.html";
         }
-        
         //error ----------------------------------------
         function error(err) {
-            console.log("heyhey7");
             console.log(err);
-            alert(err);
         }
         
     </script>
