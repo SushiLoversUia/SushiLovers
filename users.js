@@ -3,7 +3,7 @@ var app = express.Router();
 var client = require('./dbconnect');
 var bodyParser = require('body-parser').text();
 var jwt = require("jsonwebtoken");
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var secret = "sushiaresogood";
 
 /*  "/api/users"
