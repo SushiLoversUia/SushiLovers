@@ -1,4 +1,3 @@
-
 /* Init */
 
 const express = require('express');
@@ -16,7 +15,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 const { Client } = require('pg');
 
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL
 });
 
 client.connect();
@@ -29,6 +28,8 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
 });
+
+
 
 app.get('/another', function(req, res) {
     res.redirect('another.html');
@@ -48,6 +49,7 @@ app.get('/another', function(req, res) {
 });
 
 app.post('/api/users', function(req,res) {
+    
     var userid = req.body.id;
     var passw = bcrypt.hashSync(req.body.pwd,10);
     var fstname = req.body.fstname;
