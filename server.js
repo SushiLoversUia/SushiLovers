@@ -9,8 +9,7 @@ const app = express();
 
 /* Using public folder */
 
-app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '../client'));
+app.use(express.static('public'));
 
 // global for all routes -------------------------
 app.use(function(req, res, next) {
@@ -19,10 +18,8 @@ app.use(function(req, res, next) {
     next(); //go to the specified route
 });
 
-/* Example of use */
-
-app.get('/', function(req, res) {
-    res.redirect('another.html');
+app.get('/',function(req, res) {
+    res.redirect('index.html');
 });
 
 app.get('/another', function(req, res) {
@@ -41,7 +38,7 @@ app.use('/api/slides/', slides);
 /* Default adress */
 
 app.use(function(req, res, next) {
-    res.redirect('/');
+    res.send('404 NOT FOUND');
 });
 
 /* Listening PORT */

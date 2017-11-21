@@ -2,33 +2,74 @@
 
 <html>
     <head>
-<<<<<<< HEAD
         <title>Presentation application</title>
-        <link rel="stylesheet" href="css/style.css"/>
-=======
-        <title>Welcome to my server</title>
-        <link rel="Stylesheet" href="\css\style.css"/>
->>>>>>> cc26b8a8ab1e482f3597d683c494d1753cd99cca
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="css/stylelog.css"/>
+        <script src="superfetch2.js"></script>
     </head>
 
     <body>
         <div class="login-page">
             <div class="form">
-                <form class="register-form">
-                    <input type="text" placeholder="name"/>
-                    <input type="password" placeholder="password"/>
-                    <input type="text" placeholder="email address"/>
-                    <button>create</button>
-                    <p class="message">Already registered? <a href="#">Sign In</a></p>
-                </form>
-                <form class="login-form">
-                    <input type="text" placeholder="username"/>
-                    <input type="password" placeholder="password"/>
-                    <button>login</button>
-                    <p class="message">Not registered? <a href="#">Create an account</a></p>
-                </form>
+                <h1 id="title-regis">Presentation Application Account</h1>
+                    <input id="inpLoginname" type="text" placeholder="username"/>
+                    <input id="inpPassword" type="password" placeholder="password" onkeypress="isItEnter(event)"/>
+                    <button onClick="login()">login</button>
+                    <p class="message">Not registered? <a href="signup.html">Create an account</a></p>
             </div>
         </div>
     </body>
+    
+    <script>
+        
+        
+        var inpLoginname = document.getElementById("inpLoginname");
+        var inpPassword = document.getElementById("inpPassword");
+        
+        //isItEnter : function to login the user if he press enter on the field input password
+        function isItEnter(e) {
+            if(e.keyCode == 13)
+                login();
+            return;
+        }
+        
+        //button click ---------------------------------
+        function login() {
+            
+            if(inpLoginname.value != "" && inpPassword.value != "")
+            {
+                var upload = JSON.stringify({
+                    loginname: inpLoginname.value, 
+                    password: inpPassword.value
+                });
+                console.log(upload);
+                var url = "http://localhost:8080/api/users/auth";
+
+                var cfg = {
+                    method: "POST",            
+                    body: upload,
+                }
+                superfetch(url, "json", succ, error, cfg);
+            }
+            else
+            {
+                alert("A required field is empty");
+            }
+        }
+        //success --------------------------------------
+        function succ(data) {
+            console.log(data);
+            //save logindata/token to localStorage 
+            localStorage.setItem("logindata", JSON.stringify(data));
+            //redirect user to the main page
+            var token = JSON.parse(localStorage.getItem("logindata")).token;
+            window.location.href="http://localhost:8080/api/presentations/1/?token=" + token;       
+        }
+        //error ----------------------------------------
+        function error(err) {
+            console.log(err);
+        }
+        
+    </script>
 </html>
 
