@@ -1,5 +1,5 @@
 {
-  "name": "server-test-local",
+  "name": "app-presentation-sushi-lovers",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -10,10 +10,10 @@
   "author": "me",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.15.5",
     "pg": "^7.3.0",
-    "jsonwebtoken": "^8.1.0",
-    "bcrypt": "^1.0.3"
+    "jsonwebtoken": "^8.1.0"
   }
 }
