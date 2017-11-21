@@ -25,8 +25,13 @@
     
     <script>
         
+        //isItEnter : function to login the user if he press enter on the field input password
+        function isItEnter(e) {
+            if(e.keyCode == 13)
+                login();
+            return;
+        }
         //button click ---------------------------------
-        
         function createUser() {
             var username = document.getElementById("username");
             var password = document.getElementById("password");
