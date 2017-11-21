@@ -4,6 +4,27 @@ var client = require('./dbconnect');
 var bodyParser = require('body-parser').text();
 var jwt = require("jsonwebtoken");
 var secret = "sushiaresogood";
+var logindata;
+
+//Authorize all presentations‐endpoints ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+app.use(function (req, res, next) {
+    //get the token from the URL‐variable named 'token'
+    var token = req.query['token'];
+    if (!token) {
+        res.status(403).json({msg: "No token received"}); //send 
+        return; //quit
+    }
+    else {
+        try {
+            logindata = jwt.verify(token, secret); //check the token
+        }
+        catch(err) {
+            res.status(403).json({msg: "The token is not valid!"}); //send
+            return; //quit
+        }
+    }
+    next(); //we have a valid token ‐ go to the requested endpoint 
+});
 
 /*  "/api/presentations/:id"
 *   GET : find a single presentation by ID
