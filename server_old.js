@@ -1,11 +1,15 @@
 
 /* Init */
 
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 var bodyParser = require('body-parser');
+var jwt = require("jsonwebtoken");
+var bcrypt = require('bcrypt');
+var secret = "sushiaresogood";
+
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+//app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 /* Database connection */
 
@@ -35,38 +39,27 @@ app.get('/another', function(req, res) {
 *   POST : create a new user 
 */
 
-app.get('/api/users', function(req,res) {
+/*app.get('/api/users', function(req,res) {
     client.query('SELECT * FROM account;', (err, result) => {
         if (err) throw err;
 
         res.json(result.rows);
-        
-        //client.end();
     });
 });
 
-/* exemple : http://localhost:8080/api/user?id=heyhey&pwd=passweurd&fstname=Arnaud&lstname=Soler&bdate=03-07-1995 */
 app.post('/api/users', function(req,res) {
     var userid = req.body.id;
-    var passw = req.body.pwd;
+    var passw = bcrypt.hashSync(req.body.pwd,10);
     var fstname = req.body.fstname;
     var lstname = req.body.lstname;
     var bdate = req.body.bdate;
     
-    var dummyData = "[{\"userid\":\"" + userid + "\",\"userpassw\":\"" + passw + "\",\"frstname\":\"" + fstname + "\"";
-    dummyData += ",\"lstname\":\"" + lstname + "\",\"birthdate\":\"" + bdate + "\"}]";
-    
-    res.send(dummyData);
-    
-    /*client.query('INSERT INTO account(userid,userpassw,frstname,lstname,birthdate) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fstname + '\',\'' + lstname + '\',\'' + bdate + '\');', (err, res) => {
+    client.query('INSERT INTO account(userid,userpassw,fstname,lstname,birthday) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fstname + '\',\'' + lstname + '\',\'' + bdate + '\');', (err, resu) => {
         if (err) throw err;
-        console.log('Successful adding user : ' + userid + ' password : ' + passw);
-        console.log('First name : ' + fstname + ' Last name : ' + lstname);
-        console.log('Birthdate : ' + bdate);
         
-        client.end();
-    });*/
-});
+        res.json({ message: 'Successfully added' });
+    });
+});*/
 
 /*  "/api/user/:id"
 *   GET : find a single user by ID
@@ -74,7 +67,7 @@ app.post('/api/users', function(req,res) {
 *   DELETE : delete a user by ID
 */
 
-app.get('/api/user/:id', function(req,res) {
+/*app.get('/api/user/:id', function(req,res) {
     client.query('SELECT * FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
         if (err) throw err;
         
@@ -88,14 +81,51 @@ app.put('/api/user/:id', function(req,res) {
 
 app.delete('/api/user/:id', function(req,res) {
     
-    /*client.query('DELETE FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
+    client.query('DELETE FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
         if (err) throw err;
         
-        res.json(result.rows);
+        res.json({ message: 'Succesfully deleted' });
+    });
+});*/
+
+/* "/api/user/auth"
+*   POST : authenticate a user
+*/
+
+app.post('/api/users/auth', function(req,res) {
+    
+    console.log("HEY");
+    var upload = req.body;
+    var loginname = upload.loginname;
+    var password = upload.password;
+    console.log(upload);
+    /* Query to verify if the login is correct */
+    client.query('SELECT * FROM account WHERE userid=\'' + loginname + '\';', (err, result) => {
         
-        client.end();
-    });*/
-    res.send("The user : " + req.params.id + " has been deleted");
+        if(err) throw err;
+        console.log(result.rows);
+        if(result.rows <= 0) {
+            res.status(403).json({msg: "Login name does not exists"});
+            return;
+        } 
+        else {
+            var dbloginname = result.rows[0].userid;
+            var dbpassword = result.rows[0].userpassw;
+            var dbfullname = result.rows[0].fstname; 
+            //check if the password is correct
+            var checkpwd = bcrypt.compareSync(password, dbpassword);
+
+            if(!checkpwd) {
+                res.status(403).json({msg: "Wrong password"});
+                return;
+            }
+        }
+        //we have a valid user ‐> create the token
+        var payload = { loginname: dbloginname, fullname: dbpassword }; 
+        var tok = jwt.sign(payload, secret, {expiresIn: "12h"});
+        //send logininfo + token to the client
+        res.status(200).json({loginname: dbloginname, fullname: dbfullname, token: tok});
+    });
 });
 
 /*  "/api/presentation/:id"
@@ -106,7 +136,7 @@ app.delete('/api/user/:id', function(req,res) {
 
 app.get('/api/presentation/:id', function(req,res) {
     client.query('SELECT * FROM presentation WHERE idp=' + req.params.id + ';', (err, result) => {
-        if (err) throw err;
+        if(err) throw err;
         
         res.json(result.rows);
     });
@@ -158,9 +188,9 @@ app.delete('/api/slide/:id', function(req,res) {
 
 /* Default adress */
 
-app.use(function(req, res, next) {
-    res.redirect('/');
-});
+//app.use(function(req, res, next) {
+    //res.redirect('/');
+//});
 
 /* Listening PORT */
    
