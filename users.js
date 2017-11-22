@@ -22,7 +22,7 @@ app.get('/', function(req,res) {
 app.post('/', bodyParser, function(req,res) {
     var upload = JSON.parse(req.body);
     var userid = upload.loginname;
-    var passw = bcrypt.hashSync(upload.password,10);
+    var passw = bcrypt.hashSync(upload.password);
     var fstname = upload.fstname;
     var lstname = upload.lstname;
     var bdate = "01-01-1990";
