@@ -38,7 +38,7 @@ app.use('/api/slides/', slides);
 /* Default adress */
 
 app.use(function(req, res, next) {
-    res.send('404 NOT FOUND');
+    res.redirect('errornotfound.html');
 });
 
 /* Listening PORT */
