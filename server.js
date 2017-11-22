@@ -38,7 +38,7 @@ app.use('/api/slides/', slides);
 /* Default adress */
 
 app.use(function(req, res, next) {
-    res.redirect('errornotfound.html');
+    res.redirect('https://app-presentation-sushi-lovers.herokuapp.com/errornotfound.html');
 });
 
 /* Listening PORT */
