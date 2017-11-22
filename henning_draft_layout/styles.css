@@ -49,7 +49,11 @@ body{
 
 }
 
+.expand {
+  margin:10px;
+  border-radius: 100%
 
+}
 
 
 .section {
@@ -57,13 +61,17 @@ body{
     border: 2px solid black ;
 }
 
+
+
 canvas{
-  width: 100%;
-  height: 100%;
   background-color: #fbfbfb;
   border:3px solid black;
 }
 
+ul {
+  margin:0;
+  list-style-type: none;
+}
 
 
 .left{
@@ -72,26 +80,68 @@ canvas{
     grid-row: 2 / 13;
 
 }
+#lu {
+grid-column: 1 / 2;
+grid-row: 1 / 2;
+}
 
-.tool {
+#hu{
+grid-column: 2 / 3;
+grid-row: 1 / 2;
+}
+
+#ld{
+grid-column: 1 / 2;
+grid-row: 2 / 3;
+}
+
+#hd{
+grid-column: 2 / 3;
+grid-row: 2 / 3;
+}
+
+
+.tools {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(6 ,1fr);
+  grid-template-rows: repeat(4 ,1fr);
   padding:0;
 }
 
-#toolbox {
+.toolbox {
   border-bottom: 2px solid black;
-  padding: 20px;
+  padding-top: 1vw;
   font-size: 1.5em;
   color: #fff;
 
 }
 
-#last {
-    border-bottom: 0px
+/*.toolbox:hover{
+  background: rgba(87, 78, 88, 0.30);
+  cursor: pointer;
+}*/
+
+.top {
+    border-top: 2px solid black;
 }
 
+.extention{
+background:white;
+grid-template-columns: repeat(2, 1fr);
+grid-template-rows: repeat(2,1fr);
+width: 100%;
+height:75%;
+border-top: 2px solid black;
+border-bottom: 2px solid black;
+background:#fbfbfb;
+
+display : none;
+}
+
+.extention > * {
+    margin: auto ;
+    overflow: auto;
+}
 
 .center{
     background: radial-gradient(#c7c7c7, #424242);
@@ -119,8 +169,8 @@ canvas{
 .miniature {
 
   background: #fbfbfb;
-  width: 70px;
-  height: 40px;
+  width: 7vw;
+  height: 4vw;
   margin: 0 auto;
   border: 1px solid black ;
 }
