@@ -65,6 +65,8 @@
             console.log(data);
             //save logindata/token to localStorage 
             localStorage.setItem("logindata", JSON.stringify(data));
+            //redirect user to the main page
+            var token = JSON.parse(localStorage.getItem("logindata")).token;
         }
         //error ----------------------------------------
         function error(err) {
