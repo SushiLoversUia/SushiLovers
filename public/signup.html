@@ -14,8 +14,7 @@
                 <h1 id="title-regis">Presentation Application Account</h1>
                     <input id="username" type="text" placeholder="Username"/>
                     <input id="password" type="password" placeholder="Password"/>
-                    <input id="fstname" type="text" placeholder="First name"/>
-                    <input id="lstname" type="text" placeholder="Last name"/>
+                    <input id="fullname" type="text" placeholder="Full name"/>
                     <input id="email" type="text" placeholder="email address" onkeypress="isItEnter(event)"/>
                     <button onClick="createUser()">create</button>
                     <p class="message">Already registered? <a href="index.html">Sign In</a></p>
@@ -35,21 +34,19 @@
         function createUser() {
             var username = document.getElementById("username");
             var password = document.getElementById("password");
-            var fstname = document.getElementById("fstname");
-            var lstname = document.getElementById("lstname");
+            var fullname = document.getElementById("fullname");
             var email = document.getElementById("email");
 
-            if (username.value != "" && password.value != "" && fstname.value != "" && lstname.value != "" && email.value != "") {
+            if (username.value != "" && password.value != "" && fullname.value != "" && email.value != "") {
 
                 var upload = JSON.stringify({
                     loginname:username.value, 
                     password:password.value,
-                    fstname:fstname.value,
-                    lstname: lstname.value,
+                    fullname:fullname.value,
                     email:email.value
                 });
 
-                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/";
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users";
 
                 var cfg = {
                     method: "POST",            
