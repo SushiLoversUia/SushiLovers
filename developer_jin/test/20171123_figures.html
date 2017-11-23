@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #concontainer {
+        position: absolute;
+        background-color: rgb(182, 111, 64);
+    }
+
+    #container {
+        position: absolute;
+        background-color: blue;
+    }
+
+    #mydiv {
+        position: absolute;
+        z-index: 9;
+        background-color: #f1f1f1;
+        text-align: center;
+        border: 1px solid #d3d3d3;
+    }
+
+    #mydiv2 {
+        position: absolute;
+        z-index: 9;
+        background-color: #f1f1f1;
+        text-align: center;
+        border: 1px solid #d3d3d3;
+    }
+
+    #mydiv3 {
+        position: absolute;
+        z-index: 9;
+        background-color: #f1f1f1;
+        text-align: center;
+        border: 1px solid #d3d3d3;
+    }
+
+
+
+    /* resize handles are placed in clockwise */
+
+    #handleResize {
+        background-color: #727272;
+        width: 20px;
+        height: 20px;
+        cursor: nwse-resize;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+</style>
+
+<body>
+    <!-- <button id="btnSave">Save!</button> -->
+
+    <div id='container' style="top:10%;left:10%; right:10%; bottom:10%; width:80%;height:80%;">
+
+        <div id="mydiv" style="width: 15%;height: 25%; left: 10%; top:10%;">
+            <div id="handleResize"></div>
+            <p contentEditable="true"> Move1</p>
+        </div>
+
+        <div id="mydiv2" style="width: 15%;height: 25%; left: 30%; top:10%;">
+            <div id="handleResize"></div>
+            <p contentEditable="true"> Move2</p>
+        </div>
+
+        <div id="mydiv3" style="width: 15%;height: 25%; left: 50%; top:20%;">
+            <div id="handleResize"></div>
+            <p contentEditable="true"> Move3</p>
+        </div>
+    </div>
+
+
+    <script>
+        'use strict';
+
+
+        // btnSave.onclick = btnOnClick;
+
+        function btnOnClick() {
+
+            console.log("hello world!");
+
+        }
+
+
+        let parentDiv = document.getElementById('container');
+        //Make the DIV element draggagle:
+        dragElement(document.getElementById(("mydiv")), parentDiv);
+
+        //mydiv2, mydiv3 doesn't have header >> any place of them can be movable
+        dragElement(document.getElementById(("mydiv2")), parentDiv);
+        dragElement(document.getElementById(("mydiv3")), parentDiv);
+
+
+
+        function dragElement(elmnt, parentDiv) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            let parentDivLeft = parseInt(parentDiv.offsetLeft);
+            let parentDivTop = parseInt(parentDiv.offsetTop);
+
+            let parentDivWidth = parseInt(parentDiv.offsetWidth);
+            let parentDivHeight = parseInt(parentDiv.offsetHeight);
+
+
+
+            let handle = document.getElementById('handleResize');
+            let handleResizeWidth = handle.clientWidth;
+            let handleResizeHeight = handle.clientHeight;
+
+            elmnt.onmousedown = mouseDown;
+
+            //decision to drag or resize or rotate or write something
+            function mouseDown(e) {
+
+                //////////////
+                let eleLeft = parseInt(elmnt.offsetLeft);
+                let eleTop = parseInt(elmnt.offsetTop);
+                let elemLeft_screen = eleLeft + parentDivLeft;//element top posY from  whole screen
+                let elemTop_screen = eleTop + parentDivTop;//element top posY from whole screen
+                //////////////
+
+                e = e || window.event;
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                let cursurPosX_inElem = Math.abs(e.clientX - elemLeft_screen); //relative posX in element
+                let cursurPosY_inElem = Math.abs(e.clientY - elemTop_screen); //relative posY in element
+
+                // console.log(`elemLeft_container : ${elemLeft_container} & elemTop_container : ${elemTop_container}`);
+                // console.log(`elemLeft_screen : ${elemLeft_screen} & elemTop_screen : ${elemTop_screen}`);
+                // console.log(`cursurPosX_inElem : ${cursurPosX_inElem} & cursurPosY_inElem : ${cursurPosY_inElem}`);
+
+
+                //left top, right top, bottom left, bottom right range
+                if (
+                    (cursurPosX_inElem > elmnt.offsetWidth - handleResizeWidth && cursurPosX_inElem < elmnt.offsetWidth) &&
+                    (cursurPosY_inElem > elmnt.offsetHeight - handleResizeHeight && cursurPosY_inElem < elmnt.offsetHeight)
+                ) {
+                    document.onmouseup = closeElementDrag_resize;
+                    document.onmousemove = elementDrag_resize;
+                } else {
+                    document.onmouseup = closeElementDrag_move;
+                    document.onmousemove = elementDrag_move;
+                }
+
+            }
+
+
+
+            function elementDrag_resize(e) {
+                e = e || window.event;
+                
+                // calculate the new cursor position:
+                //pos1, pos2 are new cursor position diff
+                pos1 = e.clientX - pos3;
+                pos2 = e.clientY - pos4;
+
+                //have to make pos3,pos4 as startup pos
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                elmnt.style.width = (elmnt.offsetWidth + pos1)+'px';
+                elmnt.style.height = (elmnt.offsetHeight + pos2)+'px';
+            }
+
+            function closeElementDrag_resize(e) {
+                // window.removeEventListener('mousemove', startResizing, false);
+                // window.removeEventListener('mouseup', stopResizing, false);
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+
+
+
+            function elementDrag_move(e) {
+                e = e || window.event;
+                // calculate the new cursor position:
+                //pos1, pos2 are new cursor position diff
+                pos1 = e.clientX - pos3;
+                pos2 = e.clientY - pos4;
+
+                //have to make pos3,pos4 as startup pos
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                // set the element's new position:
+                elmnt.style.top = (elmnt.offsetTop + pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft + pos1) + "px";
+            }
+
+            function closeElementDrag_move() {
+                /* stop moving when mouse button is released:*/
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
