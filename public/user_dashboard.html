@@ -47,7 +47,7 @@
     <script>
         // Restrict the webpage to a user who is already logged
         if(JSON.parse(localStorage.getItem("logindata")) == null)
-            window.location.href="http://localhost:8080/errornotfound.html";
+            window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/errornotfound.html";
         
         var username = document.getElementById("username");
         username.innerHTML = JSON.parse(localStorage.getItem("logindata")).loginname;
@@ -127,7 +127,7 @@
                     email:email.value
                 });
                 var token = JSON.parse(localStorage.getItem("logindata")).token;
-                var url = "http://localhost:8080/api/users/user/?token=" + token;
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?token=" + token;
                 
                 var cfg = {
                     method: "PUT",            
