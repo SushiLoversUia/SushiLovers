@@ -67,6 +67,7 @@
             localStorage.setItem("logindata", JSON.stringify(data));
             //redirect user to the main page
             var token = JSON.parse(localStorage.getItem("logindata")).token;
+            window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/api/users/dashboard/?token=" + token;
         }
         //error ----------------------------------------
         function error(err) {

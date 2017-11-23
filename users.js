@@ -33,17 +33,17 @@ app.post('/', bodyParser, function(req,res) {
         var payload = {loginname: userid, fullname: fullname};
         var tok = jwt.sign(payload, secret, {expiresIn: "12h"});
         //send logininfo + token to the client
-        res.status(200).json({loginname: userid, fullname: fullname, token: tok}); 
+        res.status(200).json({loginname: userid, fullname: fullname, email: email, token: tok}); 
     });
 });
 
-/*  "/api/users/user/:id"
+/*  "/api/users/user/"
 *   GET : find a single user by ID
 *   PUT : update a user by ID
 *   DELETE : delete a user by ID
 */
 
-app.get('/user/:id', function(req,res) {
+app.get('/user/', bodyParser, function(req,res) {
     client.query('SELECT * FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
         if (err) throw err;
         
@@ -51,11 +51,28 @@ app.get('/user/:id', function(req,res) {
     });
 });
 
-app.put('/user/:id', function(req,res) {
-    res.send("The user : " + req.params.id + " has been updated");
+app.put('/user/', bodyParser, function(req,res) {
+    var upload = JSON.parse(req.body);
+    var userid = upload.loginname;
+    var fullname = upload.fullname;
+    var passw = upload.password;
+    var email = upload.email;
+    var tok = req.query['token'];
+    var strquery;
+
+    if(passw != "")
+        strquery = 'UPDATE account SET userpassw=\'' + passw + '\',fullname=\'' + fullname + '\',email=\'' + email + '\' WHERE userid=\'' + userid + '\';';
+    else
+        strquery = 'UPDATE account SET fullname=\'' + fullname + '\',email=\'' + email + '\' WHERE userid=\'' + userid + '\';';
+    
+    client.query(strquery, (err, resu) => {
+        if (err) throw err;
+        
+        res.status(200).json({loginname: userid, fullname: fullname, email: email, token: tok});
+    });
 });
 
-app.delete('/user/:id', function(req,res) {
+app.delete('/user/', function(req,res) {
     
     client.query('DELETE FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
         if (err) throw err;
@@ -87,6 +104,7 @@ app.post('/auth', bodyParser, function(req,res) {
             var dbloginname = result.rows[0].userid;
             var dbpassword = result.rows[0].userpassw;
             var dbfullname = result.rows[0].fullname; 
+            var dbemail = result.rows[0].email;
             //check if the password is correct
             var checkpwd = bcrypt.compareSync(password, dbpassword);
 
@@ -99,8 +117,34 @@ app.post('/auth', bodyParser, function(req,res) {
         var payload = { loginname: dbloginname, fullname: dbfullname }; 
         var tok = jwt.sign(payload, secret, {expiresIn: "12h"});
         //send logininfo + token to the client
-        res.status(200).json({loginname: dbloginname, fullname: dbfullname, token: tok});
+        res.status(200).json({loginname: dbloginname, fullname: dbfullname, email: dbemail, token: tok});
     });
+});
+
+/* Dashboard access */
+
+//Authorize all dashboard‐endpoints ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+app.use(function (req, res, next) {
+    //get the token from the URL‐variable named 'token'
+    var token = req.query['token'];
+    if (!token) {
+        res.status(403).json({msg: "No token received"}); //send 
+        return; //quit
+    }
+    else {
+        try {
+            logindata = jwt.verify(token, secret); //check the token
+        }
+        catch(err) {
+            res.status(403).json({msg: "The token is not valid!"}); //send
+            return; //quit
+        }
+    }
+    next(); //we have a valid token ‐ go to the requested endpoint 
+});
+
+app.get('/dashboard', function(req, res) {
+    res.status(200).redirect('http://localhost:8080/user_dashboard.html');
 });
 
 //export module -------------------------------------
