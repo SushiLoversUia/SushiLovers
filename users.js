@@ -144,7 +144,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/dashboard', function(req, res) {
-    res.status(200).redirect('http://localhost:8080/user_dashboard.html');
+    res.status(200).redirect('https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html');
 });
 
 //export module -------------------------------------

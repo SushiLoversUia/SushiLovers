@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Presentation application</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="css/styledashboard.css"/>
+        <script src="superfetch2.js"></script>
+    </head>
+
+    <body>
+        <div class="dashboard-page">
+            <div class="form">
+                <h1 id="title-dashboard">Your Dashboard</h1>
+                    <div id="my-profil">
+                        <h2 id="title-myprofil">My Profil</h2>
+                        <div id="my-profil-settings">
+                            <div id="my-profil-settings-labels">
+                                <p id="my-profil-settings-label-p">Username: </p>
+                                <p id="my-profil-settings-label-p">Fullname: </p>
+                                <p id="my-profil-settings-label-p">Password: </p>
+                                <p id="my-profil-settings-label-p">Confirm password: </p>
+                                <p id="my-profil-settings-label-p">Email: </p>
+                            </div>
+                            <div id="my-profil-settings-data">
+                                <p id="username"></p>
+                                <input id="inpFullname" placeholder=""/>
+                                <input id="inpPassword" placeholder="*5 characters minimum*" onchange="isPasswordOk(this.value)"/>
+                                <input id="inpConfPassword" placeholder="*The same password is required*" onchange="isConfOk(this.value)"/>
+                                <input id="inpEmail" placeholder="" onkeypress="isItEnter(event)"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onClick="save()">Save settings</button>
+                
+                    <div id="my-presentations">
+                        <h1 id="title-dashboard">My presentations</h1>
+                        <div id="presentation-table">
+                            <h1>Here is all my prezzzz</h1>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </body>
+    
+    <script>
+        // Restrict the webpage to a user who is already logged
+        if(JSON.parse(localStorage.getItem("logindata")) == null)
+            window.location.href="http://localhost:8080/errornotfound.html";
+        
+        var username = document.getElementById("username");
+        username.innerHTML = JSON.parse(localStorage.getItem("logindata")).loginname;
+        var fullname = document.getElementById("inpFullname");
+        fullname.value = JSON.parse(localStorage.getItem("logindata")).fullname;
+        document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value;
+        var password = document.getElementById("inpPassword");
+        var confpass = document.getElementById("inpConfPassword");
+        var email = document.getElementById("inpEmail");
+        email.value = JSON.parse(localStorage.getItem("logindata")).email;
+        //isItEnter : function to login the user if he press enter on the field input password
+        function isItEnter(e) {
+            if(e.keyCode == 13)
+                save();
+            return;
+        }
+        //isPasswordOk : function check if the password respect the rules (5 characters minimum) ---------------------------------
+        function isPasswordOk(e) {
+            if(e != "")
+            {
+                if(e.length < 5)
+                    password.style.background = "#e74c3c";
+                else
+                {
+                    password.style.background = "#2ecc71";
+                    if(password.value != confpass.value)
+                        confpass.style.background = "#e74c3c"
+                }
+            }
+            else
+            {
+                password.style.background = "white";
+            }
+        }
+        //isConfOk : function check if the password is the same as password confirmation
+        function isConfOk(e) {
+            if(e == "")
+            {
+                confpass.style.background = "white";
+                return;
+            }
+            if(e != password.value)
+                confpass.style.background = "#e74c3c";
+            else
+                confpass.style.background = "#2ecc71";
+        }
+        //isColorOk : function confirm that the password can be changed
+        function isColorOk() {
+            if(password.style.background == "rgb(46, 204, 113)" && confpass.style.background == "rgb(46, 204, 113)")
+                return true;
+            else if(password.style.background == "" && confpass.style.background == "")
+                return true;
+            return false;
+        }
+        //isFieldsOk : function check if the user doesn't put an empty string on email field or on fullname field
+        function isFieldOk() {
+            if(fullname.value == "")
+            {
+                alert("Fullname field can not be empty");
+                return false;
+            }
+            else if(email.value == "")
+            {
+                alert("Email field can not be empty");
+                return false;
+            }
+            return true;
+        }
+        //save : saving settings
+        function save() {
+            if(isColorOk() && isFieldOk())
+            {
+                var upload = JSON.stringify({
+                    loginname:username.textContent,
+                    fullname:fullname.value, 
+                    password:password.value,
+                    email:email.value
+                });
+                var token = JSON.parse(localStorage.getItem("logindata")).token;
+                var url = "http://localhost:8080/api/users/user/?token=" + token;
+                
+                var cfg = {
+                    method: "PUT",            
+                    body: upload,
+                }
+                
+                superfetch(url, "json", succ, error, cfg);
+            }
+        }
+        //success --------------------------------------
+        function succ(data) {
+            console.log(data);
+            // Change the localstorage informations
+            localStorage.setItem("logindata", JSON.stringify(data));
+            // Inform user
+            alert("Your settings have changed");
+        }
+        //error ----------------------------------------
+        function error(err) {
+            console.log(err);
+        }
+        
+    </script>
+</html>
+
