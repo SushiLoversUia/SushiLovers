@@ -11,7 +11,7 @@
         background-color: blue;
     }
 
-    #mydiv {
+    #square1 {
         position: absolute;
         z-index: 9;
         background-color: #f1f1f1;
@@ -19,7 +19,7 @@
         border: 1px solid #d3d3d3;
     }
 
-    #mydiv2 {
+    #square2 {
         position: absolute;
         z-index: 9;
         background-color: #f1f1f1;
@@ -27,7 +27,7 @@
         border: 1px solid #d3d3d3;
     }
 
-    #mydiv3 {
+    #square3 {
         position: absolute;
         z-index: 9;
         background-color: #f1f1f1;
@@ -51,21 +51,21 @@
 </style>
 
 <body>
-    <!-- <button id="btnSave">Save!</button> -->
+    <button id="btnSave">Save!</button>
 
     <div id='container' style="top:10%;left:10%; right:10%; bottom:10%; width:80%;height:80%;">
 
-        <div id="mydiv" style="width: 15%;height: 25%; left: 10%; top:10%;">
+        <div id="square1" style="width: 15%;height: 25%; left: 10%; top:10%;">
             <div id="handleResize"></div>
-            <p contentEditable="true"> Move1</p>
+            <p id="text" contentEditable="true"> Move1</p>
         </div>
 
-        <div id="mydiv2" style="width: 15%;height: 25%; left: 30%; top:10%;">
+        <div id="square2" style="width: 15%;height: 25%; left: 30%; top:10%;">
             <div id="handleResize"></div>
             <p contentEditable="true"> Move2</p>
         </div>
 
-        <div id="mydiv3" style="width: 15%;height: 25%; left: 50%; top:20%;">
+        <div id="square3" style="width: 15%;height: 25%; left: 50%; top:20%;">
             <div id="handleResize"></div>
             <p contentEditable="true"> Move3</p>
         </div>
@@ -76,22 +76,41 @@
         'use strict';
 
 
-        // btnSave.onclick = btnOnClick;
+        btnSave.onclick = btnOnClick;
+
+        let parentDiv2 = document.getElementById('container');
+        let figure1 = parentDiv2.childNodes[1];
+        console.log(parentDiv2.childNodes[1]);
+
+        let temp1 = JSON.parse(figure1);
+        console.log(temp1);
+        
 
         function btnOnClick() {
 
-            console.log("hello world!");
+            console.log("you just clicked save button!");
+            // how should i store div info
 
+            // first, don't try to make it adaptable, focus on only one
+            let parentDiv = document.getElementById('container');
+            let figure1 = parentDiv.childNodes[1];
+            let figure1_text = figure1;
+            let figure1_children = parentDiv.children;
+            // console.log(parentDiv);
+            // console.log(parentDiv.childNodes);
+            console.log(parentDiv.childNodes[1]);
+            console.log(figure1_text);
+            console.log(figure1_children);
         }
 
 
         let parentDiv = document.getElementById('container');
         //Make the DIV element draggagle:
-        dragElement(document.getElementById(("mydiv")), parentDiv);
+        dragElement(document.getElementById(("square1")), parentDiv);
 
         //mydiv2, mydiv3 doesn't have header >> any place of them can be movable
-        dragElement(document.getElementById(("mydiv2")), parentDiv);
-        dragElement(document.getElementById(("mydiv3")), parentDiv);
+        dragElement(document.getElementById(("square2")), parentDiv);
+        dragElement(document.getElementById(("square3")), parentDiv);
 
 
 
@@ -153,7 +172,7 @@
 
             function elementDrag_resize(e) {
                 e = e || window.event;
-                
+
                 // calculate the new cursor position:
                 //pos1, pos2 are new cursor position diff
                 pos1 = e.clientX - pos3;
@@ -163,8 +182,8 @@
                 pos3 = e.clientX;
                 pos4 = e.clientY;
 
-                elmnt.style.width = (elmnt.offsetWidth + pos1)+'px';
-                elmnt.style.height = (elmnt.offsetHeight + pos2)+'px';
+                elmnt.style.width = (elmnt.offsetWidth + pos1) + 'px';
+                elmnt.style.height = (elmnt.offsetHeight + pos2) + 'px';
             }
 
             function closeElementDrag_resize(e) {
