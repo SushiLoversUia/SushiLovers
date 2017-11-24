@@ -62,11 +62,40 @@
     btnSave.onclick = save;
     btnRecall.onclick = open;
     btnNewSquare.onclick = newSquare;
+    let btnLoadImage = document.getElementById("btnLoadImage");
+    btnLoadImage.onchange = previewFiles;
+    let lastClickedElem = null;
+
 
     //store current(maybe all the slides, work on it later) slide.
     let slideInfo = [];
     let parentDiv = document.getElementById('container');
 
+    let squareCnt = 0;
+
+
+    function previewFiles() {
+        let files = document.querySelector('input[type=file]').files;
+
+        function readAndPreview(file) {
+            // Make sure `file.name` matches our extensions criteria
+            if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                let reader = new FileReader();
+                // let square = elmnt;
+                reader.addEventListener("load", function () {
+                    let image = new Image();
+                    // image.height = 100;
+                    image.title = file.name;
+                    image.src = this.result;
+                    lastClickedElem.style.backgroundImage = `url(${image.src})`;
+                }, false);
+                reader.readAsDataURL(file);
+            }
+        }
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+    }
     function newSquare() {
         let parentDiv = document.getElementById('container');
 
@@ -87,11 +116,13 @@
         let textP = document.createElement("p");
         textP.setAttribute("id", "text");
         textP.contentEditable = "true";
-        textP.innerHTML = "new Square function is working!";
+        textP.innerHTML = `new Square function is working squareCnt:${squareCnt}!`;
+        squareCnt++;
         square.appendChild(textP);
 
         // let imgSrc = "image/4727.jpg";
         // square.style.backgroundImage = `url(${imgSrc})`;
+
 
         parentDiv.appendChild(square);
         dragElement(square, parentDiv);
@@ -114,7 +145,7 @@
     function saveSquares(square, parentDiv) {
         let parentDivHeight = parentDiv.offsetHeight;
         let parentDivWidth = parentDiv.offsetWidth;
-        
+
         //square figure information
         //currently store binary data of image in this obj.
         let figureInfo = {
@@ -133,8 +164,8 @@
                 "fontcolor": "",
                 "textAlign": ""
             },
-            "image":{
-                "src":""
+            "image": {
+                "src": ""
             }
 
         }
@@ -204,7 +235,7 @@
         square.style.fontSize = squareInfo.text.fontSize;
         square.style.color = squareInfo.text.fontcolor;
         square.style.textAlign = squareInfo.text.textAlign;
-        
+
         square.style.backgroundImage = squareInfo.image.src;
 
         let resizeHandle_square = document.createElement("div")
@@ -235,45 +266,21 @@
         let handleResizeWidth = handle.clientWidth;
         let handleResizeHeight = handle.clientHeight;
 
+
         elmnt.onmousedown = mouseDown;
 
-        let btnLoadImage = document.getElementById("btnLoadImage");
-        btnLoadImage.onchange = previewFiles;
 
-        function previewFiles() {
-            let files = document.querySelector('input[type=file]').files;
-
-            let square = elmnt;
-            function readAndPreview(file) {
-                // Make sure `file.name` matches our extensions criteria
-                if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                    let reader = new FileReader();
-
-                    reader.addEventListener("load", function () {
-                        let image = new Image();
-                        // image.height = 100;
-                        image.title = file.name;
-                        image.src = this.result;
-                        square.style.backgroundImage = `url(${image.src})`;
-                    }, false);
-                    reader.readAsDataURL(file);
-                }
-            }
-            if (files) {
-                [].forEach.call(files, readAndPreview);
-            }
-        }
 
 
         //decision to drag or resize or rotate or write something
         function mouseDown(e) {
 
-            //////////////
+            lastClickedElem = elmnt;
+
             let eleLeft = parseInt(elmnt.offsetLeft);
             let eleTop = parseInt(elmnt.offsetTop);
             let elemLeft_screen = eleLeft + parentDivLeft;//element top posY from  whole screen
             let elemTop_screen = eleTop + parentDivTop;//element top posY from whole screen
-            //////////////
 
             e = e || window.event;
             // get the mouse cursor position at startup:
