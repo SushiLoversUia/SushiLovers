@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="box">
+        <div>Resize me !</div>
+        <div id="handle" ></div>
+        <div id="handle2"></div>
+    </div>
+<!-- style="left:0px;top:0px" -->
+</body>
+<style>
+    #box {
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        background-color: #2196F3;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0px;
+    }
+
+    #handle {
+        background-color: #727272;
+        width: 10px;
+        height: 10px;
+        cursor: se-resize;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+   
+</style>
+<script>
+    // https://blog.codezero.xyz/building-interactive-elements-with-html-and-javascript-resizing/
+    var resizeHandle = document.getElementById('handle');
+    var box = document.getElementById('box');
+    resizeHandle.addEventListener('mousedown', initialiseResize, false);
+
+    function initialiseResize(e) {
+        window.addEventListener('mousemove', startResizing, false);
+        window.addEventListener('mouseup', stopResizing, false);
+    }
+
+    function startResizing(e) {
+        box.style.width = (e.clientX - box.offsetLeft) + 'px';
+        box.style.height = (e.clientY - box.offsetTop) + 'px';
+    }
+    function stopResizing(e) {
+        window.removeEventListener('mousemove', startResizing, false);
+        window.removeEventListener('mouseup', stopResizing, false);
+    }
+</script>
+
+</html>
+
+<!-- 
+ decisionTree: function (divid, xpos, ypos, container) {
+                    let resizeHandle = document.getElementById('handle');
+                    let box = document.getElementById('elem');
+
+                    if ()
+                        resizeHandle.addEventListener('mousedown', initialiseResize, false);
+
+
+                },
+                initialiseResize: function (evt) {
+                    window.addEventListener('mousemove', startResizing, false);
+                    window.addEventListener('mouseup', stopResizing, false);
+                },
+                startResizing: function (evt) {
+                    box.style.width = (e.clientX - box.offsetLeft) + 'px';
+                    box.style.height = (e.clientY - box.offsetTop) + 'px';
+                },
+                stopResizing: function (evt) {
+                    window.removeEventListener('mousemove', startResizing, false);
+                    window.removeEventListener('mouseup', stopResizing, false);
+                },
+
+ -->

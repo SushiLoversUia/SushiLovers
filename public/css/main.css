@@ -7,12 +7,16 @@ body {
 }
 
 /* Style the header */
+/* Style the header */
+/* Style the header */
 .header {
     background-color: #f1f1f1;
     padding: 20px;
     text-align: center;
 }
 
+/* Style the top navigation bar */
+/* Style the top navigation bar */
 /* Style the top navigation bar */
 .topnav {
     overflow: hidden;
@@ -72,12 +76,15 @@ body {
     font-size: 30px;
 }
 /* Middle column */
+/* Middle column */
+/* Middle column */
 .column.middle {
     width: 70%;
 }
-.canvas-container #myCanvas {
-    background-color: rgb(88, 55, 160);
+#canvasDiv {
+    background-color: rgb(8, 3, 19);
 }
+
 /* Clear floats after the columns */
 .row:after {
     content: "";
@@ -93,6 +100,8 @@ body {
     }
 }
 
+/* Style the footer */
+/* Style the footer */
 /* Style the footer */
 .footer {
     background-color: #f1f1f1;
