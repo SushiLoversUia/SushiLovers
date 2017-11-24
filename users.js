@@ -44,10 +44,30 @@ app.post('/', bodyParser, function(req,res) {
 */
 
 app.get('/user/', bodyParser, function(req,res) {
-    client.query('SELECT * FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
+    var strquery;
+    var msg1;
+    var msg2;
+
+    if(req.query['userid'] != undefined)
+    {
+        strquery = 'SELECT * FROM account WHERE userid=\'' + req.query['userid'] + '\';';
+        msg1 = "The user doesn't exist";
+        msg2 = "The user exist";
+    }
+    else
+    {
+        strquery = 'SELECT * FROM account WHERE email=\'' + req.query['email'] + '\';';
+        msg1 = "The email adress doesn't exist";
+        msg2 = "The email adress exist";
+    }
+    
+    client.query(strquery, (err, result) => {
         if (err) throw err;
         
-        res.json(result.rows);
+        if(result.rows <= 0)
+            res.status(403).json({msg: msg1});
+        else
+            res.status(200).json({msg: msg2});
     });
 });
 
@@ -73,8 +93,7 @@ app.put('/user/', bodyParser, function(req,res) {
 });
 
 app.delete('/user/', function(req,res) {
-    
-    client.query('DELETE FROM account WHERE ida=' + req.params.id + ';', (err, result) => {
+   client.query('DELETE FROM account WHERE userid=' + req.query['userid'] + ';', (err, result) => {
         if (err) throw err;
         
         res.json({ message: 'Succesfully deleted' });

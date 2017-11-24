@@ -16,7 +16,8 @@
                     <input id="password" type="password" placeholder="Password *" onchange="isFieldsOk()" maxlength="15"/>
                     <input id="fullname" type="text" placeholder="Full name *" onchange="isFieldsOk()" maxlength="100"/>
                     <input id="email" type="text" placeholder="email address *" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"/>
-                    <button onClick="createUser()">create</button>
+                    <div id="wrongcreds"></div>
+                    <button onClick="checkUser()">create</button>
                     <p class="message">Already registered? <a href="index.html">Sign In</a></p>
                     <p class="message">* Required field</p>
             </div>
@@ -29,18 +30,20 @@
         var password = document.getElementById("password");
         var fullname = document.getElementById("fullname");
         var email = document.getElementById("email");
+        var checkId;
+        var checkEmail;
         
         //isItEnter : function to login the user if he press enter on the field input password
         function isItEnter(e) {
             if(e.keyCode == 13)
-                createUser();
+                checkUser();
             return;
         }
         //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
         function isFieldsOk() {
             var regUsername = new RegExp('^[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])+$');
             var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
-            var regFullname = new RegExp('^[a-zA-Z]+[-\s]?[a-zA-Z]+$');
+            var regFullname = new RegExp('^[a-zA-Z]+[-\\s]?[a-zA-Z]+$');
             var regEmail = new RegExp('^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])*\.[a-z]{2,5}$');
 
             if(username.value == "")
@@ -74,32 +77,89 @@
                 return true;
             return false;
         }
+        // checkUserid : function to check if the username already exist in the database or not
+        function checkUser() {
+            
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?userid=" + username.value;
+            var url2 = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?email=" + email.value;
+
+            superfetch(url, "json", succCheckId, errorCheckId);
+            superfetch(url2, "json", succCheckEmail, errorCheckEmail);
+        }
+        //Success id checking
+        function succCheckId(data) {
+            console.log(data);
+            checkId = false;
+        }
+        //Error id checking
+        function errorCheckId(data) {
+            console.log(data);
+            checkId = true;
+        }
+        //Success mail checking
+        function succCheckEmail(data) {
+            console.log(data);
+            checkEmail = false;
+            createUser();
+        }
+        //Error mail checking
+        function errorCheckEmail(data) {
+            console.log(data);
+            checkEmail = true;
+            createUser();
+        }
         //button click ---------------------------------
         function createUser() {
             if(isFieldsColorOk())
             {
-                var upload = JSON.stringify({
-                    loginname:username.value, 
-                    password:password.value,
-                    fullname:fullname.value,
-                    email:email.value
-                });
+                if(checkId && checkEmail)
+                {
+                    var upload = JSON.stringify({
+                        loginname:username.value, 
+                        password:password.value,
+                        fullname:fullname.value,
+                        email:email.value
+                    });
 
-                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users";
+                    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users";
 
-                var cfg = {
-                    method: "POST",            
-                    body: upload,
+                    var cfg = {
+                        method: "POST",            
+                        body: upload,
+                    }
+
+                    superfetch(url, "json", succ, error, cfg);
                 }
-
-                superfetch(url, "json", succ, error, cfg);
+                else if(!checkId && checkEmail)
+                {
+                    //Say that the user can not use this username
+                    username.style.background = "rgb(241, 196, 15)";
+                    document.getElementById("wrongcreds").style.marginBottom = "10%";
+                    document.getElementById("wrongcreds").innerHTML = "The username already exist, pick a new one!";
+                }
+                else if(checkId && !checkEmail)
+                {
+                   //Say that the user can not use this email adress
+                    email.style.background = "rgb(241, 196, 15)";
+                    document.getElementById("wrongcreds").style.marginBottom = "10%";
+                    document.getElementById("wrongcreds").innerHTML = "The email adress already exist, pick a new one!"; 
+                }
+                else
+                {
+                    //Say that the user can not use this username and this email adress
+                    username.style.background = "rgb(241, 196, 15)";
+                    email.style.background = "rgb(241, 196, 15)";
+                    document.getElementById("wrongcreds").style.marginBottom = "10%";
+                    document.getElementById("wrongcreds").innerHTML = "The username and email adress already exist, pick a new one!";
+                }
             }
             else
             {
                 alert("A required field is empty or not correct");
             }
         }
-        //success --------------------------------------
+
+        //success insert
         function succ(data) {
             console.log(data);
             //save logindata/token to localStorage 
@@ -108,13 +168,10 @@
             var token = JSON.parse(localStorage.getItem("logindata")).token;
             window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/api/users/dashboard/?token=" + token;
         }
-        //error ----------------------------------------
+        //error
         function error(err) {
             console.log(err);
         }
         
     </script>
 </html>
-
-
-
