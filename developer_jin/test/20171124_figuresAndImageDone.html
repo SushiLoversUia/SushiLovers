@@ -50,7 +50,7 @@
     <button id="btnNewSquare">Make New Square!</button>
     </br>
     </br>
-    <input id="browse" type="file" multiple>
+    <input id="btnLoadImage" type="file" multiple>
     <div id='container' style="top:10%;left:10%; right:10%; bottom:10%; width:80%;height:80%;"></div>
 </body>
 <script>
@@ -237,8 +237,8 @@
 
         elmnt.onmousedown = mouseDown;
 
-        let temp123 = document.getElementById("browse");
-        temp123.onchange = previewFiles;
+        let btnLoadImage = document.getElementById("btnLoadImage");
+        btnLoadImage.onchange = previewFiles;
 
         function previewFiles() {
             let files = document.querySelector('input[type=file]').files;
