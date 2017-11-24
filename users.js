@@ -128,7 +128,7 @@ app.use(function (req, res, next) {
     //get the token from the URL‐variable named 'token'
     var token = req.query['token'];
     if (!token) {
-        res.status(403).json({msg: "No token received"}); //send 
+        res.status(403).redirect('https://app-presentation-sushi-lovers.herokuapp.com/errortoken.html'); //send 
         return; //quit
     }
     else {
@@ -136,7 +136,7 @@ app.use(function (req, res, next) {
             logindata = jwt.verify(token, secret); //check the token
         }
         catch(err) {
-            res.status(403).json({msg: "The token is not valid!"}); //send
+            res.status(403).redirect('https://app-presentation-sushi-lovers.herokuapp.com/errortoken.html'); //send
             return; //quit
         }
     }
