@@ -8,7 +8,7 @@
 
     #container {
         position: absolute;
-        background-color: blue;
+        background-color: rgb(0, 42, 255);
     }
 
     #square1 {
@@ -48,69 +48,146 @@
         right: 0;
         bottom: 0;
     }
+
+    #line1 {
+        width: 112px;
+        height: 47px;
+        border-bottom: 1px solid black;
+        position: absolute;
+    }
 </style>
 
 <body>
-    <button id="btnSave">Save!</button>
+    <button id="btnSave">Save</button>
+    <button id="btnRecall">open</button>
 
     <div id='container' style="top:10%;left:10%; right:10%; bottom:10%; width:80%;height:80%;">
 
-        <div id="square1" style="width: 15%;height: 25%; left: 10%; top:10%;">
+        <div id="square1" style="width: 15%;height: 35%; left: 10%; top:10%;">
             <div id="handleResize"></div>
-            <p id="text" contentEditable="true"> Move1</p>
+            <p id="text" contentEditable="true">I am contents1</p>
         </div>
 
         <div id="square2" style="width: 15%;height: 25%; left: 30%; top:10%;">
             <div id="handleResize"></div>
-            <p contentEditable="true"> Move2</p>
+            <p contentEditable="true"> I am contents12</p>
         </div>
 
         <div id="square3" style="width: 15%;height: 25%; left: 50%; top:20%;">
             <div id="handleResize"></div>
-            <p contentEditable="true"> Move3</p>
+            <p contentEditable="true"> I am contents13</p>
         </div>
     </div>
 
 
     <script>
+
+
+
+    </script>
+    <script>
         'use strict';
 
 
-        btnSave.onclick = btnOnClick;
 
-        let parentDiv2 = document.getElementById('container');
-        let figure1 = parentDiv2.childNodes[1];
-        console.log(parentDiv2.childNodes[1]);
+        btnSave.onclick = save;
+        btnRecall.onclick = open;
 
-        let temp1 = JSON.parse(figure1);
-        console.log(temp1);
-        
-
-        function btnOnClick() {
-
-            console.log("you just clicked save button!");
-            // how should i store div info
-
-            // first, don't try to make it adaptable, focus on only one
-            let parentDiv = document.getElementById('container');
-            let figure1 = parentDiv.childNodes[1];
-            let figure1_text = figure1;
-            let figure1_children = parentDiv.children;
-            // console.log(parentDiv);
-            // console.log(parentDiv.childNodes);
-            console.log(parentDiv.childNodes[1]);
-            console.log(figure1_text);
-            console.log(figure1_children);
-        }
-
+        //store current(maybe all the slides, work on it later) slide.
+        let slideInfo = [];
 
         let parentDiv = document.getElementById('container');
         //Make the DIV element draggagle:
         dragElement(document.getElementById(("square1")), parentDiv);
-
         //mydiv2, mydiv3 doesn't have header >> any place of them can be movable
         dragElement(document.getElementById(("square2")), parentDiv);
         dragElement(document.getElementById(("square3")), parentDiv);
+
+
+        // example change of figures, figure text .. 
+        let figureTemp = parentDiv.querySelector("#square1");
+        figureTemp.style.color = "rgb(0, 255, 0)"
+        figureTemp.style.fontSize = "20px";
+        figureTemp.style.textAlign = "left";
+
+        //save all info about 
+        function save() {
+
+            console.log("you just clicked save button!");
+
+            let figureInfo = {
+
+                "type": "",
+                "size": {
+                    "width": "",
+                    "height": ""
+                },
+                "position": {
+                    "left": "",
+                    "top": ""
+                },
+                "text": {
+                    "content": "",
+                    "fontSize": "",
+                    "fontcolor": "",
+                    "textAlign": ""
+                }
+            }
+
+            let parentDiv = document.getElementById('container');
+            let parentDivHeight = parentDiv.offsetHeight;
+            let parentDivWidth = parentDiv.offsetWidth;
+
+            let figure = parentDiv.querySelector("#square1");
+
+            let figureHeight = figure.offsetHeight / parentDivHeight * 100 + "%";
+            let figureWidth = figure.offsetWidth / parentDivWidth * 100 + "%";
+
+            let figureLeft = figure.offsetLeft / parentDivWidth * 100 + "%";
+            let figureTop = figure.offsetTop / parentDivHeight * 100 + "%";
+
+            let figureText = figure.querySelector("#text");
+            let figureText_content = figureText.innerHTML;
+
+            let figureText_fontSize = figure.style.fontSize;
+            let figureText_color = figure.style.color;
+            let figureText_Align = figure.style.textAlign;
+
+            //put data in the structure
+            //put data in the structure
+            //put data in the structure
+
+            //should work on it >> make it percentage
+            figureInfo.type = "square";
+            figureInfo.size.height = figureHeight;
+            figureInfo.size.width = figureWidth;
+
+            //should work on it >> make it percentage
+            figureInfo.position.top = figureTop;
+            figureInfo.position.left = figureLeft;
+
+            figureInfo.text.content = figureText_content;
+            figureInfo.text.fontsize = figureText_fontSize;
+            figureInfo.text.fontcolor = figureText_color;
+            figureInfo.text.textAlign = figureText_Align;
+
+            slideInfo.push(figureInfo);
+            console.log(slideInfo);
+            localStorage.setItem('storage_figures', JSON.stringify(slideInfo));
+        }
+
+        function open() {
+            let figures_string = localStorage.getItem("storage_figures");
+            let figures_json = JSON.parse(figures_string);
+
+            console.log(figures_json);
+
+            // 
+
+
+        }
+
+
 
 
 

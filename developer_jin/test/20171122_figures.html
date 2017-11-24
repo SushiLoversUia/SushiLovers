@@ -142,8 +142,10 @@
                 ) {
                     // handleResize3.addEventListener('mousedown', initialiseResize, false);
                     // document.onmousedown = initialiseResize;
-                    document.onmousemove = startResizing;
+                    
                     document.onmouseup = stopResizing;
+
+                    document.onmousemove = startResizing;
 
                 } else {
                     document.onmouseup = closeDragElement;
@@ -157,10 +159,6 @@
             function initialiseResize(e) {
                 // window.addEventListener('mousemove', startResizing, false);
                 // window.addEventListener('mouseup', stopResizing, false);
-
-
-
-
                 document.onmousemove = startResizing;
                 document.onmouseup = stopResizing;
             }
