@@ -12,17 +12,23 @@
         <div class="login-page">
             <div class="form">
                 <h1 id="title-regis">Presentation Application Account</h1>
-                    <input id="username" type="text" placeholder="Username"/>
-                    <input id="password" type="password" placeholder="Password"/>
-                    <input id="fullname" type="text" placeholder="Full name"/>
-                    <input id="email" type="text" placeholder="email address" onkeypress="isItEnter(event)"/>
+                    <input id="username" type="text" placeholder="Username *" onchange="isFieldsOk()" maxlength="20"/>
+                    <input id="password" type="password" placeholder="Password *" onchange="isFieldsOk()" maxlength="15"/>
+                    <input id="fullname" type="text" placeholder="Full name *" onchange="isFieldsOk()" maxlength="100"/>
+                    <input id="email" type="text" placeholder="email address *" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"/>
                     <button onClick="createUser()">create</button>
                     <p class="message">Already registered? <a href="index.html">Sign In</a></p>
+                    <p class="message">* Required field</p>
             </div>
         </div>
     </body>
     
     <script>
+
+        var username = document.getElementById("username");
+        var password = document.getElementById("password");
+        var fullname = document.getElementById("fullname");
+        var email = document.getElementById("email");
         
         //isItEnter : function to login the user if he press enter on the field input password
         function isItEnter(e) {
@@ -30,15 +36,48 @@
                 createUser();
             return;
         }
+        //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
+        function isFieldsOk() {
+            var regUsername = new RegExp('^[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])+$');
+            var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
+            var regFullname = new RegExp('^[a-zA-Z]+[-\s]?[a-zA-Z]+$');
+            var regEmail = new RegExp('^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])*\.[a-z]{2,5}$');
+
+            if(username.value == "")
+                username.style.background = "";
+            else if(!regUsername.test(username.value))
+                username.style.background = "#e74c3c";
+            else
+                username.style.background = "#2ecc71";
+            if(password.value == "")
+                password.style.background = "";
+            else if(!regPassw.test(password.value) || password.value.length < 5)
+                password.style.background = "#e74c3c";
+            else
+                password.style.background = "#2ecc71";
+            if(fullname.value == "")
+                fullname.style.background = "";
+            else if(!regFullname.test(fullname.value))
+                fullname.style.background = "#e74c3c";
+            else
+                fullname.style.background = "#2ecc71";
+            if(email.value == "")
+                email.style.background = "";
+            else if(!regEmail.test(email.value))
+                email.style.background = "#e74c3c";
+            else
+                email.style.background = "#2ecc71";
+        }
+        //isFieldsColorOk() : function to check the background color of each field return true if all are green
+        function isFieldsColorOk() {
+            if(username.style.background == "rgb(46, 204, 113)" && password.style.background == "rgb(46, 204, 113)"  && fullname.style.background == "rgb(46, 204, 113)" && email.style.background == "rgb(46, 204, 113)")
+                return true;
+            return false;
+        }
         //button click ---------------------------------
         function createUser() {
-            var username = document.getElementById("username");
-            var password = document.getElementById("password");
-            var fullname = document.getElementById("fullname");
-            var email = document.getElementById("email");
-
-            if (username.value != "" && password.value != "" && fullname.value != "" && email.value != "") {
-
+            if(isFieldsColorOk())
+            {
                 var upload = JSON.stringify({
                     loginname:username.value, 
                     password:password.value,
@@ -52,12 +91,12 @@
                     method: "POST",            
                     body: upload,
                 }
-                
+
                 superfetch(url, "json", succ, error, cfg);
             }
             else
             {
-                alert("A required field is empty");
+                alert("A required field is empty or not correct");
             }
         }
         //success --------------------------------------

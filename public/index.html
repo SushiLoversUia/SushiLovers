@@ -39,11 +39,18 @@
                 login();
             return;
         }
-        
+        //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
+        function isFieldsOk() {
+            var regUsername = new RegExp('^[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])+$');
+            var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
+            
+            if(regUsername.test(inpLoginname.value) && regPassw.test(inpPassword.value))
+                return true;
+        }
         //button click ---------------------------------
         function login() {
             
-            if(inpLoginname.value != "" && inpPassword.value != "")
+            if(isFieldsOk())
             {
                 var upload = JSON.stringify({
                     loginname: inpLoginname.value, 
@@ -60,7 +67,7 @@
             }
             else
             {
-                alert("A required field is empty");
+                alert("A required field is empty or you are trying to hack my website");
             }
         }
         //success --------------------------------------

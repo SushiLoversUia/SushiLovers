@@ -11,26 +11,27 @@
     <body>
         <div class="dashboard-page">
             <div class="form">
+                <span id="logout" onclick="logout()">Sushi out [->]</span>
                 <h1 id="title-dashboard">Your Dashboard</h1>
-                    <div id="my-profil">
-                        <h2 id="title-myprofil">My Profil</h2>
-                        <div id="my-profil-settings">
-                            <div id="my-profil-settings-labels">
-                                <p id="my-profil-settings-label-p">Username: </p>
-                                <p id="my-profil-settings-label-p">Fullname: </p>
-                                <p id="my-profil-settings-label-p">Password: </p>
-                                <p id="my-profil-settings-label-p">Confirm password: </p>
-                                <p id="my-profil-settings-label-p">Email: </p>
-                            </div>
-                            <div id="my-profil-settings-data">
-                                <p id="username"></p>
-                                <input id="inpFullname" placeholder=""/>
-                                <input id="inpPassword" placeholder="*5 characters minimum*" onchange="isPasswordOk(this.value)"/>
-                                <input id="inpConfPassword" placeholder="*The same password is required*" onchange="isConfOk(this.value)"/>
-                                <input id="inpEmail" placeholder="" onkeypress="isItEnter(event)"/>
-                            </div>
+                <div id="my-profil">
+                    <h2 id="title-myprofil">My Profil</h2>
+                    <div id="my-profil-settings">
+                        <div id="my-profil-settings-labels">
+                            <p id="my-profil-settings-label-p">Username: </p>
+                            <p id="my-profil-settings-label-p">Fullname: </p>
+                            <p id="my-profil-settings-label-p">Password: </p>
+                            <p id="my-profil-settings-label-p">Confirm password: </p>
+                            <p id="my-profil-settings-label-p">Email: </p>
+                        </div>
+                        <div id="my-profil-settings-data">
+                            <p id="username"></p>
+                            <input id="inpFullname" placeholder="*It can not be empty*" onchange="isFieldsOk()" maxlength="100"/>
+                            <input id="inpPassword" type="password" placeholder="*5 characters minimum*" onchange="isFieldsOk()" maxlength="15"/>
+                            <input id="inpConfPassword" type="password" placeholder="*The same password is required*" onchange="isFieldsOk()" maxlength="15"/>
+                            <input id="inpEmail" placeholder="*It can not be empty*" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"/>
                         </div>
                     </div>
+                </div>
                     
                     <button onClick="save()">Save settings</button>
                 
@@ -60,65 +61,63 @@
         email.value = JSON.parse(localStorage.getItem("logindata")).email;
         //isItEnter : function to login the user if he press enter on the field input password
         function isItEnter(e) {
+            console.log(e.keycode);
             if(e.keyCode == 13)
                 save();
             return;
         }
-        //isPasswordOk : function check if the password respect the rules (5 characters minimum) ---------------------------------
-        function isPasswordOk(e) {
-            if(e != "")
-            {
-                if(e.length < 5)
-                    password.style.background = "#e74c3c";
-                else
-                {
-                    password.style.background = "#2ecc71";
-                    if(password.value != confpass.value)
-                        confpass.style.background = "#e74c3c"
-                }
-            }
+        //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
+        function isFieldsOk() {
+            var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
+            var regFullname = new RegExp('^[a-zA-Z]+[-\s]?[a-zA-Z]+$');
+            var regEmail = new RegExp('^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])*\.[a-z]{2,5}$');
+
+            if(password.value == "")
+                password.style.background = "";
+            else if(!regPassw.test(password.value) || password.value.length < 5)
+                password.style.background = "#e74c3c";
             else
             {
-                password.style.background = "white";
+                password.style.background = "#2ecc71";
+                if(password.value != confpass.value)
+                        confpass.style.background = "#e74c3c";
             }
-        }
-        //isConfOk : function check if the password is the same as password confirmation
-        function isConfOk(e) {
-            if(e == "")
-            {
-                confpass.style.background = "white";
-                return;
-            }
-            if(e != password.value)
+            if(confpass.value == "")
+                confpass.style.background = "";
+            else if(confpass.value != password.value)
                 confpass.style.background = "#e74c3c";
             else
                 confpass.style.background = "#2ecc71";
+            if(fullname.value == "")
+                fullname.style.background = "";
+            else if(!regFullname.test(fullname.value))
+                fullname.style.background = "#e74c3c";
+            else
+                fullname.style.background = "#2ecc71";
+            if(email.value == "")
+                email.style.background = "";
+            else if(!regEmail.test(email.value))
+                email.style.background = "#e74c3c";
+            else
+                email.style.background = "#2ecc71";
         }
-        //isColorOk : function confirm that the password can be changed
-        function isColorOk() {
-            if(password.style.background == "rgb(46, 204, 113)" && confpass.style.background == "rgb(46, 204, 113)")
-                return true;
-            else if(password.style.background == "" && confpass.style.background == "")
-                return true;
-            return false;
+        //isFieldsColorOk() : function to check the background color of each field return true if all are green
+        function isFieldsColorOk() {
+            if(fullname.style.background == "rgb(231, 76, 60)" || password.style.background == "rgb(231, 76, 60)" || confpass.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(231, 76, 60)")
+                return false;
+            return true;
         }
         //isFieldsOk : function check if the user doesn't put an empty string on email field or on fullname field
-        function isFieldOk() {
+        function isFieldEmpty() {
             if(fullname.value == "")
-            {
-                alert("Fullname field can not be empty");
                 return false;
-            }
             else if(email.value == "")
-            {
-                alert("Email field can not be empty");
                 return false;
-            }
             return true;
         }
         //save : saving settings
         function save() {
-            if(isColorOk() && isFieldOk())
+            if(isFieldsColorOk() && isFieldEmpty())
             {
                 var upload = JSON.stringify({
                     loginname:username.textContent,
@@ -136,6 +135,10 @@
                 
                 superfetch(url, "json", succ, error, cfg);
             }
+            else
+            {
+                alert("A required fiedl is empty or you made something wrong and extremly bad!");
+            }
         }
         //success --------------------------------------
         function succ(data) {
@@ -147,7 +150,14 @@
         }
         //error ----------------------------------------
         function error(err) {
-            console.log(err);
+            console.log(err.msg);
+            if(err.msg == "No token received" || err.msg == "The token is not valid!")
+                window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/errortoken.html";
+        }
+        // Logout
+        function logout() {
+            localStorage.clear();
+            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/";
         }
         
     </script>
