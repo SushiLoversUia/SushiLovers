@@ -83,7 +83,14 @@ body {
 #presentation-table {
     border: solid green 1px;
 }
-
+#logout{
+    position: absolute;
+    margin-left: 39%;
+    text-decoration: underline;
+}
+#logout:hover{
+    cursor: pointer;
+}
 
 
 
