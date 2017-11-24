@@ -63,7 +63,7 @@ body{
 
 
 
-canvas{
+#whiteBoard{
   background-color: #fbfbfb;
   border:3px solid black;
 }
@@ -173,4 +173,18 @@ display : none;
   height: 4vw;
   margin: 0 auto;
   border: 1px solid black ;
+}
+
+
+#ribbon {
+  height: 8%;
+  background-color: #60a175;
+  color: white;
+  border-bottom: 2px solid black;
+
+}
+
+#textArea{
+  height: 92%;
+  width:100%;
 }
