@@ -96,6 +96,9 @@ body {
     text-align: left;
     font-size: 14px;
 }
+#deleteBtn{
+    background-color: red;
+}
 
 
 
