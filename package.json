@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 <<<<<<< HEAD
   "name": "server1",
@@ -28,3 +29,24 @@
   "license": "ISC"
 >>>>>>> cc26b8a8ab1e482f3597d683c494d1753cd99cca
 }
+=======
+{
+  "name": "app-presentation-sushi-lovers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.15.5",
+    "jsonwebtoken": "^8.1.0",
+    "pg": "^7.3.0"
+  }
+}
+>>>>>>> ee5ccee94f14a1f52fe4b191b388dd78432add32

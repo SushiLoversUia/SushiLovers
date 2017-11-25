@@ -44,5 +44,11 @@ cursor: pointer;
 #myFrame {
   height: 100%;
   width: 100%;
+  position: relative;
 
+}
+
+#myDiv{
+
+  position: absolute;
 }
