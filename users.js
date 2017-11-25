@@ -75,7 +75,7 @@ app.put('/user/', bodyParser, function(req,res) {
     var upload = JSON.parse(req.body);
     var userid = upload.loginname;
     var fullname = upload.fullname;
-    var passw = upload.password;
+    var passw = bcrypt.hashSync(upload.password);
     var email = upload.email;
     var tok = req.query['token'];
     var strquery;

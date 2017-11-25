@@ -32,9 +32,9 @@
                         </div>
                     </div>
                 </div>
-                    
-                    <button onClick="save()">Save settings</button>
-                
+                    <div id="wrongmail"></div>
+                    <button onClick="checkEmail()">Save settings</button>
+
                     <div id="my-presentations">
                         <h1 id="title-dashboard">My presentations</h1>
                         <div id="presentation-table">
@@ -61,7 +61,6 @@
         email.value = JSON.parse(localStorage.getItem("logindata")).email;
         //isItEnter : function to login the user if he press enter on the field input password
         function isItEnter(e) {
-            console.log(e.keycode);
             if(e.keyCode == 13)
                 save();
             return;
@@ -69,8 +68,9 @@
         //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
         function isFieldsOk() {
             var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
-            var regFullname = new RegExp('^[a-zA-Z]+[-\s]?[a-zA-Z]+$');
+            var regFullname = new RegExp('^[a-zA-Z]+[-\\s]?[a-zA-Z]+$');
             var regEmail = new RegExp('^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])*\.[a-z]{2,5}$');
+            mailuser = JSON.parse(localStorage.getItem("logindata")).email;
 
             if(password.value == "")
                 password.style.background = "";
@@ -88,13 +88,13 @@
                 confpass.style.background = "#e74c3c";
             else
                 confpass.style.background = "#2ecc71";
-            if(fullname.value == "")
+            if(fullname.value == "" || fullname.value == JSON.parse(localStorage.getItem("logindata")).fullname)
                 fullname.style.background = "";
             else if(!regFullname.test(fullname.value))
                 fullname.style.background = "#e74c3c";
             else
                 fullname.style.background = "#2ecc71";
-            if(email.value == "")
+            if(email.value == "" || email.value == mailuser)
                 email.style.background = "";
             else if(!regEmail.test(email.value))
                 email.style.background = "#e74c3c";
@@ -103,7 +103,7 @@
         }
         //isFieldsColorOk() : function to check the background color of each field return true if all are green
         function isFieldsColorOk() {
-            if(fullname.style.background == "rgb(231, 76, 60)" || password.style.background == "rgb(231, 76, 60)" || confpass.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(231, 76, 60)")
+            if(fullname.style.background == "rgb(231, 76, 60)" || password.style.background == "rgb(231, 76, 60)" || confpass.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(241, 196, 15)")
                 return false;
             return true;
         }
@@ -115,9 +115,40 @@
                 return false;
             return true;
         }
+        //isFieldsFullWhite : function check if all the fields have a white background
+        function isFieldsFullWhite() {
+            if(fullname.style.background == "" && password.style.background == "" && confpass.style.background == "" && email.style.background == "")
+                return true;
+            return false;
+        }
+        //checkUser : function to check if the email respect the regex and if it is not already in the database
+        function checkEmail() {
+            if(email.style.background == "rgb(46, 204, 113)")
+            {
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?email=" + email.value;
+            
+                superfetch(url, "json", succCheckEmail, errorCheckEmail);
+            }
+            else
+                save();
+        }
+        //Success check email
+        function succCheckEmail(data) {
+            console.log(data);
+            email.style.background = "rgb(241, 196, 15)";
+            document.getElementById("wrongmail").style.marginBottom = "2%";
+            document.getElementById("wrongmail").innerHTML = "The email adress already exist, pick a new one!";
+        }
+        //Error check email
+        function errorCheckEmail(data) {
+            console.log(data);
+            document.getElementById("wrongmail").style.marginBottom = "0%";
+            document.getElementById("wrongmail").innerHTML = "";
+            save();
+        }
         //save : saving settings
         function save() {
-            if(isFieldsColorOk() && isFieldEmpty())
+            if(isFieldsColorOk() && isFieldEmpty() && !isFieldsFullWhite())
             {
                 var upload = JSON.stringify({
                     loginname:username.textContent,
@@ -135,7 +166,7 @@
                 
                 superfetch(url, "json", succ, error, cfg);
             }
-            else
+            else if(!isFieldsFullWhite())
             {
                 alert("A required fiedl is empty or you made something wrong and extremly bad!");
             }
@@ -147,6 +178,7 @@
             localStorage.setItem("logindata", JSON.stringify(data));
             // Inform user
             alert("Your settings have changed");
+            window.location.reload(true);
         }
         //error ----------------------------------------
         function error(err) {
