@@ -91,7 +91,11 @@ body {
 #logout:hover{
     cursor: pointer;
 }
-
+#wrongmail{
+    color: red;
+    text-align: left;
+    font-size: 14px;
+}
 
 
 
