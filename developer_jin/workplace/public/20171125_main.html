@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ABC</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="..\css\main.css">
+  <script src="..\js\main.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <!-- <h1>Header</h1> -->
+  </div>
+
+  <div class="topnav">
+    <button id="btnSave">Save</button>
+    <button id="btnRecall">open</button>
+    <button id="btnNewSquare">Make New Square!</button>
+    <button id="btnNewSlide">New Slide</button>
+
+
+    <button id="btnLogin">Login</button>
+    <button id="btnSignup">Sign Up</button>
+
+    <input id="btnLoadImage" type="file" multiple>
+  </div>
+
+  <!-- middle row -->
+  <div class="column side" id="midColLeft">
+    <div id="leftSlide">1</div>
+  </div>
+
+  <div class="column middle">
+    <div id='slideMiddle'></div>
+  </div>
+
+  <div class="column side">
+    <div id="slide">1</div>
+    <div id="slide">1</div>
+    <div id="slide">1</div>
+  </div>
+
+  <div class="footer">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+
+</body>
+<script>
+
+  btnSave.onclick = save;
+  btnRecall.onclick = open;
+  btnNewSquare.onclick = newSquare;
+  btnNewSlide.onclick = makeNewSlide;
+  let btnLoadImage = document.getElementById("btnLoadImage");
+btnLoadImage.onchange = previewFiles;
+</script>
+
+</html>
