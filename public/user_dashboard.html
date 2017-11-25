@@ -41,6 +41,7 @@
                             <h1>Here is all my prezzzz</h1>
                         </div>
                     </div>
+                    <button id="deleteBtn" onClick="deleteUserAccount()">Delete my account</button>
             </div>
         </div>
     </body>
@@ -196,7 +197,7 @@
                 var upload = JSON.stringify({
                     loginname: username.textContent
                 })
-                var url = "http://localhost:8080/api/users/user/";
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/";
                 var cfg = {
                     method: "DELETE",
                     body: upload,
