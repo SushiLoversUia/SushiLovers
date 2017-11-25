@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="editorStyle.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+</head>
+<body>
+  <div id='whiteBoard' style="">
+    <div id="ribbon">
+      <button id="newText">New textBox</button>
+      <button id="boldButton" title="Bold"><strong>B</strong></button>
+      <button id="italicButton" title="Italic"><em>I</em></button>
+      <button id="underLine" name="button" style="text-decoration: underline">U</button>
+      <button id="supButton" title="SuperScript">X<sup>2</sup></button>
+      <button id="subButton" title="SubScript">X<sub>2</sub></button>
+      <select id="fontChange">
+          <optgroup id="fonts" label="Font Style">
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Calibri">Calibri</option>
+            <option value="Lucida Sans">Lucida Sans</option>
+            <option value="Optima">Optima</option>
+            <option value="Bodoni">Bodoni</option>
+            <option value="Futura">Futura</option>
+            <option value="Comic Sans">Comic Sans</option>
+        </optgroup>
+      </select>
+      <select id="fontSize">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+      </select>
+      <input type="color" id="fontColorButton"  style="width: 20px;">
+      <input type="color" id="hightlightButton" value="#ffffff" style="width: 20px;">
+      <button id="unorderedListButton">&bull;</button>
+      <button id="orderedListButton">123</button>
+      <button id="linkButton">Link</button>
+      <button id="unlinkButton">Unlink</button>
+      <button id="undoButton">&larr;</button>
+      <button id="redoButton">&rarr;</button>
+      <button id="addImg">Add image</button>
+
+
+    </div>
+    <div id="textArea">
+      <iframe frameborder="0" id="myFrame" name="myFrame">
+      </iframe>
+    </div>
+  </div>
+</body>
+
+
+
+<script type="text/javascript">
+
+  var fonts = document.querySelectorAll("#fonts > option");
+  console.log(fonts)
+  for(var i = 0; i < fonts.length; i++){
+      fonts[i].style.fontFamily = fonts[i].value;
+  }
+
+
+</script>
+<script>
+  window.addEventListener("load", function(){
+    var editor= myFrame.document;
+    var myDiv;
+    var text;
+    editor.designMode = "on";
+
+    newText.addEventListener("click", function(event){
+
+      myDiv = document.createElement("div");
+      myDiv.style.backgroundColor="#8284b1"
+      myDiv.style.width= "300px";
+      myDiv.style.height= "70px";
+      myDiv.style.border= "2px solid #d3d3d3";
+      myDiv.id= "myDiv";
+      myDiv.style.position = "absolute";
+      myDiv.style.whiteSpace= "pre-line";
+      myDiv.style.display="flex";
+
+
+
+      text = document.createTextNode("Enter text");
+      myDiv.appendChild(text);
+      myDiv.style.left = "1px";
+      myDiv.style.top = "1px"
+      editor.body.appendChild(myDiv);
+
+      myDiv.addEventListener("mousedown", mouseDown);
+      myDiv.addEventListener("mouseup", mouseUp);
+
+    })
+
+
+    boldButton.addEventListener("click", function(){
+        editor.execCommand("Bold", false, null)
+    })
+
+    italicButton.addEventListener("click", function(){
+        editor.execCommand("Italic", false, null)
+    })
+
+    supButton.addEventListener("click", function(){
+        editor.execCommand("SuperScript", false, null)
+    })
+
+    subButton.addEventListener("click", function(){
+        editor.execCommand("SubScript", false, null)
+    })
+
+    orderedListButton.addEventListener("click", function(){
+        editor.execCommand("InsertOrderedList", false, "newOL"+ Math.round(Math.random()*1000))
+    })
+
+    unorderedListButton.addEventListener("click", function(){
+        editor.execCommand("InsertUnorderedList", false, "newOL"+ Math.round(Math.random()*1000))
+    })
+
+    fontColorButton.addEventListener("change", function(event){
+        editor.execCommand("ForeColor", false, event.target.value)
+    })
+
+    hightlightButton.addEventListener("change", function(event){
+        editor.execCommand("BackColor", false, event.target.value)
+    })
+
+    fontChange.addEventListener("change", function(event){
+        editor.execCommand("FontName", false, event.target.value)
+    })
+
+    fontSize.addEventListener("change", function(event){
+        editor.execCommand("FontSize", false, event.target.value)
+    })
+
+    linkButton.addEventListener("click", function(event){
+      var url = prompt("Enter a URL", "http://")
+        editor.execCommand("CreateLink", false, url)
+    })
+    unlinkButton.addEventListener("click", function(event){
+      editor.execCommand("UnLink", false, null)
+    })
+
+    undoButton.addEventListener("click", function(event){
+      editor.execCommand("undo", false, null)
+    })
+
+    redoButton.addEventListener("click", function(event){
+      editor.execCommand("redo", false, null)
+    })
+
+////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////////////////////////////////////
+
+let active = false;
+
+
+
+  /*  editor.addEventListener("click", klikk)
+
+ function klikk(e) {
+
+    let x = e.clientX-editor.offsetLeft;
+    let y= e.clientY-editor.offsetTop;
+
+console.log(e.clientX ,e.clientY);
+
+}*/
+
+
+let curX;
+let curY;
+let divPosX;
+let divPosY;
+/*
+function lineBreak(e) {
+  if (e.keyCode == 13) {
+    console.log("enter")
+    var m=document.createElement("p");
+      editor.appendChild("br");
+
+  }
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+   function mouseDown(e) {
+      active = true;
+
+      curX=e.clientX;
+      curY=e.clientY;
+
+      divPosX= parseInt(myDiv.style.left)
+      divPosY=parseInt(myDiv.style.top)
+      console.log()
+          }
+
+  editor.addEventListener("mousemove", mouseMove);
+
+  function mouseMove(e) {
+
+    if(active){
+
+      myDiv.style.left= divPosX+ e.clientX-curX +"px";
+      myDiv.style.top=  divPosY+  e.clientY-curY +"px";
+  }
+}
+    function mouseUp(e) {
+      console.log("yo")
+        active = false;
+}
+
+/////////////////////////////////////////////////////////
+
+  var divLeft=0;
+
+  function anim(e){
+
+    console.log(myDiv.style.left)
+
+  if(e.keyCode==39){
+    divLeft+=2;
+    myDiv.style.left = divLeft + 'px';
+
+  }
+  if(e.keyCode==37){
+    divLeft-=2;
+    myDiv.style.left = divLeft + 'px';
+
+
+  }
+  }
+  document.onkeydown = anim;
+
+});
+
+
+
+  /*  addImage.addEventListener("click", function(event){
+      var img = document.getElementById('file')
+      editor.execCommand("insertImage", false, img.files[0])
+    })*/
+/*
+    'use strict';
+    //Make the DIV element draggagle:
+    dragElement(myDiv);
+
+    //mydiv2, mydiv3 doesn't have header >> any place of them can be movable
+
+    function dragElement(elmnt) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+        let containerLeft = parseInt(document.getElementById('myFrame').style.left); // container posX
+        let containerTop = parseInt(document.getElementById('myFrame').style.top);
+        let elementWidth = elmnt.offsetWidth;
+        let elementHeight = elmnt.offsetHeight;
+        let handleResizeWidth = document.getElementById('myFrame').clientWidth;
+        let handleResizeHeight = document.getElementById('myFrame').clientHeight;
+
+
+
+        elmnt.onmousedown = mouseDown;
+
+        //decision to drag or resize or rotate or write something
+        function mouseDown(e) {
+
+          console.log("yo")
+
+
+            e = e || editor.event;
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+
+            let elemLeft_container = parseInt(elmnt.style.left);//element top posX from container
+            let elemTop_container = parseInt(elmnt.style.top); //element top posY from container
+
+            let elemLeft_screen = elemLeft_container + containerLeft;//element top posY from  whole screen
+            let elemTop_screen = elemTop_container + containerTop;//element top posY from whole screen
+
+            let cursurPosX_inElem = Math.abs(e.clientX - elemLeft_screen); //relative posX in element
+            let cursurPosY_inElem = Math.abs(e.clientY - elemTop_screen); //relative posY in element
+
+            // console.log(`elemLeft_container : ${elemLeft_container} & elemTop_container : ${elemTop_container}`);
+            // console.log(`elemLeft_screen : ${elemLeft_screen} & elemTop_screen : ${elemTop_screen}`);
+            // console.log(`cursurPosX_inElem : ${cursurPosX_inElem} & cursurPosY_inElem : ${cursurPosY_inElem}`);
+
+
+            if (
+                (cursurPosX_inElem > handleResizeWidth && cursurPosX_inElem < elementWidth - handleResizeWidth)
+                || (cursurPosY_inElem > handleResizeHeight && cursurPosY_inElem < elementHeight - handleResizeHeight)
+            ) {
+
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            } else {
+                // handleResize3.addEventListener('mousedown', initialiseResize, false);
+                document.onmousedown = initialiseResize;
+
+            }
+
+        }
+
+        /////////////////////////////////
+        function initialiseResize(e) {
+            window.addEventListener('mousemove', startResizing, false);
+            window.addEventListener('mouseup', stopResizing, false);
+        }
+
+        function startResizing(e) {
+            elmnt.style.width = (e.clientX - elmnt.offsetLeft) + 'px';
+            elmnt.style.height = (e.clientY - elmnt.offsetTop) + 'px';
+        }
+
+        function stopResizing(e) {
+            window.removeEventListener('mousemove', startResizing, false);
+            window.removeEventListener('mouseup', stopResizing, false);
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            // calculate the new cursor position:
+            //pos1, pos2 are new cursor position diff
+            pos1 = e.clientX - pos3;
+            pos2 = e.clientY - pos4;
+
+            //have to make pos3,pos4 as startup pos
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop + pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft + pos1) + "px";
+        }
+
+        function closeDragElement() {
+            // stop moving when mouse button is released://
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
+*/
+
+
+</script>
+
+</html>
