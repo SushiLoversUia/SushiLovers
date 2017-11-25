@@ -189,7 +189,31 @@
             localStorage.clear();
             window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/";
         }
-        
+        //Delete User Account
+        function deleteUserAccount() {
+            if(confirm("You are about to delete your account, this operation can not be canceled, are you sure ?"))
+            {
+                var upload = JSON.stringify({
+                    loginname: username.textContent
+                })
+                var url = "http://localhost:8080/api/users/user/";
+                var cfg = {
+                    method: "DELETE",
+                    body: upload,
+                }
+                
+                superfetch(url, "json", succDelete, errorDelete, cfg);
+            }
+        }
+        //Success delete account
+        function succDelete(data) {
+            console.log(data);
+            logout();
+        }
+        //Error delete account
+        function errorDelete(data) {
+            console.log(data);
+        }
     </script>
 </html>
 

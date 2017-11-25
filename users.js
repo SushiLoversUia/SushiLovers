@@ -92,11 +92,14 @@ app.put('/user/', bodyParser, function(req,res) {
     });
 });
 
-app.delete('/user/', function(req,res) {
-   client.query('DELETE FROM account WHERE userid=' + req.query['userid'] + ';', (err, result) => {
+app.delete('/user/', bodyParser, function(req,res) {
+    var upload = JSON.parse(req.body);
+    var userid = upload.loginname;
+
+    client.query('DELETE FROM account WHERE userid=\'' + userid + '\';', (err, result) => {
         if (err) throw err;
-        
-        res.json({ message: 'Succesfully deleted' });
+
+        res.status(200).json({ message: 'Succesfully deleted' });
     });
 });
 
