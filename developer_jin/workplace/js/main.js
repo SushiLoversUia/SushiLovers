@@ -6,18 +6,20 @@ let lastClickedElem = null;
 let squareCnt = 0;
 
 //make it clear what slide you are working on
-let lastSlide = null;
+let lastClickedSlide = null;
 let slideCnt = 1;
 
 //store current(maybe all the slides, work on it later) slide.
 let slideInfo = [];
 
-function tempFunc(){
+
+//tempFunc1,2 makeNewSlide >> currently working on it.
+function tempFunc() {
     let tempSlide = document.getElementById("slideMiddle");
     tempSlide.style.visibility = "hidden";
 }
 
-function tempFunc2(){
+function tempFunc2() {
     let tempSlide = document.getElementById("slideMiddle");
     tempSlide.style.visibility = "visible";
 }
@@ -28,21 +30,23 @@ function makeNewSlide() {
     slide.setAttribute("id", "leftSlide");
     slideCnt++;
     slide.innerHTML = `${slideCnt}`;
-    slide.onclick = showOnMiddle;
 
     parentDiv.appendChild(slide);
 
+    slide.onclick = showOnMiddle;
+
+    function showOnMiddle() {
+        lastClickedSlide = slide;
+        console.log("here is showOnMiddle function working");
+        console.log(lastClickedSlide);
+        // make invisible all the slides
+        // make visible only one slide, user clicked last time
+
+    }
+
 }
-//make slides clickable and ..
 
 
-
-function showOnMiddle() {
-    console.log("here is showOnMiddle function working");
-    // make invisible all the slides
-    // make visible only one slide, user clicked last time
-
-}
 
 
 //to put image data inside of figure(currently only square)
@@ -171,7 +175,7 @@ function saveSquares(square, parentDiv) {
     let figureImg_src = figure.style.backgroundImage;
 
 
-    
+
     /*********************************************************** */
     /**** put info just got above in the structure ************ */
     /*********************************************************** */
@@ -230,7 +234,7 @@ function recallSquares(squareInfo, parentDiv) {
     //size info
     square.style.width = squareInfo.size.width;
     square.style.height = squareInfo.size.height;
-    
+
     //position info
     square.style.left = squareInfo.position.left;
     square.style.top = squareInfo.position.top;
@@ -255,7 +259,7 @@ function recallSquares(squareInfo, parentDiv) {
     //put the original text info     
     textP.innerHTML = squareInfo.text.content;
     square.appendChild(textP);
-    
+
     //put the square we have made so far inside of parentDiv(id : slideMiddle)
     parentDiv.appendChild(square);
 
@@ -269,12 +273,14 @@ function recallSquares(squareInfo, parentDiv) {
 function dragElement(elmnt, parentDiv) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
+    //always move, drag base on parentDivs offsetLeft,Top
     let parentDivLeft = parseInt(parentDiv.offsetLeft);
     let parentDivTop = parseInt(parentDiv.offsetTop);
 
     let parentDivWidth = parseInt(parentDiv.offsetWidth);
     let parentDivHeight = parseInt(parentDiv.offsetHeight);
 
+    //resize handler
     let handle = document.getElementById('handleResize');
     let handleResizeWidth = handle.clientWidth;
     let handleResizeHeight = handle.clientHeight;
@@ -299,19 +305,29 @@ function dragElement(elmnt, parentDiv) {
         let cursurPosX_inElem = Math.abs(e.clientX - elemLeft_screen); //relative posX in element
         let cursurPosY_inElem = Math.abs(e.clientY - elemTop_screen); //relative posY in element
 
-        //left top, right top, bottom left, bottom right range
+        //currently only bottom right handle is applied, if true >> resize, false >> move element
         if (
             (cursurPosX_inElem > elmnt.offsetWidth - handleResizeWidth && cursurPosX_inElem < elmnt.offsetWidth) &&
             (cursurPosY_inElem > elmnt.offsetHeight - handleResizeHeight && cursurPosY_inElem < elmnt.offsetHeight)
         ) {
+
+            //mouse release >> closeElementDrag_resize >> make all the mouseEvent val null
             document.onmouseup = closeElementDrag_resize;
+
+            //mouse move >> begin resizing
             document.onmousemove = elementDrag_resize;
         } else {
+
+            //mouse release >> closeElementDrag_move >> make all the mouseEvent val null
             document.onmouseup = closeElementDrag_move;
+
+            //mouse move >> begin dragging element
             document.onmousemove = elementDrag_move;
         }
     }
 
+
+    //resize element funtion
     function elementDrag_resize(e) {
         e = e || window.event;
         // calculate the new cursor position:
@@ -323,17 +339,18 @@ function dragElement(elmnt, parentDiv) {
         pos3 = e.clientX;
         pos4 = e.clientY;
 
+
         elmnt.style.width = (elmnt.offsetWidth + pos1) + 'px';
         elmnt.style.height = (elmnt.offsetHeight + pos2) + 'px';
     }
 
+
     function closeElementDrag_resize(e) {
-        // window.removeEventListener('mousemove', startResizing, false);
-        // window.removeEventListener('mouseup', stopResizing, false);
-        document.onmousemove = null;
         document.onmouseup = null;
+        document.onmousemove = null;
     }
 
+    //drag element function 
     function elementDrag_move(e) {
         e = e || window.event;
         // calculate the new cursor position:
