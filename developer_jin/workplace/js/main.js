@@ -6,52 +6,76 @@ let lastClickedElem = null;
 let squareCnt = 0;
 
 //make it clear what slide you are working on
-let lastSlide = null;
+let lastClickedSlide = null;
 let slideCnt = 1;
 
 //store current(maybe all the slides, work on it later) slide.
 let slideInfo = [];
-let parentDiv = document.getElementById('slide');
 
+
+//tempFunc1,2 makeNewSlide >> currently working on it.
+function tempFunc() {
+    let tempSlide = document.getElementById("slideMiddle");
+    tempSlide.style.visibility = "hidden";
+}
+
+function tempFunc2() {
+    let tempSlide = document.getElementById("slideMiddle");
+    tempSlide.style.visibility = "visible";
+}
 function makeNewSlide() {
+
     let parentDiv = document.getElementById("midColLeft");
     let slide = document.createElement("div");
     slide.setAttribute("id", "leftSlide");
     slideCnt++;
     slide.innerHTML = `${slideCnt}`;
+
     parentDiv.appendChild(slide);
+
     slide.onclick = showOnMiddle;
 
+    function showOnMiddle() {
+        lastClickedSlide = slide;
+        console.log("here is showOnMiddle function working");
+        console.log(lastClickedSlide);
+        // make invisible all the slides
+        // make visible only one slide, user clicked last time
+
+    }
+
 }
-//make slides clickable and ..
-
-function showOnMiddle() {
-    console.log("sfdfsdfsdfds");
-}
 
 
+
+
+//to put image data inside of figure(currently only square)
 function previewFiles() {
     let files = document.querySelector('input[type=file]').files;
 
     function readAndPreview(file) {
         // Make sure `file.name` matches our extensions criteria
         if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+
             let reader = new FileReader();
-            // let square = elmnt;
             reader.addEventListener("load", function () {
                 let image = new Image();
-                // image.height = 100;
                 image.title = file.name;
                 image.src = this.result;
+
+                //put the image user just clicked inside of last clicked squares
                 lastClickedElem.style.backgroundImage = `url(${image.src})`;
             }, false);
             reader.readAsDataURL(file);
         }
     }
+    //don't need it now, case of user clicked several images
     if (files) {
         [].forEach.call(files, readAndPreview);
     }
 }
+
+//making new squares, it's just temporary information to test other functions, info that we are putting inside is not important
 function newSquare() {
     let parentDiv = document.getElementById('slideMiddle');
 
@@ -76,10 +100,6 @@ function newSquare() {
     squareCnt++;
     square.appendChild(textP);
 
-    // let imgSrc = "image/4727.jpg";
-    // square.style.backgroundImage = `url(${imgSrc})`;
-
-
     parentDiv.appendChild(square);
     dragElement(square, parentDiv);
 }
@@ -98,6 +118,8 @@ function save() {
     console.log(slideInfo);
     localStorage.setItem('storage_figures', JSON.stringify(slideInfo));
 }
+
+//save function helper, only for saving squares since different figures would have different features
 function saveSquares(square, parentDiv) {
     let parentDivHeight = parentDiv.offsetHeight;
     let parentDivWidth = parentDiv.offsetWidth;
@@ -128,21 +150,35 @@ function saveSquares(square, parentDiv) {
 
     let figure = square;
 
+
+    /*********************************************************** */
+    /* get information to put them in infoStructure ************ */
+    /*********************************************************** */
+    //figure size info
     let figureHeight = figure.offsetHeight / parentDivHeight * 100 + "%";
     let figureWidth = figure.offsetWidth / parentDivWidth * 100 + "%";
 
+    //figure position info
     let figureLeft = figure.offsetLeft / parentDivWidth * 100 + "%";
     let figureTop = figure.offsetTop / parentDivHeight * 100 + "%";
 
+    //figure text info
     let figureText = figure.querySelector("#text");
     let figureText_content = figureText.innerHTML;
 
+    //figure text css
     let figureText_fontSize = figure.style.fontSize;
     let figureText_color = figure.style.color;
     let figureText_Align = figure.style.textAlign;
 
+    //figure backgroud image
     let figureImg_src = figure.style.backgroundImage;
 
+
+
+    /*********************************************************** */
+    /**** put info just got above in the structure ************ */
+    /*********************************************************** */
     figureInfo.type = "square";
     figureInfo.size.height = figureHeight;
     figureInfo.size.width = figureWidth;
@@ -158,8 +194,11 @@ function saveSquares(square, parentDiv) {
     figureInfo.image.src = figureImg_src;
 
 
+    //put all the info in slideInfo.
     slideInfo.push(figureInfo);
 }
+
+//open resotred data, currently using localStorage 
 function open() {
     let parentDiv = document.getElementById('slideMiddle');
     let figures_string = localStorage.getItem("storage_figures");
@@ -167,7 +206,10 @@ function open() {
 
     console.log(figures_json);
 
+    //loop through all the data we just got
     for (let i = 0; i < figures_json.length; i++) {
+
+        //case of square information >> call the recallSquares for opening speicifically squares
         if (figures_json[i].type == "square") {
             recallSquares(figures_json[i], parentDiv);
         }
@@ -177,47 +219,68 @@ function open() {
         }
     }
 }
-function recallSquares(squareInfo, parentDiv) {
-    // if slideInfo[i].type is square then
 
+//open function helper, same reason with saveSquares, to retrive squares we need specific function for open squares.
+function recallSquares(squareInfo, parentDiv) {
+
+    //making new div >> it will be square figure at the end
     let square = document.createElement("div");
     square.setAttribute("id", `square`);
 
+    /*********************************************************** */
+    /**** put the square information we just retrived ************ */
+    /*********************************************************** */
+
+    //size info
     square.style.width = squareInfo.size.width;
     square.style.height = squareInfo.size.height;
+
+    //position info
     square.style.left = squareInfo.position.left;
     square.style.top = squareInfo.position.top;
 
+    //text css
     square.style.fontSize = squareInfo.text.fontSize;
     square.style.color = squareInfo.text.fontcolor;
     square.style.textAlign = squareInfo.text.textAlign;
 
+    //square background
     square.style.backgroundImage = squareInfo.image.src;
 
+    //making handle for resizing and put it inside of square div we are making now
     let resizeHandle_square = document.createElement("div")
     resizeHandle_square.setAttribute("id", "handleResize");
     square.appendChild(resizeHandle_square);
 
+    //making text element <p> and put it inside of div
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
     textP.contentEditable = "true";
+    //put the original text info     
     textP.innerHTML = squareInfo.text.content;
     square.appendChild(textP);
 
+    //put the square we have made so far inside of parentDiv(id : slideMiddle)
     parentDiv.appendChild(square);
+
+    //add functionality(dragable, resizable) to the square we just made
     dragElement(square, parentDiv);
 
 }
 
+
+//handle all the event, drag, resize .. 
 function dragElement(elmnt, parentDiv) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
+    //always move, drag base on parentDivs offsetLeft,Top
     let parentDivLeft = parseInt(parentDiv.offsetLeft);
     let parentDivTop = parseInt(parentDiv.offsetTop);
 
     let parentDivWidth = parseInt(parentDiv.offsetWidth);
     let parentDivHeight = parseInt(parentDiv.offsetHeight);
 
+    //resize handler
     let handle = document.getElementById('handleResize');
     let handleResizeWidth = handle.clientWidth;
     let handleResizeHeight = handle.clientHeight;
@@ -242,19 +305,29 @@ function dragElement(elmnt, parentDiv) {
         let cursurPosX_inElem = Math.abs(e.clientX - elemLeft_screen); //relative posX in element
         let cursurPosY_inElem = Math.abs(e.clientY - elemTop_screen); //relative posY in element
 
-        //left top, right top, bottom left, bottom right range
+        //currently only bottom right handle is applied, if true >> resize, false >> move element
         if (
             (cursurPosX_inElem > elmnt.offsetWidth - handleResizeWidth && cursurPosX_inElem < elmnt.offsetWidth) &&
             (cursurPosY_inElem > elmnt.offsetHeight - handleResizeHeight && cursurPosY_inElem < elmnt.offsetHeight)
         ) {
+
+            //mouse release >> closeElementDrag_resize >> make all the mouseEvent val null
             document.onmouseup = closeElementDrag_resize;
+
+            //mouse move >> begin resizing
             document.onmousemove = elementDrag_resize;
         } else {
+
+            //mouse release >> closeElementDrag_move >> make all the mouseEvent val null
             document.onmouseup = closeElementDrag_move;
+
+            //mouse move >> begin dragging element
             document.onmousemove = elementDrag_move;
         }
     }
 
+
+    //resize element funtion
     function elementDrag_resize(e) {
         e = e || window.event;
         // calculate the new cursor position:
@@ -266,17 +339,18 @@ function dragElement(elmnt, parentDiv) {
         pos3 = e.clientX;
         pos4 = e.clientY;
 
+
         elmnt.style.width = (elmnt.offsetWidth + pos1) + 'px';
         elmnt.style.height = (elmnt.offsetHeight + pos2) + 'px';
     }
 
+
     function closeElementDrag_resize(e) {
-        // window.removeEventListener('mousemove', startResizing, false);
-        // window.removeEventListener('mouseup', stopResizing, false);
-        document.onmousemove = null;
         document.onmouseup = null;
+        document.onmousemove = null;
     }
 
+    //drag element function 
     function elementDrag_move(e) {
         e = e || window.event;
         // calculate the new cursor position:

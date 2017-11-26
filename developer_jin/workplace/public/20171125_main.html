@@ -21,6 +21,8 @@
     <button id="btnRecall">open</button>
     <button id="btnNewSquare">Make New Square!</button>
     <button id="btnNewSlide">New Slide</button>
+    <button id="btnTemp">tempFunc</button>
+    <button id="btnTemp2">tempFunc2</button>
 
 
     <button id="btnLogin">Login</button>
@@ -35,7 +37,11 @@
   </div>
 
   <div class="column middle">
-    <div id='slideMiddle'></div>
+    <div id='slideMiddle'style="visibility:visible"></div>
+    <!-- <div id='slideMiddle' style="visibility:hidden"></div>
+    <div id='slideMiddle' style="visibility:hidden"></div> -->
+    
+  
   </div>
 
   <div class="column side">
@@ -54,12 +60,25 @@
 </body>
 <script>
 
+  //save all the information currently the user is using, seeing
   btnSave.onclick = save;
+
+  //open(retrive) information that user stored previously
   btnRecall.onclick = open;
+
+  //making new example squares on our slide(in the middle)
   btnNewSquare.onclick = newSquare;
+
+  //make new slides
   btnNewSlide.onclick = makeNewSlide;
+
+  //testing functions, not important
+  btnTemp.onclick = tempFunc;
+  btnTemp2.onclick = tempFunc2;
+
+  //put image file from local dir inside of square(that user clicked last time)
   let btnLoadImage = document.getElementById("btnLoadImage");
-btnLoadImage.onchange = previewFiles;
+  btnLoadImage.onchange = previewFiles;
 </script>
 
 </html>

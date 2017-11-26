@@ -103,6 +103,18 @@ body, html {
     }
 } */
 
+#leftSlide:hover{
+    outline: 5px solid rgb(0, 0, 255);
+} 
+#leftSlide:focus,
+#leftSlide:active{
+    outline: 5px solid rgb(17, 16, 16);
+}
+/* 
+a:focus,
+a:active {
+    color: green;
+} */
 
 #slideMiddle {
     position: absolute;
@@ -126,7 +138,7 @@ body, html {
 }
 
 #handleResize {
-    background-color: #f1f1f1;
+    /* background-color: #f1f1f1; */
     width: 20px;
     height: 20px;
     cursor: nwse-resize;
@@ -136,5 +148,7 @@ body, html {
 }
 
 #handleResize:hover {
+    /* display: block; */
     background-color: red;
+    /* visibility: visible; */
 }
