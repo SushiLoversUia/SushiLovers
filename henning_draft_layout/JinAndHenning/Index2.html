@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="editorStyle.css">
+  <script type="text/javascript" src="buttons.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Document</title>
+
+</head>
+<body>
+  <div id='whiteBoard' style="">
+    <div id="ribbon">
+      <button id="newText">New textBox</button>
+      <button id="boldButton" title="Bold"><strong>B</strong></button>
+      <button id="italicButton" title="Italic"><em>I</em></button>
+      <button id="underLine" name="button" style="text-decoration: underline">U</button>
+      <button id="supButton" title="SuperScript">X<sup>2</sup></button>
+      <button id="subButton" title="SubScript">X<sub>2</sub></button>
+      <select id="fontChange">
+          <optgroup id="fonts" label="Font Style">
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Calibri">Calibri</option>
+            <option value="Lucida Sans">Lucida Sans</option>
+            <option value="Optima">Optima</option>
+            <option value="Bodoni">Bodoni</option>
+            <option value="Futura">Futura</option>
+            <option value="Comic Sans">Comic Sans</option>
+        </optgroup>
+      </select>
+      <select id="fontSize">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+      </select>
+      <input type="color" id="fontColorButton"  style="width: 20px;">
+      <input type="color" id="hightlightButton" value="#ffffff" style="width: 20px;">
+      <button id="unorderedListButton">&bull;</button>
+      <button id="orderedListButton">123</button>
+      <button id="linkButton">Link</button>
+      <button id="unlinkButton">Unlink</button>
+      <button id="undoButton">&larr;</button>
+      <button id="redoButton">&rarr;</button>
+      <br>
+      <Input id="addImg" type=file>
+
+      <button id="alignLeft">Align Left</button>
+      <button id="alignCenter">Align Center</i></button>
+      <button id="alignRight">Align Right</i></button>
+
+    </div>
+    <div id="textArea">
+      <iframe frameborder="0" id="myFrame" name="myFrame">
+      </iframe>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+
+//Give differrent font-options its own font
+
+  var fonts = document.querySelectorAll("#fonts > option");
+  console.log(fonts)
+  for(var i = 0; i < fonts.length; i++){
+      fonts[i].style.fontFamily = fonts[i].value;
+  }
+
+//CSS for iframe
+
+  var cssLink = document.createElement("link");
+  cssLink.href = "styleFrame.css";
+  cssLink.rel = "stylesheet";
+  cssLink.type = "text/css";
+
+  frames['myFrame'].document.body.appendChild(cssLink);
+</script>
+
+
+<script type="text/javascript" src="script1.js">
+
+
+
+
+</script>
+
+</html>
