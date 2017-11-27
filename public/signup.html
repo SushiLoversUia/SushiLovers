@@ -12,14 +12,17 @@
         <div class="login-page">
             <div class="form">
                 <h1 id="title-regis">Presentation Application Account</h1>
-                    <input id="username" type="text" placeholder="Username *" onchange="isFieldsOk()" maxlength="20"/>
-                    <input id="password" type="password" placeholder="Password *" onchange="isFieldsOk()" maxlength="15"/>
-                    <input id="fullname" type="text" placeholder="Full name *" onchange="isFieldsOk()" maxlength="100"/>
-                    <input id="email" type="text" placeholder="email address *" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"/>
-                    <div id="wrongcreds"></div>
-                    <button onClick="checkUser()">create</button>
-                    <p class="message">Already registered? <a href="index.html">Sign In</a></p>
-                    <p class="message">* Required field</p>
+                <input id="username" type="text" placeholder="Username *" onchange="isFieldsOk()" maxlength="20"/>
+                <input id="password" type="password" placeholder="Password *" onchange="isFieldsOk()" maxlength="15"/>
+                <input id="fullname" type="text" placeholder="Full name *" onchange="isFieldsOk()" maxlength="100"/>
+                <input id="email" type="text" placeholder="email address *" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"/>
+                <label id="labelavatar" for="avatar">Choose your avatar (optionnal)</label>
+                <input id="avatar" type="file" onchange="getMyFile()">
+                <canvas id="image" width="270" height="150"></canvas>
+                <button onClick="checkUser()">create</button>
+                <div id="wrongcreds"></div>
+                <p class="message">Already registered? <a href="index.html">Sign In</a></p>
+                <p class="message">* Required field</p>
             </div>
         </div>
     </body>
@@ -30,8 +33,34 @@
         var password = document.getElementById("password");
         var fullname = document.getElementById("fullname");
         var email = document.getElementById("email");
+        var img = new Image();
         var checkId;
         var checkEmail;
+
+        //getMyFile : function to get the image which is loaded in the input file
+        function getMyFile() {
+            var file = document.getElementById("avatar").files[0];
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                showMyPic(reader.result);
+            }
+            
+            reader.readAsDataURL(file);
+        }
+        //showMyPic : function to display a preview of the avatar selected
+        function showMyPic(result) {
+            
+            img.onload = function() {
+                var can = document.getElementById("image");
+                var ctx = can.getContext("2d");
+                can.style.display = "inline";
+                ctx.drawImage(img,0,0,270,150);
+                imgData = ctx.getImageData(0,0,can.width,can.height);
+                dataurl = can.toDataURL();
+            };
+            img.src = result;
+        }
         
         //isItEnter : function to login the user if he press enter on the field input password
         function isItEnter(e) {
@@ -118,7 +147,8 @@
                         loginname:username.value, 
                         password:password.value,
                         fullname:fullname.value,
-                        email:email.value
+                        email:email.value,
+                        avatar:img.src
                     });
 
                     var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users";
@@ -134,14 +164,16 @@
                 {
                     //Say that the user can not use this username
                     username.style.background = "rgb(241, 196, 15)";
-                    document.getElementById("wrongcreds").style.marginBottom = "10%";
+                    document.getElementById("wrongcreds").style.marginBottom = "5%";
+                    document.getElementById("wrongcreds").style.marginTop = "5%";
                     document.getElementById("wrongcreds").innerHTML = "The username already exist, pick a new one!";
                 }
                 else if(checkId && !checkEmail)
                 {
                    //Say that the user can not use this email adress
                     email.style.background = "rgb(241, 196, 15)";
-                    document.getElementById("wrongcreds").style.marginBottom = "10%";
+                    document.getElementById("wrongcreds").style.marginBottom = "5%";
+                    document.getElementById("wrongcreds").style.marginTop = "5%";
                     document.getElementById("wrongcreds").innerHTML = "The email adress already exist, pick a new one!"; 
                 }
                 else
@@ -149,7 +181,8 @@
                     //Say that the user can not use this username and this email adress
                     username.style.background = "rgb(241, 196, 15)";
                     email.style.background = "rgb(241, 196, 15)";
-                    document.getElementById("wrongcreds").style.marginBottom = "10%";
+                    document.getElementById("wrongcreds").style.marginBottom = "5%";
+                    document.getElementById("wrongcreds").style.marginTop = "5%";
                     document.getElementById("wrongcreds").innerHTML = "The username and email adress already exist, pick a new one!";
                 }
             }
@@ -175,3 +208,6 @@
         
     </script>
 </html>
+
+
+

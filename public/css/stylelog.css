@@ -61,3 +61,15 @@ body {
     text-align: left;
     font-size: 14px;
 }
+#avatar{
+    padding: 0px;
+    margin-top: 15px;
+}
+#labelavatar{
+    font-family: "Roboto", sans-serif;
+    color: grey;
+    font-size: 14px;
+}
+#image{
+    display: none;
+}

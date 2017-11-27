@@ -25,8 +25,9 @@ app.post('/', bodyParser, function(req,res) {
     var passw = bcrypt.hashSync(upload.password);
     var fullname = upload.fullname;
     var email = upload.email;
+    var avatar = upload.avatar;
 
-    client.query('INSERT INTO account(userid,userpassw,fullname,email) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fullname + '\',\'' + email + '\');', (err, resu) => {
+    client.query('INSERT INTO account(userid,userpassw,fullname,email,avatar) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fullname + '\',\'' + email + '\',\'' + avatar + '\');', (err, resu) => {
         if (err) throw err;
 
         //create the token        
@@ -37,13 +38,11 @@ app.post('/', bodyParser, function(req,res) {
     });
 });
 
-/*  "/api/users/user/"
-*   GET : find a single user by ID
-*   PUT : update a user by ID
-*   DELETE : delete a user by ID
+/*  "/api/users/user"
+*   GET : find a single user by userid
 */
 
-app.get('/user/', bodyParser, function(req,res) {
+app.get('/user/', function(req,res) {
     var strquery;
     var msg1;
     var msg2;
@@ -71,37 +70,36 @@ app.get('/user/', bodyParser, function(req,res) {
     });
 });
 
-app.put('/user/', bodyParser, function(req,res) {
-    var upload = JSON.parse(req.body);
-    var userid = upload.loginname;
-    var fullname = upload.fullname;
-    var passw = bcrypt.hashSync(upload.password);
-    var email = upload.email;
-    var tok = req.query['token'];
-    var strquery;
+/* "api/users/user/avatar"
+*   GET : find avatar data
+*   PUT : update user's avatar
+*/
 
-    if(passw != "")
-        strquery = 'UPDATE account SET userpassw=\'' + passw + '\',fullname=\'' + fullname + '\',email=\'' + email + '\' WHERE userid=\'' + userid + '\';';
-    else
-        strquery = 'UPDATE account SET fullname=\'' + fullname + '\',email=\'' + email + '\' WHERE userid=\'' + userid + '\';';
+app.get('/user/avatar/', function(req, res) {
+    var strquery = 'SELECT avatar FROM account WHERE userid=\'' + req.query['userid'] + '\';';
     
-    client.query(strquery, (err, resu) => {
+    client.query(strquery, (err, result) => {
         if (err) throw err;
         
-        res.status(200).json({loginname: userid, fullname: fullname, email: email, token: tok});
+        if(result.rows <= 0)
+            res.status(403).json({avatar: ""});
+        else
+            res.status(200).json({avatar: result.rows[0].avatar});
     });
 });
 
-app.delete('/user/', bodyParser, function(req,res) {
+app.put('/user/avatar/', bodyParser, function(req, res) {
     var upload = JSON.parse(req.body);
     var userid = upload.loginname;
-
-    client.query('DELETE FROM account WHERE userid=\'' + userid + '\';', (err, result) => {
+    var avatar = upload.avatar;
+    var strquery = 'UPDATE account SET avatar=\'' + avatar + '\' WHERE userid=\'' + userid + '\';'
+    
+    client.query(strquery, (err, result) => {
         if (err) throw err;
-
-        res.status(200).json({ message: 'Succesfully deleted' });
-    });
-});
+        
+        res.status(200).json({msg: "Your avatar has been updated"});
+    })
+})
 
 /* "/api/users/auth"
 *   POST : authenticate a user
@@ -143,9 +141,7 @@ app.post('/auth', bodyParser, function(req,res) {
     });
 });
 
-/* Dashboard access */
-
-//Authorize all dashboard‐endpoints ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//Authorize all endpoints below
 app.use(function (req, res, next) {
     //get the token from the URL‐variable named 'token'
     var token = req.query['token'];
@@ -164,6 +160,45 @@ app.use(function (req, res, next) {
     }
     next(); //we have a valid token ‐ go to the requested endpoint 
 });
+
+/*  "/api/users/user/"
+*   PUT : update a user by userid
+*   DELETE : delete a user by userid
+*/
+
+app.put('/user/', bodyParser, function(req,res) {
+    var upload = JSON.parse(req.body);
+    var userid = upload.loginname;
+    var fullname = upload.fullname;
+    var passw = upload.password;
+    var email = upload.email;
+    var tok = req.query['token'];
+    var strquery;
+
+    if(passw != "")
+        strquery = 'UPDATE account SET userpassw=\'' + bcrypt.hashSync(passw) + '\',fullname=\'' + fullname + '\',email=\'' + email + '\' WHERE userid=\'' + userid + '\';';
+    else
+        strquery = 'UPDATE account SET fullname=\'' + fullname + '\',email=\'' + email + '\' WHERE userid=\'' + userid + '\';';
+    
+    client.query(strquery, (err, resu) => {
+        if (err) throw err;
+        
+        res.status(200).json({loginname: userid, fullname: fullname, email: email, token: tok});
+    });
+});
+
+app.delete('/user/', bodyParser, function(req,res) {
+    var upload = JSON.parse(req.body);
+    var userid = upload.loginname;
+
+    client.query('DELETE FROM account WHERE userid=\'' + userid + '\';', (err, result) => {
+        if (err) throw err;
+
+        res.status(200).json({ message: 'Succesfully deleted' });
+    });
+});
+
+/* Dashboard access */
 
 app.get('/dashboard', function(req, res) {
     res.status(200).redirect('https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html');

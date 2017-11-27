@@ -98,9 +98,9 @@ body {
 }
 #deleteBtn{
     background-color: red;
+    margin-top: 10%;
 }
-
-
-
-
+#image{
+    display: none;
+}
 
