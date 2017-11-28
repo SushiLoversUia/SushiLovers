@@ -34,12 +34,6 @@
         background-color: red;
     }
 
-    img {
-        width: 100%;
-        /* or any custom size */
-        height: 100%;
-        object-fit: contain;
-    }
 </style>
 
 <body>
@@ -94,11 +88,8 @@
         }
         if (files) {
             [].forEach.call(files, readAndPreview);
-
         }
     }
-
-
     function newSquare() {
         let parentDiv = document.getElementById('container');
 
@@ -130,7 +121,7 @@
         parentDiv.appendChild(square);
         dragElement(square, parentDiv);
     }
-    //save all info about
+    //save all info about 
     function save() {
         console.log("you just clicked save button!");
 
@@ -375,15 +366,15 @@
         </div> -->
 
 
-<!--                 let figures = `<div id=${slideInfo[i].type}
-                                    style="width :${slideInfo[i].size.width};
+<!--                 let figures = `<div id=${slideInfo[i].type} 
+                                    style="width :${slideInfo[i].size.width}; 
                                            height:${slideInfo[i].size.height};
-                                           left:${slideInfo[i].position.left};
+                                           left:${slideInfo[i].position.left}; 
                                            top:${slideInfo[i].position.top};
                                            fontSize:${slideInfo[i].text.fontSize};
                                            color:${slideInfo[i].text.fontcolor};
-                                           textAligh:${slideInfo[i].text.textAlign};">
-                                    <div id="handleResize"><div>
+                                           textAligh:${slideInfo[i].text.textAlign};">   
+                                    <div id="handleResize"><div>  
                                     <p id="text" contentEditable="true">${slideInfo[i].text.content}</p>
                                </div>`
  -->

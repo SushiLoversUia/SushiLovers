@@ -22,6 +22,7 @@
                             <p id="my-profil-settings-label-p">Password: </p>
                             <p id="my-profil-settings-label-p">Confirm password: </p>
                             <p id="my-profil-settings-label-p">Email: </p>
+                            <p id="my-profil-settings-label-p">Avatar: </p>
                         </div>
                         <div id="my-profil-settings-data">
                             <p id="username"></p>
@@ -29,6 +30,8 @@
                             <input id="inpPassword" type="password" placeholder="*5 characters minimum*" onchange="isFieldsOk()" maxlength="15"/>
                             <input id="inpConfPassword" type="password" placeholder="*The same password is required*" onchange="isFieldsOk()" maxlength="15"/>
                             <input id="inpEmail" placeholder="*It can not be empty*" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"/>
+                            <input id="inpAvatar" type="file" onchange="getMyFile()"/>
+                            <canvas id="image"></canvas>
                         </div>
                     </div>
                 </div>
@@ -41,6 +44,7 @@
                             <h1>Here is all my prezzzz</h1>
                         </div>
                     </div>
+                    <button id="deleteBtn" onClick="deleteUserAccount()">Delete my account</button>
             </div>
         </div>
     </body>
@@ -54,11 +58,50 @@
         username.innerHTML = JSON.parse(localStorage.getItem("logindata")).loginname;
         var fullname = document.getElementById("inpFullname");
         fullname.value = JSON.parse(localStorage.getItem("logindata")).fullname;
-        document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value;
         var password = document.getElementById("inpPassword");
         var confpass = document.getElementById("inpConfPassword");
         var email = document.getElementById("inpEmail");
         email.value = JSON.parse(localStorage.getItem("logindata")).email;
+        var img = new Image();
+        getMyAvatar();
+        //getMyAvatar : function to retrieve avatar data in database
+        function getMyAvatar() {
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/avatar/?userid=" + username.textContent;
+            
+            superfetch(url, "json", succAvatar, errorAvatar);
+        }
+        //Success avatar
+        function succAvatar(data) {
+            document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value + "               <img id=\"avatar\" src=\"" + data.avatar + "\" width=\"30px\">";
+        }
+        //Error avatar
+        function errorAvatar(data) {
+            document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value + "               <img src=\"pictures/avatardefault.jpeg\" width=\"30px\">";
+        }
+        //getMyFile : function to get the image which is loaded in the input file
+        function getMyFile() {
+            var file = document.getElementById("inpAvatar").files[0];
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                showMyPic(reader.result);
+            }
+            
+            reader.readAsDataURL(file);
+        }
+        //showMyPic : function to display a preview of the avatar selected
+        function showMyPic(result) {
+            
+            img.onload = function() {
+                var can = document.getElementById("image");
+                var ctx = can.getContext("2d");
+                can.style.display = "inline";
+                ctx.drawImage(img,0,0,270,150);
+                imgData = ctx.getImageData(0,0,can.width,can.height);
+                dataurl = can.toDataURL();
+            };
+            img.src = result;
+        }
         //isItEnter : function to login the user if he press enter on the field input password
         function isItEnter(e) {
             if(e.keyCode == 13)
@@ -121,6 +164,14 @@
                 return true;
             return false;
         }
+        //isAvatar : function check if the user want to update his avatar
+        function isAvatar() {
+            var file = document.getElementById("inpAvatar").files[0];
+
+            if(file == undefined)
+                return false;
+            return true;
+        }
         //checkUser : function to check if the email respect the regex and if it is not already in the database
         function checkEmail() {
             if(email.style.background == "rgb(46, 204, 113)")
@@ -158,7 +209,7 @@
                 });
                 var token = JSON.parse(localStorage.getItem("logindata")).token;
                 var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?token=" + token;
-                
+
                 var cfg = {
                     method: "PUT",            
                     body: upload,
@@ -169,7 +220,33 @@
             else if(!isFieldsFullWhite())
             {
                 alert("A required fiedl is empty or you made something wrong and extremly bad!");
+                document.getElementById("wrongmail").style.marginBottom = "0%";
+                document.getElementById("wrongmail").innerHTML = "";
             }
+            if(isAvatar())
+            {
+                var upload = JSON.stringify({
+                    loginname:username.textContent,
+                    avatar:img.src
+                })
+                var token = JSON.parse(localStorage.getItem("logindata")).token;
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/avatar/";
+                var cfg = {
+                    method: "PUT",
+                    body: upload
+                }
+                superfetch(url, "json", succAv, errorAv, cfg);
+            }
+        }
+        //Success avatar
+        function succAv(data) {
+            console.log(data);
+            window.location.reload(true);
+        }
+        //Error avatar
+        function errorAv(err) {
+            console.log(err);
+            alert("Your avatar is too large, please select another or resize it");
         }
         //success --------------------------------------
         function succ(data) {
@@ -184,12 +261,36 @@
         function error(err) {
             console.log(err.msg);
         }
-        // Logout
+        //Logout
         function logout() {
             localStorage.clear();
             window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/";
         }
-        
+        //Delete User Account
+        function deleteUserAccount() {
+            if(confirm("You are about to delete your account, this operation can not be canceled, are you sure ?"))
+            {
+                var upload = JSON.stringify({
+                    loginname: username.textContent
+                })
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/";
+                var cfg = {
+                    method: "DELETE",
+                    body: upload,
+                }
+                
+                superfetch(url, "json", succDelete, errorDelete, cfg);
+            }
+        }
+        //Success delete account
+        function succDelete(data) {
+            console.log(data);
+            logout();
+        }
+        //Error delete account
+        function errorDelete(data) {
+            console.log(data);
+        }
     </script>
 </html>
 

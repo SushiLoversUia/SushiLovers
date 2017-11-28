@@ -29,10 +29,7 @@ jinho:
 	I want to have different modes when i show my presentation to other people so that they can only focus on my presentation.
 
 arnaud:
-<<<<<<< HEAD
-=======
 
->>>>>>> cc26b8a8ab1e482f3597d683c494d1753cd99cca
 	As a financial worker, i have to show lot of graphics and diagrams to co-workers and clients.
 	I want to show the health of the enterprise and the variations of the budget.
 	I want to show in a good way, how to make the enterprise growing-up.
@@ -41,7 +38,3 @@ arnaud:
 	As a project manager, i always have to present the main purpose of a project and the customer needs.
 	I want to enumerate all the tasks we need to do.
 	I want to show the time, the budget and the constraints to respect to my team.
-<<<<<<< HEAD
-
-=======
->>>>>>> cc26b8a8ab1e482f3597d683c494d1753cd99cca

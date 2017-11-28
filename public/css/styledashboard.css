@@ -96,8 +96,11 @@ body {
     text-align: left;
     font-size: 14px;
 }
-
-
-
-
+#deleteBtn{
+    background-color: red;
+    margin-top: 10%;
+}
+#image{
+    display: none;
+}
 
