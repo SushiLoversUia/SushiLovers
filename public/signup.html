@@ -23,7 +23,7 @@
             </div>
         </div>
     </body>
-    
+
     <script>
 
         var username = document.getElementById("username");
@@ -31,8 +31,8 @@
         var fullname = document.getElementById("fullname");
         var email = document.getElementById("email");
         var checkId;
-        var checkEmail;
-        
+        var checkEmail; 
+
         //isItEnter : function to login the user if he press enter on the field input password
         function isItEnter(e) {
             if(e.keyCode == 13)
@@ -79,7 +79,7 @@
         }
         // checkUserid : function to check if the username already exist in the database or not
         function checkUser() {
-            
+
             var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?userid=" + username.value;
             var url2 = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?email=" + email.value;
 
@@ -115,7 +115,7 @@
                 if(checkId && checkEmail)
                 {
                     var upload = JSON.stringify({
-                        loginname:username.value, 
+                        loginname:username.value,
                         password:password.value,
                         fullname:fullname.value,
                         email:email.value
@@ -124,7 +124,7 @@
                     var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users";
 
                     var cfg = {
-                        method: "POST",            
+                        method: "POST",
                         body: upload,
                     }
 
@@ -142,7 +142,7 @@
                    //Say that the user can not use this email adress
                     email.style.background = "rgb(241, 196, 15)";
                     document.getElementById("wrongcreds").style.marginBottom = "10%";
-                    document.getElementById("wrongcreds").innerHTML = "The email adress already exist, pick a new one!"; 
+                    document.getElementById("wrongcreds").innerHTML = "The email adress already exist, pick a new one!";
                 }
                 else
                 {
@@ -162,7 +162,7 @@
         //success insert
         function succ(data) {
             console.log(data);
-            //save logindata/token to localStorage 
+            //save logindata/token to localStorage
             localStorage.setItem("logindata", JSON.stringify(data));
             //redirect user to the main page
             var token = JSON.parse(localStorage.getItem("logindata")).token;
@@ -172,6 +172,6 @@
         function error(err) {
             console.log(err);
         }
-        
+
     </script>
 </html>
