@@ -22,7 +22,7 @@ function dragElement(elmnt, parentDiv) {
     function mouseDown(e) {
 
         lastClickedElem = elmnt;
-
+        flag_focusingElem = "figure";
         let eleLeft = parseInt(elmnt.offsetLeft);
         let eleTop = parseInt(elmnt.offsetTop);
         let elemLeft_screen = eleLeft + parentDivLeft;//element top posY from  whole screen

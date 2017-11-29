@@ -20,6 +20,8 @@ function previewFiles() {
 
                 //put the image user just clicked inside of last clicked squares
                 lastClickedElem.style.backgroundImage = `url(${image.src})`;
+                flag_focusingElem = "figure";
+            
             }, false);
             reader.readAsDataURL(file);
         }

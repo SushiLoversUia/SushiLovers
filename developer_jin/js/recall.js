@@ -8,6 +8,11 @@ function recall() {
         deletePresentation_html();
         recallPresentation();
     } else { }
+
+    //if you open stored presentation, all the clicked flags have to be reset
+    lastClickedElem = null;
+    lastClicked_LeftSlide = null;
+    lastClicked_MiddleSlide = null;
 }
 
 function recallPresentation() {
@@ -35,19 +40,11 @@ function recallPresentation() {
         //should hide all the slides before making new slides
         hideAllSlides();
 
-        lastClicked_LeftSlide = leftSlide;
-        lastClicked_MiddleSlide = newSlideMiddle;
 
         function showOnMiddle_recall() {
-            //always have to keep the last clicekd slide >> show it to user.
-            lastClicked_LeftSlide = leftSlide;
-            lastClicked_MiddleSlide = newSlideMiddle;
             // make invisible all the slides
             hideAllSlides();
 
-            // console.log("here is showOnMiddle function working");
-            // console.log(lastClicked_LeftSlide);
-            // console.log(lastClicked_MiddleSlide);
             newSlideMiddle.style.visibility = "visible";
             // make visible only one slide, user clicked last time
 
@@ -148,8 +145,6 @@ function firstSlideVisible() {
 
     let firstMiddleSlide = getNthMiddleSlide(0);
     firstMiddleSlide.style.visibility = "visible";
-    lastClicked_LeftSlide = getNthLeftSlide(0);
-    lastClicked_MiddleSlide = getNthMiddleSlide(0);
 }
 
 function makeDragaable() {

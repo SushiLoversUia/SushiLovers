@@ -4,7 +4,7 @@
 
 
 <head>
-  <title>ABC</title>
+  <title>presentation workplace</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="..\css\main.css">
@@ -19,7 +19,7 @@
   <script src="..\js\recall.js"></script>
 
   <script src="..\js\full-screen.js"></script>
-
+  <script src="..\js\key-control.js"></script>
 
 </head>
 
@@ -59,14 +59,30 @@
 
 
 
+  /*******************************************************************/
+  // all the flags, they have to match with resetFlags function
+  /*******************************************************************/
 
   let lastClickedElem = null;
-  let squareCnt = 0;
 
   //make it clear what slide you are working on
   let lastClicked_LeftSlide = null;
   let lastClicked_MiddleSlide = null;
+
+  let squareCnt = 0;
   let slideCnt = 0;
+
+  //when we delete, need to decide what to delete >> ex) slide or figures
+  // ex) figure, slide .. 
+  let flag_focusingElem = null;
+
+  /********************************************************************/
+  /********************************************************************/
+  /********************************************************************/
+
+
+
+
 
 
   //save all the information currently the user is using, seeing
@@ -90,10 +106,12 @@
   btnPresentation.onclick = presentationMode;
   document.onkeydown = keyEvent;
 
+  //need one at least one slide always
   makeNewSlide();
-  newSquare();
-  newSquare();
 
+
+  newSquare();
+  newSquare();
   // newSquare();
   // newSquare();
 
@@ -108,13 +126,6 @@
   // newSquare();
   // newSquare();
 
-    // console.log(getNthLeftSlide(0));
-    // console.log(getNthLeftSlide(1));
-    // console.log(getNthLeftSlide(2));
-
-    // console.log(getNthMiddleSlide(0));
-    // console.log(getNthMiddleSlide(1));
-    // console.log(getNthMiddleSlide(2));
 </script>
 
 </html>

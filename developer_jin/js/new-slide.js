@@ -22,7 +22,7 @@ function makeNewSlide() {
     slideCnt++;
     leftSlide.innerHTML = `${slideCnt}`;
     parentDiv_midColLeft.appendChild(leftSlide);
-    leftSlide.onclick = showOnMiddle_save;
+    leftSlide.onclick = showOnMiddle;
 
     //should hide all the slides before making new slides
     hideAllSlides();
@@ -36,22 +36,20 @@ function makeNewSlide() {
 
     lastClicked_LeftSlide = leftSlide;
     lastClicked_MiddleSlide = middleSlide;
+    flag_focusingElem = "slide";
 
     //below is working on totally different condition, put inside of this function just because they have to share elements (left slide, middle slide connection)
     //should hide all the other slides first, 
-    function showOnMiddle_save() {
+    function showOnMiddle() {
 
         //always have to keep the last clicekd slide >> show it to user.
         lastClicked_LeftSlide = leftSlide;
         lastClicked_MiddleSlide = middleSlide;
+        flag_focusingElem = "slide";
+    
         // make invisible all the slides
         hideAllSlides();
-
-        // console.log("here is showOnMiddle function working");
-        // console.log(lastClicked_LeftSlide);
-        // console.log(lastClicked_MiddleSlide);
         middleSlide.style.visibility = "visible";
-        // make visible only one slide, user clicked last time
 
     }
 
