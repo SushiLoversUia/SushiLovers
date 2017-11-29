@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="..\css\main.css">
   <script src="..\js\drag.js"></script>
   <script src="..\js\slide-tool.js"></script>
+  <script src="..\js\square-tool.js"></script>
   <script src="..\js\add-image.js"></script>
   <script src="..\js\new-square.js"></script>
   <script src="..\js\new-slide.js"></script>
@@ -42,7 +43,7 @@
 
     <button id="btnLogin">Login</button>
     <button id="btnSignup">Sign Up</button>
-    <input id="btnLoadImage" type="file" multiple>
+    <input id="btnLoadImage" type="file" multiple name="images">
   </div>
   <!-- middle row -->
 
@@ -81,6 +82,8 @@
   // ex) figure, slide .. 
   let flag_focusingElem = null;
 
+  //style.zIndex max : 2147483648(32bit) >> assume no bug  
+  let flag_zIndex = 0;
   /********************************************************************/
   /********************************************************************/
   /********************************************************************/
@@ -97,14 +100,14 @@
   btnRecall.onclick = recall;
 
   //making new example squares on our slide(in the middle)
-  btnNewSquare.onclick = newSquare;
+  btnNewSquare.onclick = makeNewSquare;
   btnNewtextbox.onclick = newTextbox;
   //make new slides
   btnNewSlide.onclick = makeNewSlide;
 
   //put image file from local dir inside of square(that user clicked last time)
   let btnLoadImage = document.getElementById("btnLoadImage");
-  btnLoadImage.onchange = previewFiles;
+  btnLoadImage.onchange = putImageFiles;
 
   //presentation mode button, full-screen.js
 
@@ -119,13 +122,14 @@
 
   //need one at least one slide always
   makeNewSlide();
-  newSquare();
-  newSquare();
-  newSquare();
+  makeNewSquare();
+  makeNewSquare();
+  makeNewSquare();
+
   makeNewSlide();
-  newSquare();
-  newSquare();
-  newSquare();
+  makeNewSquare();
+  makeNewSquare();
+  makeNewSquare();
 
   hideAllSlides();
   makeVisible_NthSlide(0);

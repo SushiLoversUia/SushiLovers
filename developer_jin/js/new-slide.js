@@ -1,18 +1,7 @@
 'use strict';
 
 
-//make presentation info structure >> store user info as well..?
-function hideAllSlides() {
-    let colMiddle = document.getElementById("midColCenter");
-    let childNodes = colMiddle.childNodes;
 
-    for (let i = 0; i < childNodes.length; i++) {
-        if (childNodes[i].id === "slideMiddle") {
-            // console.log(childNodes[i]);
-            childNodes[i].style.visibility = "hidden";
-        }
-    }
-}
 function makeNewSlide() {
 
     //making left slide, and put it in the leftSlide(parentDiv) 

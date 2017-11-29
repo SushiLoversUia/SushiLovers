@@ -1,11 +1,8 @@
 'use strict';
 
 
-// https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
-// there is code for reading only one image as well.
 //to put image data inside of figure(currently only square)
-//currently we could choose mutliple pictures, but no big problem
-function previewFiles() {
+function putImageFiles() {
     let files = document.querySelector('input[type=file]').files;
 
     function readAndPreview(file) {
@@ -18,10 +15,11 @@ function previewFiles() {
                 image.title = file.name;
                 image.src = this.result;
 
+                let newSquare = makeNewSquare();
                 //put the image user just clicked inside of last clicked squares
-                lastClickedElem.style.backgroundImage = `url(${image.src})`;
+                newSquare.style.backgroundImage = `url(${image.src})`;
                 flag_focusingElem = "figure";
-            
+
             }, false);
             reader.readAsDataURL(file);
         }
