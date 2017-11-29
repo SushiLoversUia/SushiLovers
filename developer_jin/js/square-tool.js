@@ -15,7 +15,6 @@ function getMaxZ(inputSquare) {
                 maxZ = curZ;
             }
         }
-
     }
     return maxZ;
 }

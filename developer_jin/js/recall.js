@@ -130,6 +130,7 @@ function recallSquare(squareInfo) {
     //position info
     square.style.left = squareInfo.position.left;
     square.style.top = squareInfo.position.top;
+    square.style.zIndex = squareInfo.position.zVal;
 
     //text css
     square.style.fontSize = squareInfo.text.fontSize;

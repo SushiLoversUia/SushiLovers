@@ -22,11 +22,15 @@ function dragElement(elmnt, parentDiv) {
     function mouseDown(e) {
 
         let slideHighestZ = getMaxZ(elmnt);
-        elmnt.style.zIndex = slideHighestZ+1;
-
+        let newZindex = slideHighestZ + 1;
+        elmnt.style.zIndex = newZindex;
 
         lastClickedElem = elmnt;
+        let parentSlide = elmnt.parentNode;
+        lastClicked_MiddleSlide = parentSlide;
         flag_focusingElem = "figure";
+
+
         let eleLeft = parseInt(elmnt.offsetLeft);
         let eleTop = parseInt(elmnt.offsetTop);
         let elemLeft_screen = eleLeft + parentDivLeft;//element top posY from  whole screen

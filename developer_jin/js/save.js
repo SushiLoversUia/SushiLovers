@@ -18,7 +18,7 @@ function save() {
 
     //clean up the previous local storage files
     deleteSlides_localStorage();
-    
+
     let midColCenter = document.getElementById("midColCenter");
     let slideCnt = 0;
     //storing square figures
@@ -74,7 +74,8 @@ function getSquares(square, parentDiv) {
         },
         "position": {
             "left": "",
-            "top": ""
+            "top": "",
+            "zVal": ""
         },
         "text": {
             "content": "",
@@ -100,6 +101,7 @@ function getSquares(square, parentDiv) {
     //figure position info
     let figureLeft = figure.offsetLeft / parentDivWidth * 100 + "%";
     let figureTop = figure.offsetTop / parentDivHeight * 100 + "%";
+    let figureZindex = figure.style.zIndex;
 
     //figure text info
     let figureText = figure.querySelector("#text");
@@ -112,18 +114,18 @@ function getSquares(square, parentDiv) {
 
     //figure backgroud image
     let figureImg_src = figure.style.backgroundImage;
-
-
-
     /*********************************************************** */
     /**** put info just got above in the structure ************ */
     /*********************************************************** */
+
+    
     figureInfo.type = "square";
     figureInfo.size.height = figureHeight;
     figureInfo.size.width = figureWidth;
 
     figureInfo.position.top = figureTop;
     figureInfo.position.left = figureLeft;
+    figureInfo.position.zVal = figureZindex;
 
     figureInfo.text.content = figureText_content;
     figureInfo.text.fontSize = figureText_fontSize;
