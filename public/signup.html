@@ -100,7 +100,7 @@
             else
                 email.style.background = "#2ecc71";
         }
-        //isFieldsColorOk() : function to check the background color of each field return true if all are green
+        //isFieldsColorOk : function to check the background color of each field return true if all are green
         function isFieldsColorOk() {
             if(username.style.background == "rgb(46, 204, 113)" && password.style.background == "rgb(46, 204, 113)"  && fullname.style.background == "rgb(46, 204, 113)" && email.style.background == "rgb(46, 204, 113)")
                 return true;
@@ -139,6 +139,19 @@
         }
         //button click ---------------------------------
         function createUser() {
+            var regImg = new RegExp('\.(jpe?g|png|gif)$');
+
+            if(document.getElementById("avatar").files[0] != undefined)
+            {
+                var nameFile = document.getElementById("avatar").files[0].name;
+                if(!regImg.test(nameFile))
+                {
+                    alert("Only jpeg, jpg, png and gif file can be uploded");
+                    return;
+                }
+            }
+            else
+                img.src="no avatar";
             if(isFieldsColorOk())
             {
                 if(checkId && checkEmail)

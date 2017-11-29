@@ -27,14 +27,14 @@ app.post('/', bodyParser, function(req,res) {
     var email = upload.email;
     var avatar = upload.avatar;
 
-    client.query('INSERT INTO account(userid,userpassw,fullname,email,avatar) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fullname + '\',\'' + email + '\',\'' + avatar + '\');', (err, resu) => {
+    client.query('INSERT INTO account(userid,userpassw,fullname,email,avatar) VALUES(\'' + userid + '\',\'' + passw + '\',\'' + fullname + '\',\'' + email + '\',\'' + avatar + '\') RETURNING ida;', (err, result) => {
         if (err) throw err;
 
         //create the token        
         var payload = {loginname: userid, fullname: fullname};
         var tok = jwt.sign(payload, secret, {expiresIn: "12h"});
         //send logininfo + token to the client
-        res.status(200).json({loginname: userid, fullname: fullname, email: email, token: tok}); 
+        res.status(200).json({ida: result.rows[0].ida, loginname: userid, fullname: fullname, email: email, token: tok}); 
     });
 });
 
@@ -70,6 +70,22 @@ app.get('/user/', function(req,res) {
     });
 });
 
+/*   "/api/users/user/id
+*    GET : find a single user's id by userid
+*/
+app.get('/user/id', function(req,res) {
+    var strquery = 'SELECT ida FROM account WHERE userid=\'' + req.query['userid'] + '\';';
+    
+    client.query(strquery, (err, result) => {
+        if(err) throw err;
+        
+        if(result.rows <= 0)
+            res.status(403).json({msg: "user not found"});
+        else
+            res.status(200).json(result.rows[0].ida);
+    });
+});
+
 /* "api/users/user/avatar"
 *   GET : find avatar data
 *   PUT : update user's avatar
@@ -92,14 +108,14 @@ app.put('/user/avatar/', bodyParser, function(req, res) {
     var upload = JSON.parse(req.body);
     var userid = upload.loginname;
     var avatar = upload.avatar;
-    var strquery = 'UPDATE account SET avatar=\'' + avatar + '\' WHERE userid=\'' + userid + '\';'
+    var strquery = 'UPDATE account SET avatar=\'' + avatar + '\' WHERE userid=\'' + userid + '\';';
     
     client.query(strquery, (err, result) => {
         if (err) throw err;
         
         res.status(200).json({msg: "Your avatar has been updated"});
-    })
-})
+    });
+});
 
 /* "/api/users/auth"
 *   POST : authenticate a user
@@ -121,6 +137,7 @@ app.post('/auth', bodyParser, function(req,res) {
             return;
         } 
         else {
+            var dbida = result.rows[0].ida;
             var dbloginname = result.rows[0].userid;
             var dbpassword = result.rows[0].userpassw;
             var dbfullname = result.rows[0].fullname; 
@@ -137,7 +154,7 @@ app.post('/auth', bodyParser, function(req,res) {
         var payload = { loginname: dbloginname, fullname: dbfullname }; 
         var tok = jwt.sign(payload, secret, {expiresIn: "12h"});
         //send logininfo + token to the client
-        res.status(200).json({loginname: dbloginname, fullname: dbfullname, email: dbemail, token: tok});
+        res.status(200).json({ida: dbida, loginname: dbloginname, fullname: dbfullname, email: dbemail, token: tok});
     });
 });
 
