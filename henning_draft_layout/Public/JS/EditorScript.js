@@ -2,16 +2,13 @@
 
     let editor= document.getElementById('whiteBoard');
     let textBox;
-    let image;
-    let background;
-    let resizeHandle;
+    let resizeHandle
     let text;
     let slideInfo = [];
     //editor.designMode = "on";
 
-
 //Create new textbox
-    newText.addEventListener("click", function newBox(event){
+    newText.addEventListener("click", function(event){
 
       textBox = document.createElement("div");
       textBox.style.backgroundColor="rgba(#ffffff, 0)"
@@ -21,11 +18,9 @@
       textBox.id= "textBox";
       textBox.style.position = "absolute";
       textBox.style.whiteSpace= "pre-line";
-      textBox.style.backgroundSize= "100% 100%";
-
-    //  textBox.style.display="flex";
-      textBox.style.left = "15%";
-      textBox.style.top = "15%"
+      textBox.style.display="flex";
+      textBox.style.left = "1px";
+      textBox.style.top = "1px"
       editor.appendChild(textBox);
 
 ////////////////////////////////////////////////
@@ -57,77 +52,9 @@
       editElement(textBox);
     //  addImage(myDiv)
 
-
     })
 
 ///////////////////////////////////////////////////////////
-
-
-
-
-
-//  addImage(myDiv)
-
-function addImage(){
-
-
-  newImage = document.createElement("div");
-  newImage.style.width= "300px";
-  newImage.style.height= "70px";
-  newImage.style.backgroundSize="100% 100%";
-  newImage.style.border= "2px solid #d3d3d3";
-  newImage.id= "newImage";
-  newImage.style.position = "absolute";
-  newImage.style.whiteSpace= "pre-line";
-  newImage.style.display="flex";
-  newImage.style.left = "1px";
-  newImage.style.top = "1px"
-  editor.appendChild(newImage);
-
-////////////////////////////////////////////////
-
-  resizeHandle = document.createElement("div")
-  resizeHandle.style.backgroundColor= "#f1f1f1"
-  resizeHandle.style.width= "8px";
-  resizeHandle.style.height= "8px";
-  resizeHandle.style.cursor= "nwse-resize";
-  resizeHandle.style.position= "absolute";
-  resizeHandle.style.right= "0";
-  resizeHandle.style.bottom= "0";
-
-  resizeHandle.setAttribute("id", "handleResize");
-  newImage.appendChild(resizeHandle);
-
-  editElement(newImage);
-
-
-   let myImage = document.getElementById('addImg').files[0];
-   var reader = new FileReader();
-   reader.addEventListener("load", function(){
-         let image = new Image();
-
-        image.title = myImage.name;
-        image.src = this.result;
-        newImage.style.backgroundImage = `url(${image.src})`;
-
-   })
-   if(myImage){
-      reader.readAsDataURL(myImage);
-    }
-    else{
-    }
-
-
-}
-
-
-
-
-
-
-
-
-
 
 let active = false;
 let active2 = true;
@@ -140,11 +67,9 @@ let lastClickedElem
 
   function editElement(elmnt){
 
-    //var rect = element.getBoundingClientRect();
 
-
-    elmnt.addEventListener("mousedown", translate);
-    elmnt.addEventListener("mouseup", release);
+    textBox.addEventListener("mousedown", translate);
+    textBox.addEventListener("mouseup", release);
 
     resizeHandle.addEventListener("mousedown", resize);
 
@@ -158,10 +83,9 @@ let lastClickedElem
       curX=e.clientX;
       curY=e.clientY;
 
-      divPosX=lastClickedElem.getBoundingClientRect().x //parseInt(lastClickedElem.style.left)
-      divPosY=lastClickedElem.getBoundingClientRect().y //parseInt(lastClickedElem.style.top)
-
-
+      divPosX= parseInt(lastClickedElem.style.left)
+      divPosY=parseInt(lastClickedElem.style.top)
+      console.log()
           }
 
   editor.addEventListener("mousemove", mouseMove);
@@ -170,17 +94,11 @@ let lastClickedElem
 
     if(active && active2){
 
-      console.log("e.clientX-curX ", e.clientX-curX )
-
-      lastClickedElem.style.left= divPosX+ e.clientX-curX-editor.offsetLeft +"px";
-      lastClickedElem.style.top=  divPosY+ e.clientY-curY-editor.offsetTop +"px";
-
-        console.log("offset", textBox.offsetLeft, "divPosX", divPosX, "getbound", lastClickedElem.getBoundingClientRect().x, "curX", curX, "lastClickedElem.style.left", lastClickedElem.style.left );
+      lastClickedElem.style.left= divPosX+ e.clientX-curX +"px";
+      lastClickedElem.style.top=  divPosY+  e.clientY-curY +"px";
   }
 
   else if(active && !active2){
-
-    console.log("divSizeX", divSizeX);
 
     lastClickedElem.style.width= divSizeX+ e.clientX-curX +"px";
     lastClickedElem.style.height=  divSizeY+  e.clientY-curY +"px";
@@ -206,12 +124,30 @@ let lastClickedElem
   curX=e.clientX;
   curY=e.clientY;
 
-  divSizeX= lastClickedElem.clientWidth;
-  divSizeY= lastClickedElem.clientHeight;
+  divSizeX= parseInt(lastClickedElem.style.width)
+  divSizeY=parseInt(lastClickedElem.style.height)
 
 
   }
 
+}
+
+function addImage(){
+
+   let myImage = document.getElementById('addImg').files[0];
+   var reader = new FileReader();
+   reader.addEventListener("load", function(){
+         let image = new Image();
+
+        image.title = myImage.name;
+        image.src = this.result;
+        lastClickedElem.style.backgroundImage = `url(${image.src})`;
+   })
+   if(myImage){
+      reader.readAsDataURL(myImage);
+    }
+    else{
+    }
 }
 
 
@@ -231,7 +167,7 @@ function save() {
 }
 
 
-function saveSquares(textBox, parentDiv) {
+function saveSquares(square, parentDiv) {
 
   console.log("saveSquare")
     let parentDivHeight = parentDiv.offsetHeight;
