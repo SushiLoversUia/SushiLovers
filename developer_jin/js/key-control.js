@@ -5,7 +5,7 @@ let KEY_RIGHTARROW = 39;
 let KEY_LEFTARROW = 37;
 let KEY_UPARROW = 38;
 let KEY_DOWNARROW = 40;
-let KEY_BACKSPACE = 8;
+let KEY_DELETE = 46;
 
 function keyEvent(e) {
 
@@ -40,7 +40,7 @@ function keyEvent(e) {
             hideAllSlides();
             makeVisible_NthSlide(fullscreenIdx);
 
-            
+
             lastClicked_LeftSlide = getNthLeftSlide(fullscreenIdx);
             lastClicked_MiddleSlide = getNthMiddleSlide(fullscreenIdx);
             flag_focusingElem = "slide"
@@ -49,7 +49,7 @@ function keyEvent(e) {
         }
     }
 
-    else if (e.keyCode === KEY_BACKSPACE) {
+    else if (e.keyCode === KEY_DELETE) {
         if (flag_focusingElem === "figure") {
             deleteSquare_html();
             flag_focusingElem = null;

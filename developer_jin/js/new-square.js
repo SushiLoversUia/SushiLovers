@@ -21,7 +21,7 @@ function newSquare() {
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
     textP.contentEditable = "true";
-    textP.innerHTML = `squareCnt:${squareCnt}!`;
+    textP.innerHTML = `squareCnt:${squareCnt}`;
     squareCnt++;
     square.appendChild(textP);
 

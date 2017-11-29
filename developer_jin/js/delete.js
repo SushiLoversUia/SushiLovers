@@ -1,5 +1,3 @@
-
-
 //delete all left, middle slides 
 function deletePresentation_html() {
     console.log("clean up the previous pr")
@@ -58,6 +56,8 @@ function deleteSlide_html() {
         deleMiddleSlide.parentNode.removeChild(deleMiddleSlide);
     }
 }
+
+
 
 function resetFlags() {
     lastClickedElem = null;

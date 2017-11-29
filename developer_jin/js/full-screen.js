@@ -78,9 +78,6 @@ function presentationMode() {
 }
 
 
-function makeVisible_NthSlide(nth) {
-    getNthMiddleSlide(nth).style.visibility = "visible";
-}
 
 //user enter presentation mode >> make all zoomIn
 function allSlide_zoomIn() {
