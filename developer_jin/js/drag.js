@@ -57,7 +57,6 @@ function dragElement(elmnt, parentDiv) {
         }
     }
 
-
     //resize element funtion
     function elementDrag_resize(e) {
         e = e || window.event;

@@ -5,10 +5,9 @@ function recall() {
     //need to ask user to clean up the current presentation.
     let txt;
     if (confirm("to open other presentation you have to discard current presentation") === true) {
-        cleanupCurrentPr();
+        deletePresentation_html();
         recallPresentation();
     } else { }
-
 }
 
 function recallPresentation() {
@@ -65,31 +64,65 @@ function recallPresentation() {
     firstSlideVisible();
 }
 
+//numOfLeftSlide === numOfRightSlide  
+function getNumOfSlides() {
+
+    let slideCnt = null;
+
+    let midColLeft = document.getElementById("midColLeft");
+
+    if (midColLeft === null) {
+        slideCnt = "slideCnt error";
+    } else {
+        let leftSlides = midColLeft.childNodes;
+
+        for (let i = 0; i < leftSlides.length; i++) {
+            let leftSlide = leftSlides[i];
+            if (leftSlide.id === 'leftSlide') {
+
+                slideCnt++;
+            }
+        }
+    }
+
+    return slideCnt;
+}
+
 function getNthLeftSlide(nth) {
     let midColLeft = document.getElementById("midColLeft");
-    let leftSlides = midColLeft.childNodes;
-    let slideCnt = 0;
-
     let returnSlide = null;
 
-    for (let i = 0; i < leftSlides.length; i++) {
-        let leftSlide = leftSlides[i];
-        if (leftSlide.id === 'leftSlide') {
+    if (midColLeft === null) {
+        returnSlide = "getNthLeftSlide error";
 
-            if (slideCnt === nth) {
-                returnSlide = leftSlide;
-                break;
+    } else {
+        let leftSlides = midColLeft.childNodes;
+        let slideCnt = 0;
+
+
+        for (let i = 0; i < leftSlides.length; i++) {
+            let leftSlide = leftSlides[i];
+            if (leftSlide.id === 'leftSlide') {
+
+                if (slideCnt === nth) {
+                    returnSlide = leftSlide;
+                    break;
+                }
+                slideCnt++;
             }
-            slideCnt++;
         }
     }
 
     return returnSlide;
+
 }
 
 
 function getNthMiddleSlide(nth) {
     let midColCenter = document.getElementById("midColCenter");
+    if (midColCenter === null) {
+        return "getNthMiddleSlide error";
+    }
     let middleSlides = midColCenter.childNodes;
 
     let slideCnt = 0;
@@ -113,7 +146,7 @@ function getNthMiddleSlide(nth) {
 //should change this to get nth left slide, nth middle slide >> and change
 function firstSlideVisible() {
 
-    let firstMiddleSlide = getNthMiddleSlide(0); 
+    let firstMiddleSlide = getNthMiddleSlide(0);
     firstMiddleSlide.style.visibility = "visible";
     lastClicked_LeftSlide = getNthLeftSlide(0);
     lastClicked_MiddleSlide = getNthMiddleSlide(0);

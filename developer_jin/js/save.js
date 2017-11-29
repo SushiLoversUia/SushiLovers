@@ -1,11 +1,24 @@
 'use strict';
 
-//presentationInfo >> include all the slides info(not a single info slide!)
 
-//save all info about presentation
+/*************************************************************/
+// currently storing all the slides in each local storage file
+// ex) a user has 5 diff slides
+// local storage : 
+//     presentationInfo(with presentation name & num of slides which will be 5)
+//     slides1
+//     slides2
+//     slides3
+//     slides4
+//     slides5
+/*************************************************************/
+
+//save all info about presentation 
 function save() {
 
-
+    //clean up the previous local storage files
+    deleteSlides_localStorage();
+    
     let midColCenter = document.getElementById("midColCenter");
     let slideCnt = 0;
     //storing square figures
@@ -26,11 +39,12 @@ function save() {
     };
     presentationInfo.prName = "awesomeSlide"
     presentationInfo.numOfSlides = slideCnt;
-
-    // console.log(presentationInfo);
-    localStorage.setItem('presentationInfo',JSON.stringify(presentationInfo));
+    localStorage.setItem('presentationInfo', JSON.stringify(presentationInfo));
 }
 
+
+
+//input : slide(based on html slide), output : all the slide info of input in json format
 function getSlide(curSlide) {
     //currently childNodes are only squares
     let childNodes = curSlide.childNodes;
@@ -43,10 +57,9 @@ function getSlide(curSlide) {
         }
     }
     return slideInfo;
-    // let slideInfo_string = JSON.stringify(slideInfo)
-    // return slideInfo_string;
 }
 
+//input : square(based on html square), output : all the square info of input in json format
 function getSquares(square, parentDiv) {
     let parentDivHeight = parentDiv.offsetHeight;
     let parentDivWidth = parentDiv.offsetWidth;
