@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="..\css\main.css">
   <script src="..\js\drag.js"></script>
+  <script src="..\js\slide-tool.js"></script>
   <script src="..\js\add-image.js"></script>
   <script src="..\js\new-square.js"></script>
   <script src="..\js\new-slide.js"></script>
@@ -35,6 +36,10 @@
     <button id="btnNewSlide">New Slide</button>
     <button id="btnPresentation">Presentation Mode</button>
     <button id="btnNewtextbox">Make New text box</button>
+
+    <button id="btnDelete_square">delete square</button>
+    <button id="btnDelete_slide">delete slide</button>
+
     <button id="btnLogin">Login</button>
     <button id="btnSignup">Sign Up</button>
     <input id="btnLoadImage" type="file" multiple>
@@ -106,25 +111,25 @@
   btnPresentation.onclick = presentationMode;
   document.onkeydown = keyEvent;
 
+
+  //backspace delete >> has bug, can't differentiate with text editing
+  btnDelete_square.onclick = deleteSquare_html;
+  btnDelete_slide.onclick = deleteSlide_html;
+
+
   //need one at least one slide always
   makeNewSlide();
-
-
   newSquare();
   newSquare();
-  // newSquare();
-  // newSquare();
-
+  newSquare();
   makeNewSlide();
   newSquare();
-  // newSquare();
-  // newSquare();
+  newSquare();
+  newSquare();
 
+  hideAllSlides();
+  makeVisible_NthSlide(0);
 
-  // makeNewSlide();
-  // newSquare();
-  // newSquare();
-  // newSquare();
 
 </script>
 
