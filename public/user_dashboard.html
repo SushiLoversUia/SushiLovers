@@ -395,9 +395,12 @@
         }
         //localStorClean : function to clean presentation data
         function localStoClean() {
-            var nbSlide = JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides;
-            for(i=0; i<nbSlide; i++)
-                localStorage.removeItem('slide' + i);
+            if(localStorage.getItem('presentationInfo') != null)
+            {
+                var nbSlide = JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides;
+                for(i=0; i<nbSlide; i++)
+                    localStorage.removeItem('slide' + i);
+            }
         }
         //Delete User Account
         function deleteUserAccount() {
