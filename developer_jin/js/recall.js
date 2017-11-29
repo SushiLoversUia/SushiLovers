@@ -1,30 +1,34 @@
 'use strict';
 
-
 //open resotred data, currently using localStorage 
 function recall() {
-    let retrivedPr_string = localStorage.getItem("presentationInfo");
-    let retrivedPr_json = JSON.parse(retrivedPr_string);
-    // console.log(retrivedPr_string);
-    // console.log(retrivedPr_json);
+    //need to ask user to clean up the current presentation.
+    let txt;
+    if (confirm("to open other presentation you have to discard current presentation") === true) {
+        cleanupCurrentPr();
+        recallPresentation();
+    } else { }
 
+}
+
+function recallPresentation() {
     let midColCenter = document.getElementById("midColCenter");
     let midColLeft = document.getElementById("midColLeft");
     slideCnt = 0;
 
+    while (localStorage.getItem(`slide${slideCnt}`)) {
 
-    //making whole presentation again based on retired presentation data
-    for (let i = 0; i < retrivedPr_json.length; i++) {
+        let curSlide_string = localStorage.getItem(`slide${slideCnt}`);
+        let curSlide_json = JSON.parse(curSlide_string);
 
         //making middle slide
-        let slideInfo = retrivedPr_json[i];
+        let slideInfo = curSlide_json;
         let newSlideMiddle = recallSlide(slideInfo);
         midColCenter.appendChild(newSlideMiddle);
 
         //making left slide
         let leftSlide = document.createElement("div");
         leftSlide.setAttribute("id", "leftSlide");
-        slideCnt++;
         leftSlide.innerHTML = `${slideCnt}`;
         midColLeft.appendChild(leftSlide);
         leftSlide.onclick = showOnMiddle_recall;
@@ -50,9 +54,69 @@ function recall() {
 
         }
 
+        slideCnt++;
     }
 
+    //make all the square(figures) draggable
     makeDragaable();
+
+    //make first presentation visible
+    hideAllSlides();
+    firstSlideVisible();
+}
+
+function getNthLeftSlide(nth) {
+    let midColLeft = document.getElementById("midColLeft");
+    let leftSlides = midColLeft.childNodes;
+    let slideCnt = 0;
+
+    let returnSlide = null;
+
+    for (let i = 0; i < leftSlides.length; i++) {
+        let leftSlide = leftSlides[i];
+        if (leftSlide.id === 'leftSlide') {
+
+            if (slideCnt === nth) {
+                returnSlide = leftSlide;
+                break;
+            }
+            slideCnt++;
+        }
+    }
+
+    return returnSlide;
+}
+
+
+function getNthMiddleSlide(nth) {
+    let midColCenter = document.getElementById("midColCenter");
+    let middleSlides = midColCenter.childNodes;
+
+    let slideCnt = 0;
+
+    let returnSlide = null;
+    for (let i = 0; i < middleSlides.length; i++) {
+        let middleSlide = middleSlides[i];
+        if (middleSlide.id === 'slideMiddle') {
+
+            if (slideCnt === nth) {
+                returnSlide = middleSlide;
+                break;
+            }
+            slideCnt++;
+        }
+    }
+
+    return returnSlide;
+}
+
+//should change this to get nth left slide, nth middle slide >> and change
+function firstSlideVisible() {
+
+    let firstMiddleSlide = getNthMiddleSlide(0); 
+    firstMiddleSlide.style.visibility = "visible";
+    lastClicked_LeftSlide = getNthLeftSlide(0);
+    lastClicked_MiddleSlide = getNthMiddleSlide(0);
 }
 
 function makeDragaable() {
