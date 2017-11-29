@@ -1,21 +1,33 @@
 'use strict';
 
 //presentationInfo >> include all the slides info(not a single info slide!)
-let presentationInfo = [];
 
 //save all info about presentation
 function save() {
-    let midColCenter = document.getElementById("midColCenter");
 
+
+    let midColCenter = document.getElementById("midColCenter");
+    let slideCnt = 0;
     //storing square figures
     let slides = midColCenter.childNodes;
     for (let i = 0; i < slides.length; i++) {
         if (slides[i].id === "slideMiddle") {
             let curSlide = getSlide(slides[i]);
-            presentationInfo.push(curSlide);
+            localStorage.setItem(`slide${slideCnt}`, JSON.stringify(curSlide));
+            slideCnt++;
+            // presentationInfo.push(curSlide);
+
         }
     }
-    console.log(presentationInfo);
+
+    let presentationInfo = {
+        "prName": "",
+        "numOfSlides": ""
+    };
+    presentationInfo.prName = "awesomeSlide"
+    presentationInfo.numOfSlides = slideCnt;
+
+    // console.log(presentationInfo);
     localStorage.setItem('presentationInfo',JSON.stringify(presentationInfo));
 }
 

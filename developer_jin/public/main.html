@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ABC</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="..\css\main.css">
+
+  <script src="..\js\drag.js"></script>
+  <script src="..\js\add-image.js"></script>
+  <script src="..\js\new-square.js"></script>
+  <script src="..\js\new-slide.js"></script>
+  
+  <script src="..\js\delete.js"></script>
+
+  <script src="..\js\save.js"></script>
+  <script src="..\js\recall.js"></script>
+  
+  <script src="..\js\full-screen.js"></script>
+
+</head>
+
+<body>
+
+  <body>
+
+    <div class="header">
+      <!-- <h1>Header</h1> -->
+    </div>
+
+    <div class="topnav">
+      <button id="btnSave">Save</button>
+      <button id="btnRecall">open</button>
+      <button id="btnNewSquare">Make New Square!</button>
+      <button id="btnNewSlide">New Slide</button>
+      <button id="btnPresentation">Presentation Mode</button>
+      <!-- <button id="btnTemp">hideAllSlides</button> -->
+      <!-- <button id="btnTemp2">showLastClickedSlide</button> -->
+
+
+      <button id="btnLogin">Login</button>
+      <button id="btnSignup">Sign Up</button>
+
+      <input id="btnLoadImage" type="file" multiple>
+    </div>
+
+    <!-- middle row -->
+    <div class="column side" id="midColLeft">
+      <!-- <div id="leftSlide">1</div> -->
+
+    </div>
+
+    <div class="column middle" id="midColCenter">
+      <!-- <div id='slideMiddle'style="visibility:visible"></div> -->
+      <!-- <div id='slid
+      eMiddle' style="visibility:hidden"></div>
+    <div id='slideMiddle' style="visibility:hidden"></div> -->
+    </div>
+
+    <!-- <div class="column side"> -->
+    <!-- <div id="slide">1</div> -->
+    <!-- <div id="slide">1</div> -->
+    <!-- <div id="slide">1</div> -->
+    <!-- </div> -->
+
+    <!-- <div class="footer"> -->
+    <!-- <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div> -->
+    <!-- </div> -->
+
+  </body>
+  <script>
+    'use strict';
+
+    let lastClickedElem = null;
+    let squareCnt = 0;
+
+    //make it clear what slide you are working on
+    let lastClicked_LeftSlide = null;
+    let lastClicked_MiddleSlide = null;
+    let slideCnt = 0;
+
+    //store current(maybe all the slides, work on it later) slide.
+    // let slidesInfo = [];
+    // let slideInfo = [];
+
+
+    //save all the information currently the user is using, seeing
+    btnSave.onclick = save;
+
+    //open(retrive) information that user stored previously
+    btnRecall.onclick = recall;
+
+    //making new example squares on our slide(in the middle)
+    btnNewSquare.onclick = newSquare;
+
+    //make new slides
+    btnNewSlide.onclick = makeNewSlide;
+
+    //testing functions, not important
+    // btnTemp.onclick = hideAllSlides;
+    // btnTemp2.onclick = showLastClickedSlide;
+
+    //put image file from local dir inside of square(that user clicked last time)
+    let btnLoadImage = document.getElementById("btnLoadImage");
+    btnLoadImage.onchange = previewFiles;
+
+    //presentation mode button, full-screen.js
+    btnPresentation.onclick = presentationMode;
+
+
+    makeNewSlide();
+    newSquare();
+    newSquare();
+    newSquare();
+    newSquare();
+
+    makeNewSlide();
+    newSquare();
+    newSquare();
+    newSquare();
+
+
+    makeNewSlide();
+    newSquare();
+    newSquare();
+    newSquare();
+
+    // console.log(getNthLeftSlide(0));
+    // console.log(getNthLeftSlide(1));
+    // console.log(getNthLeftSlide(2));
+
+    // console.log(getNthMiddleSlide(0));
+    // console.log(getNthMiddleSlide(1));
+    // console.log(getNthMiddleSlide(2));
+  </script>
+
+</html>
