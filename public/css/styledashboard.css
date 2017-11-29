@@ -103,4 +103,6 @@ body {
 #image{
     display: none;
 }
-
+#newPres{
+    margin-top: 2%;
+}

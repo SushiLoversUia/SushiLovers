@@ -103,7 +103,7 @@ function newSquare() {
     parentDiv.appendChild(square);
     dragElement(square, parentDiv);
 }
-//save all info about 
+//save all info about
 function save() {
     console.log("you just clicked save button!");
 
@@ -198,7 +198,7 @@ function saveSquares(square, parentDiv) {
     slideInfo.push(figureInfo);
 }
 
-//open resotred data, currently using localStorage 
+//open resotred data, currently using localStorage
 function open() {
     let parentDiv = document.getElementById('slideMiddle');
     let figures_string = localStorage.getItem("storage_figures");
@@ -256,7 +256,7 @@ function recallSquares(squareInfo, parentDiv) {
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
     textP.contentEditable = "true";
-    //put the original text info     
+    //put the original text info
     textP.innerHTML = squareInfo.text.content;
     square.appendChild(textP);
 
@@ -269,7 +269,7 @@ function recallSquares(squareInfo, parentDiv) {
 }
 
 
-//handle all the event, drag, resize .. 
+//handle all the event, drag, resize ..
 function dragElement(elmnt, parentDiv) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
@@ -350,7 +350,7 @@ function dragElement(elmnt, parentDiv) {
         document.onmousemove = null;
     }
 
-    //drag element function 
+    //drag element function
     function elementDrag_move(e) {
         e = e || window.event;
         // calculate the new cursor position:
