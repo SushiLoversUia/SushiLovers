@@ -67,7 +67,7 @@ function presentationMode() {
                 makeVisible_NthSlide(0);
                 slide.mozRequestFullScreen();
                 allSlide_zoomIn();
-                
+
             }
             else if ("msRequestFullscreen" in slide) {
                 saveSquaresRelativePos();
@@ -75,7 +75,7 @@ function presentationMode() {
                 makeVisible_NthSlide(0);
                 slide.msRequestFullscreen();
                 allSlide_zoomIn();
-                
+
             }
         }
     }
@@ -84,17 +84,6 @@ function presentationMode() {
     }
 
 }
-
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-
 
 
 //should reposition all the squares inside of slides
@@ -207,14 +196,8 @@ function allSlide_zoomOut() {
     }
 }
 function slide_zoomIn(input) {
-<<<<<<< HEAD:public/client/js/full-screen.js
     input.style.width = "100%";
     input.style.height = "100%";
-=======
-
-    input.style.width = "100vw";
-    input.style.height = "100vh";
->>>>>>> cb42be409d4fd3399cc8cbeef138702c9693489f:developer_henning/Joined code/js/full-screen.js
     input.style.top = "0%";
     input.style.left = "0%";
 }
