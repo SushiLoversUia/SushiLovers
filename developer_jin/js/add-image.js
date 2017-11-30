@@ -14,7 +14,7 @@ function putImageFiles() {
                 let image = new Image();
                 image.title = file.name;
                 image.src = this.result;
-
+                
                 let newSquare = makeNewSquare();
                 //put the image user just clicked inside of last clicked squares
                 newSquare.style.backgroundImage = `url(${image.src})`;

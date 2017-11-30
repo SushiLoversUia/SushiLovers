@@ -11,6 +11,10 @@
   <script src="..\js\drag.js"></script>
   <script src="..\js\slide-tool.js"></script>
   <script src="..\js\square-tool.js"></script>
+  <script src="..\js\extra-tool.js"></script>
+  <!-- <script src="..\js\read-write.js"></script> -->
+
+
   <script src="..\js\add-image.js"></script>
   <script src="..\js\new-square.js"></script>
   <script src="..\js\new-slide.js"></script>
@@ -35,7 +39,7 @@
   <div class="topnav">
     <button id="btnSave">Save</button>
     <button id="btnRecall">open</button>
-    <button id="btnNewSquare">Make New Square!</button>
+    <!-- <button id="btnNewSquare">Make New Square!</button> -->
     <button id="btnNewSlide">New Slide</button>
     <button id="btnPresentation">Presentation Mode</button>
     <button id="btnNewtextbox">Make New text box</button>
@@ -45,7 +49,10 @@
 
     <button id="btnLogin">Login</button>
     <button id="btnSignup">Sign Up</button>
+
     <input id="btnLoadImage" type="file" multiple name="images">
+    <!-- <input id="btnBackgroundTheme" type="file" multiple name="theme"> -->
+
   </div>
   <!-- middle row -->
 
@@ -55,9 +62,8 @@
 
   <div class="column middle" id="midColCenter">
     <!-- <div id='slideMiddle'style="visibility:visible"></div> -->
-    <!-- <div id='slid
-            eMiddle' style="visibility:hidden"></div>
-          <div id='slideMiddle' style="visibility:hidden"></div> -->
+    <!-- <div id='slideMiddle' style="visibility:hidden"></div> -->
+    <!-- <div id='slideMiddle' style="visibility:hidden"></div> -->
   </div>
 
 </body>
@@ -102,7 +108,6 @@
   btnRecall.onclick = recall;
 
   //making new example squares on our slide(in the middle)
-  btnNewSquare.onclick = makeNewSquare;
   btnNewtextbox.onclick = newTextbox;
   //make new slides
   btnNewSlide.onclick = makeNewSlide;
@@ -112,14 +117,19 @@
   btnLoadImage.onchange = putImageFiles;
 
   //presentation mode button, full-screen.js
-
   btnPresentation.onclick = presentationMode;
+
+  //left, down arrow >> previous slide, right,up arrow >> next slide, delete >> delete slide or square(figure)
   document.onkeydown = keyEvent;
 
 
-  //backspace delete >> has bug, can't differentiate with text editing
+  //backspace delete or delete last clicked square or slide 
   btnDelete_square.onclick = deleteSquare_html;
   btnDelete_slide.onclick = deleteSlide_html;
+
+  //working on it
+  // btnBackgroundTheme.onclick = addPresentationTheme;
+
 
 
   //need one at least one slide always
@@ -136,6 +146,11 @@
   hideAllSlides();
   makeVisible_NthSlide(0);
 
+  // let temp = getAllMiddleSlide();
+  // console.log(temp);
+
+
+  // writeFileExample();
 
 </script>
 

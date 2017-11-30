@@ -89,7 +89,7 @@ function allSlide_zoomIn() {
             slide_zoomIn(childNodes[i]);
         }
     }
-
+    
 }
 
 //user exit presentation mode >> makeall zoomOut(make it back to original size)
