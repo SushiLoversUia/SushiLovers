@@ -139,7 +139,7 @@ function slideSquares_zoomIn(inputSlide, inputSlideInfo) {
 
     for (let i = 0; i < curSquares.length; i++) {
         let curSquare = curSquares[i];
-        console.log(curSlideInfo[i]);
+        // console.log(curSlideInfo[i]);
         curSquare.style.left = curSlideInfo[i].left;
         curSquare.style.top = curSlideInfo[i].top;
         curSquare.style.zIndex = curSlideInfo[i].zIndex;

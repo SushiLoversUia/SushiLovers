@@ -28,7 +28,6 @@ function save() {
             localStorage.setItem(`slide${slideCnt}`, JSON.stringify(curSlide));
             slideCnt++;
             // presentationInfo.push(curSlide);
-
         }
     }
 
