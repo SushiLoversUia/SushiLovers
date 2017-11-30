@@ -126,7 +126,6 @@ a:active {
 
 #square {
     position: absolute;
-    z-index: 9;
     background-color: rgb(255, 255, 255);
     text-align: center;
     border: 1px solid rgb(15, 5, 5);

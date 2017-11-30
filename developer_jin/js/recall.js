@@ -8,6 +8,11 @@ function recall() {
         deletePresentation_html();
         recallPresentation();
     } else { }
+
+    //if you open stored presentation, all the clicked flags have to be reset
+    lastClickedElem = null;
+    lastClicked_LeftSlide = null;
+    lastClicked_MiddleSlide = null;
 }
 
 function recallPresentation() {
@@ -35,19 +40,11 @@ function recallPresentation() {
         //should hide all the slides before making new slides
         hideAllSlides();
 
-        lastClicked_LeftSlide = leftSlide;
-        lastClicked_MiddleSlide = newSlideMiddle;
 
         function showOnMiddle_recall() {
-            //always have to keep the last clicekd slide >> show it to user.
-            lastClicked_LeftSlide = leftSlide;
-            lastClicked_MiddleSlide = newSlideMiddle;
             // make invisible all the slides
             hideAllSlides();
 
-            // console.log("here is showOnMiddle function working");
-            // console.log(lastClicked_LeftSlide);
-            // console.log(lastClicked_MiddleSlide);
             newSlideMiddle.style.visibility = "visible";
             // make visible only one slide, user clicked last time
 
@@ -64,92 +61,11 @@ function recallPresentation() {
     firstSlideVisible();
 }
 
-//numOfLeftSlide === numOfRightSlide  
-function getNumOfSlides() {
-
-    let slideCnt = null;
-
-    let midColLeft = document.getElementById("midColLeft");
-
-    if (midColLeft === null) {
-        slideCnt = "slideCnt error";
-    } else {
-        let leftSlides = midColLeft.childNodes;
-
-        for (let i = 0; i < leftSlides.length; i++) {
-            let leftSlide = leftSlides[i];
-            if (leftSlide.id === 'leftSlide') {
-
-                slideCnt++;
-            }
-        }
-    }
-
-    return slideCnt;
-}
-
-function getNthLeftSlide(nth) {
-    let midColLeft = document.getElementById("midColLeft");
-    let returnSlide = null;
-
-    if (midColLeft === null) {
-        returnSlide = "getNthLeftSlide error";
-
-    } else {
-        let leftSlides = midColLeft.childNodes;
-        let slideCnt = 0;
-
-
-        for (let i = 0; i < leftSlides.length; i++) {
-            let leftSlide = leftSlides[i];
-            if (leftSlide.id === 'leftSlide') {
-
-                if (slideCnt === nth) {
-                    returnSlide = leftSlide;
-                    break;
-                }
-                slideCnt++;
-            }
-        }
-    }
-
-    return returnSlide;
-
-}
-
-
-function getNthMiddleSlide(nth) {
-    let midColCenter = document.getElementById("midColCenter");
-    if (midColCenter === null) {
-        return "getNthMiddleSlide error";
-    }
-    let middleSlides = midColCenter.childNodes;
-
-    let slideCnt = 0;
-
-    let returnSlide = null;
-    for (let i = 0; i < middleSlides.length; i++) {
-        let middleSlide = middleSlides[i];
-        if (middleSlide.id === 'slideMiddle') {
-
-            if (slideCnt === nth) {
-                returnSlide = middleSlide;
-                break;
-            }
-            slideCnt++;
-        }
-    }
-
-    return returnSlide;
-}
-
 //should change this to get nth left slide, nth middle slide >> and change
 function firstSlideVisible() {
 
     let firstMiddleSlide = getNthMiddleSlide(0);
     firstMiddleSlide.style.visibility = "visible";
-    lastClicked_LeftSlide = getNthLeftSlide(0);
-    lastClicked_MiddleSlide = getNthMiddleSlide(0);
 }
 
 function makeDragaable() {
@@ -214,6 +130,7 @@ function recallSquare(squareInfo) {
     //position info
     square.style.left = squareInfo.position.left;
     square.style.top = squareInfo.position.top;
+    square.style.zIndex = squareInfo.position.zVal;
 
     //text css
     square.style.fontSize = squareInfo.text.fontSize;

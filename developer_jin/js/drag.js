@@ -21,7 +21,15 @@ function dragElement(elmnt, parentDiv) {
     //decision to drag or resize or rotate or write something
     function mouseDown(e) {
 
+        let slideHighestZ = getMaxZ(elmnt);
+        let newZindex = slideHighestZ + 1;
+        elmnt.style.zIndex = newZindex;
+
         lastClickedElem = elmnt;
+        let parentSlide = elmnt.parentNode;
+        lastClicked_MiddleSlide = parentSlide;
+        flag_focusingElem = "figure";
+
 
         let eleLeft = parseInt(elmnt.offsetLeft);
         let eleTop = parseInt(elmnt.offsetTop);

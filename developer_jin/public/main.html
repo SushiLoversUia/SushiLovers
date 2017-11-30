@@ -4,11 +4,13 @@
 
 
 <head>
-  <title>ABC</title>
+  <title>presentation workplace</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="..\css\main.css">
   <script src="..\js\drag.js"></script>
+  <script src="..\js\slide-tool.js"></script>
+  <script src="..\js\square-tool.js"></script>
   <script src="..\js\add-image.js"></script>
   <script src="..\js\new-square.js"></script>
   <script src="..\js\new-slide.js"></script>
@@ -19,7 +21,9 @@
   <script src="..\js\recall.js"></script>
 
   <script src="..\js\full-screen.js"></script>
+  <script src="..\js\key-control.js"></script>
 
+  <script src="..\js\background-theme.js"></script>
 
 </head>
 
@@ -35,9 +39,13 @@
     <button id="btnNewSlide">New Slide</button>
     <button id="btnPresentation">Presentation Mode</button>
     <button id="btnNewtextbox">Make New text box</button>
+
+    <button id="btnDelete_square">delete square</button>
+    <button id="btnDelete_slide">delete slide</button>
+
     <button id="btnLogin">Login</button>
     <button id="btnSignup">Sign Up</button>
-    <input id="btnLoadImage" type="file" multiple>
+    <input id="btnLoadImage" type="file" multiple name="images">
   </div>
   <!-- middle row -->
 
@@ -59,14 +67,32 @@
 
 
 
+  /*******************************************************************/
+  // all the flags, they have to match with resetFlags function
+  /*******************************************************************/
 
   let lastClickedElem = null;
-  let squareCnt = 0;
 
   //make it clear what slide you are working on
   let lastClicked_LeftSlide = null;
   let lastClicked_MiddleSlide = null;
+
+  let squareCnt = 0;
   let slideCnt = 0;
+
+  //when we delete, need to decide what to delete >> ex) slide or figures
+  // ex) figure, slide .. 
+  let flag_focusingElem = null;
+
+  //style.zIndex max : 2147483648(32bit) >> assume no bug  
+  let flag_zIndex = 0;
+  /********************************************************************/
+  /********************************************************************/
+  /********************************************************************/
+
+
+
+
 
 
   //save all the information currently the user is using, seeing
@@ -76,45 +102,41 @@
   btnRecall.onclick = recall;
 
   //making new example squares on our slide(in the middle)
-  btnNewSquare.onclick = newSquare;
+  btnNewSquare.onclick = makeNewSquare;
   btnNewtextbox.onclick = newTextbox;
   //make new slides
   btnNewSlide.onclick = makeNewSlide;
 
   //put image file from local dir inside of square(that user clicked last time)
   let btnLoadImage = document.getElementById("btnLoadImage");
-  btnLoadImage.onchange = previewFiles;
+  btnLoadImage.onchange = putImageFiles;
 
   //presentation mode button, full-screen.js
 
   btnPresentation.onclick = presentationMode;
   document.onkeydown = keyEvent;
 
+
+  //backspace delete >> has bug, can't differentiate with text editing
+  btnDelete_square.onclick = deleteSquare_html;
+  btnDelete_slide.onclick = deleteSlide_html;
+
+
+  //need one at least one slide always
   makeNewSlide();
-  newSquare();
-  newSquare();
-
-  // newSquare();
-  // newSquare();
+  makeNewSquare();
+  makeNewSquare();
+  makeNewSquare();
 
   makeNewSlide();
-  newSquare();
-  // newSquare();
-  // newSquare();
+  makeNewSquare();
+  makeNewSquare();
+  makeNewSquare();
+
+  hideAllSlides();
+  makeVisible_NthSlide(0);
 
 
-  // makeNewSlide();
-  // newSquare();
-  // newSquare();
-  // newSquare();
-
-    // console.log(getNthLeftSlide(0));
-    // console.log(getNthLeftSlide(1));
-    // console.log(getNthLeftSlide(2));
-
-    // console.log(getNthMiddleSlide(0));
-    // console.log(getNthMiddleSlide(1));
-    // console.log(getNthMiddleSlide(2));
 </script>
 
 </html>
