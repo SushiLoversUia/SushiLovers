@@ -23,7 +23,7 @@ function makeNewSquare() {
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
     textP.contentEditable = "true";
-    textP.innerHTML = `squareCnt:${squareCnt}`;
+    textP.innerHTML = `debug cnt :${squareCnt}`;
     squareCnt++;
     square.appendChild(textP);
 
@@ -59,7 +59,7 @@ function newTextbox() {
     // textP.innerHTML = `squareCnt:${squareCnt}!`;
     squareCnt++;
     square.appendChild(textP);
-    
+
     parentDiv.appendChild(square);
     dragElement(square, parentDiv);
 }

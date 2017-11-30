@@ -95,3 +95,12 @@ function getNthMiddleSlide(nth) {
 
     return returnSlide;
 }
+
+function getCurSlideIdx(inputSlide) {
+    let idxCnt = 0;
+    let midColCenter = inputSlide.parentNode;
+    let slides = midColCenter.children;
+    idxCnt = Array.from(slides).indexOf(inputSlide)
+
+    return idxCnt;
+}
