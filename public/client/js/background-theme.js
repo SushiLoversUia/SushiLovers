@@ -4,7 +4,7 @@
 
 let themeInput = document.getElementById('btnChangeTheme');
 themeInput.addEventListener('change', changeBackgroundTheme);
-
+themeInput.style.opacity = 0;
 function changeBackgroundTheme() {
     let files = document.getElementById("btnChangeTheme").files;
 

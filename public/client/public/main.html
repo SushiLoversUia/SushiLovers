@@ -41,10 +41,17 @@
 
       <button id="btnNewtextbox">create text box</button>
       <button id="btnDelete_square">delete text box</button>
-      <button id="btnDelete_slide">delete slide</button>
+      <button id="btnDelete_curSlide">delete current slide</button>
 
-      <input id="btnLoadImage" type="file" multiple name="images" accept=".jpg, .jpeg, .png">
+
+      <br>
+      <br>
+      <label id ="btnLoadImageLabel" for="btnLoadImage">upload images</label>
+      <input id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
+      <br>
+      <label id ="btnChangeThemeLabel" for="btnChangeTheme">change theme</label>
       <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
+      <br>
       <button id="btnDelete_curSlideTheme">delete current slide theme</button>
       <button id="btnDelete_wholeSlideTheme">delete whole slide theme</button>
 
@@ -149,21 +156,11 @@
 
 
   makeNewSlide();
-  makeNewSquare();
-
-  makeNewSlide();
-  makeNewSquare();
-  makeNewSquare();
-
-  makeNewSlide();
-  makeNewSquare();
-  makeNewSquare();
-  makeNewSquare();
-
 
   hideAllSlides();
   makeVisible_NthSlide(0);
-
+  lastClicked_MiddleSlide = getNthMiddleSlide(0);
+  lastClicked_LeftSlide = getNthLeftSlide(0);
 
 </script>
 

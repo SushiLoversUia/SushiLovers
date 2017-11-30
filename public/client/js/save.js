@@ -115,7 +115,7 @@ function getSquares(square, parentDiv) {
     //figure text info
     let figureText = figure.querySelector("#text");
     let figureText_content = figureText.innerHTML;
-
+    
     //figure text css
     let figureText_fontSize = figure.style.fontSize;
     let figureText_color = figure.style.color;

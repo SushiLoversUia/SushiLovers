@@ -93,7 +93,7 @@ window.addEventListener("load", function () {
     btnNewSlide.addEventListener('click', makeNewSlide);
 
     let btnNewtextbox = document.getElementById('btnNewtextbox');
-    btnNewtextbox.addEventListener('click', makeNewSquare);
+    btnNewtextbox.addEventListener('click', newTextbox);
 
     //put image file from local dir inside of square(that user clicked last time)
 
@@ -108,8 +108,8 @@ window.addEventListener("load", function () {
     //backspace delete or delete last clicked square or slide
     let btnDelete_square = document.getElementById('btnDelete_square');
     btnDelete_square.addEventListener('click', deleteSquare_html);
-    let btnDelete_slide = document.getElementById('btnDelete_slide');
-    btnDelete_slide.addEventListener('click', deleteSlide_html);
+    let btnDelete_curSlide = document.getElementById('btnDelete_curSlide');
+    btnDelete_curSlide.addEventListener('click', deleteSlide_html);
 
     let btnDelete_curSlideTheme = document.getElementById('btnDelete_curSlideTheme');
     btnDelete_curSlideTheme.addEventListener('click', deleteCurSlide_theme);

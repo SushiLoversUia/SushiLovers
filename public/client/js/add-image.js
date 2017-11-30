@@ -2,6 +2,7 @@
 
 let btnLoadImage = document.getElementById('btnLoadImage');
 btnLoadImage.addEventListener('change', putImageFiles);
+btnLoadImage.style.opacity = 0;
 
 //to put image data inside of figure(currently only square)
 function putImageFiles() {

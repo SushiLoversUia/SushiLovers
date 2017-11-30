@@ -27,7 +27,7 @@ function makeNewSquare() {
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
     textP.contentEditable = "true";
-    textP.innerHTML = `debug cnt :${squareCnt}`;
+    // textP.innerHTML = `debug cnt :${squareCnt}`;
     squareCnt++;
     square.appendChild(textP);
 
@@ -53,8 +53,9 @@ function newTextbox() {
     square.style.left = `${generateRanNum()}%`;
     square.style.top = `${generateRanNum()}%`;
 
+
     square.style.fontSize = "30px";
-    square.style.color = "rgb(255, 0, 0)";
+    square.style.color = "rgb(0, 0, 0)";
     square.style.textAlign = "center";
 
     square.style.backgroundColor = "transparent";
@@ -66,7 +67,7 @@ function newTextbox() {
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
     textP.contentEditable = "true";
-    // textP.innerHTML = `squareCnt:${squareCnt}!`;
+    textP.innerHTML = `click to edit`;
     squareCnt++;
     square.appendChild(textP);
 
