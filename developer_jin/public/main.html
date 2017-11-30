@@ -46,6 +46,8 @@
     <button id="btnLogin">Login</button>
     <button id="btnSignup">Sign Up</button>
     <input id="btnLoadImage" type="file" multiple name="images">
+    <input id="btnTheme" type="file" multiple name="images">
+    
   </div>
   <!-- middle row -->
 
@@ -121,7 +123,7 @@
   btnDelete_square.onclick = deleteSquare_html;
   btnDelete_slide.onclick = deleteSlide_html;
 
-
+  btnTheme.onclick = addPresentationTheme;
   //need one at least one slide always
   makeNewSlide();
   makeNewSquare();
