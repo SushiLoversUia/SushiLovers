@@ -15,7 +15,7 @@ function hideAllSlides() {
 }
 function makeNewSlide() {
 
-    //making left slide, and put it in the leftSlide(parentDiv) 
+    //making left slide, and put it in the leftSlide(parentDiv)
     let parentDiv_midColLeft = document.getElementById("midColLeft");
     let leftSlide = document.createElement("div");
     leftSlide.setAttribute("id", "leftSlide");
@@ -38,7 +38,7 @@ function makeNewSlide() {
     lastClicked_MiddleSlide = middleSlide;
 
     //below is working on totally different condition, put inside of this function just because they have to share elements (left slide, middle slide connection)
-    //should hide all the other slides first, 
+    //should hide all the other slides first,
     function showOnMiddle_save() {
 
         //always have to keep the last clicekd slide >> show it to user.
@@ -56,4 +56,3 @@ function makeNewSlide() {
     }
 
 }
-

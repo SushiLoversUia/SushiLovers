@@ -6,7 +6,7 @@ document.addEventListener("webkitfullscreenchange", screen_change);
 document.addEventListener("mozfullscreenchange", screen_change);
 document.addEventListener("MSFullscreenChange", screen_change);
 
-//called when requestFullscreen(); fails. it may fail if iframe don't have allowfullscreen attribute enabled or for something else.
+//called when requestFullscreen(); fails. it may fail if iframe don't have allowfullscreen attribute enabled or for something else. 
 document.addEventListener("fullscreenerror", function () { console.log("Full screen failed"); });
 document.addEventListener("webkitfullscreenerror", function () { console.log("Full screen failed"); });
 document.addEventListener("mozfullscreenerror", function () { console.log("Full screen failed"); });
@@ -88,6 +88,7 @@ function allSlide_zoomIn() {
             slide_zoomIn(childNodes[i]);
         }
     }
+    
 }
 
 //user exit presentation mode >> makeall zoomOut(make it back to original size)
@@ -104,9 +105,8 @@ function allSlide_zoomOut() {
     }
 }
 function slide_zoomIn(input) {
-
-    input.style.width = "100vw";
-    input.style.height = "100vh";
+    input.style.width = "100%";
+    input.style.height = "100%";
     input.style.top = "0%";
     input.style.left = "0%";
 }
@@ -148,3 +148,5 @@ function screen_change() {
     }
 
 }
+
+

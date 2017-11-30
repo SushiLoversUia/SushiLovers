@@ -33,14 +33,16 @@ body{
 
 #ribbon {
 
-  grid-column: 1 / 17;
-  grid-row: 1 / 2;
+  grid-column: 3 / 19;
+  grid-row: 2 / 3;
+
   background-color: #242b28;
   color: white;
   border-bottom: 2px solid black;
 
   padding: 5px;
   z-index: 100;
+
 
 }
 
@@ -61,13 +63,14 @@ body{
 
 #midColCenter{
   background: radial-gradient(#c7c7c7, #424242);
-  grid-row: 2 / 15;
+  grid-row: 3 / 15;
   grid-column: 3 / 19;
   background-color: gray;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(16, 1fr);
-  grid-template-rows: repeat(16, 1fr);
+  display: flex;
+  flex-direction: column;
+
+
 
 }
 
@@ -104,17 +107,24 @@ body{
 #leftSlide:hover{
     outline: 5px solid rgb(0, 0, 255);
 }
-#leftSlide:focus,
-#leftSlide:active{
-    outline: 5px solid rgb(17, 16, 16);
+
+#leftSlide:focus{
+    border: 5px solid rgb(17, 16, 16);
 }
 
 #slideMiddle{
 
-  grid-column: 2 / 16;
-  grid-row: 3 /16 ;
+
   background: white;
   border: 2px solid black;
+
+  height: 70%;
+  width:70%;
+  align-self: center;
+  position: absolute;
+
+
+
 }
 
 #footer{
