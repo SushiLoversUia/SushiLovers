@@ -49,7 +49,7 @@ function deleteSquare_html() {
 //delete lastClicked_LeftSlide & lastClicked_MiddleSlide
 function deleteSlide_html() {
 
-
+    
     let deleLeftSlide = lastClicked_LeftSlide;
     let deleMiddleSlide = lastClicked_MiddleSlide;
     let deleMiddleSlide_idx = getCurSlideIdx(deleMiddleSlide)

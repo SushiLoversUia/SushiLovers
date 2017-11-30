@@ -32,7 +32,7 @@ function dragElement(elmnt, parentDiv) {
         lastClicked_MiddleSlide = parentSlide;
         let curSlideIdx = getCurSlideIdx(parentSlide);
         lastClicked_LeftSlide = getNthLeftSlide(curSlideIdx);
-
+        
         flag_focusingElem = "figure";
 
 

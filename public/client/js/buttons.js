@@ -2,6 +2,7 @@ window.addEventListener("load", function () {
 
 
 
+
     boldButton.addEventListener("click", function () {
         document.execCommand("Bold", false, null)
     })
@@ -75,9 +76,6 @@ window.addEventListener("load", function () {
     })
 
 
-    let themeInput = document.getElementById('btnChangeTheme');
-    themeInput.addEventListener('change', changeBackgroundTheme);
-
 
 
     //save all the information currently the user is using, seeing
@@ -95,11 +93,9 @@ window.addEventListener("load", function () {
     btnNewSlide.addEventListener('click', makeNewSlide);
 
     let btnNewtextbox = document.getElementById('btnNewtextbox');
-    btnNewtextbox.addEventListener('click', makeNewSquare);
+    btnNewtextbox.addEventListener('click', newTextbox);
 
     //put image file from local dir inside of square(that user clicked last time)
-    let btnLoadImage = document.getElementById('btnLoadImage');
-    btnLoadImage.addEventListener('click', putImageFiles);
 
 
     //presentation mode button, full-screen.js
@@ -112,8 +108,8 @@ window.addEventListener("load", function () {
     //backspace delete or delete last clicked square or slide
     let btnDelete_square = document.getElementById('btnDelete_square');
     btnDelete_square.addEventListener('click', deleteSquare_html);
-    let btnDelete_slide = document.getElementById('btnDelete_slide');
-    btnDelete_slide.addEventListener('click', deleteSlide_html);
+    let btnDelete_curSlide = document.getElementById('btnDelete_curSlide');
+    btnDelete_curSlide.addEventListener('click', deleteSlide_html);
 
     let btnDelete_curSlideTheme = document.getElementById('btnDelete_curSlideTheme');
     btnDelete_curSlideTheme.addEventListener('click', deleteCurSlide_theme);
@@ -121,6 +117,4 @@ window.addEventListener("load", function () {
 
     let btnDelete_wholeSlideTheme = document.getElementById('btnDelete_wholeSlideTheme');
     btnDelete_wholeSlideTheme.addEventListener('click', deleteWholeSlide_theme);
-
-
 })

@@ -170,3 +170,12 @@ body{
     background-color: #f1f1f1;
     /* visibility: visible; */
 }
+
+#btnChangeThemeLabel {
+    background-color: rgb(216, 22, 22);
+}
+
+
+#btnLoadImageLabel {
+    background-color: rgb(236, 14, 14);
+}

@@ -118,10 +118,32 @@ function getAllMiddleSlide() {
 
 
 function getCurSlideIdx(inputSlide) {
+
     let idxCnt = 0;
     let midColCenter = inputSlide.parentNode;
     let slides = midColCenter.children;
     idxCnt = Array.from(slides).indexOf(inputSlide)
 
     return idxCnt;
+}
+
+function getVisibleSlide() {
+    let midColCenter = document.getElementById("midColCenter");
+    if (midColCenter === null) {
+        return "getNthMiddleSlide error";
+    }
+    let middleSlides = midColCenter.childNodes;
+
+
+    let returnSlide = null;
+    for (let i = 0; i < middleSlides.length; i++) {
+        let middleSlide = middleSlides[i];
+        if (middleSlide.id === 'slideMiddle' && middleSlide.style.visibility === 'visible') {
+        }
+    }
+
+    return returnSlide;
+
+
+
 }
