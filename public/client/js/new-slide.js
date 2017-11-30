@@ -4,9 +4,9 @@
 
 function makeNewSlide() {
 
-    //making left slide, and put it in the leftSlide(parentDiv) 
+    //making left slide, and put it in the leftSlide(parentDiv)
     let parentDiv_midColLeft = document.getElementById("midColLeft");
-    let leftSlide = document.createElement("div");
+    let leftSlide = document.createElement("li");
     leftSlide.setAttribute("id", "leftSlide");
     slideCnt++;
     leftSlide.innerHTML = `${slideCnt}`;
@@ -28,14 +28,14 @@ function makeNewSlide() {
     flag_focusingElem = "slide";
 
     //below is working on totally different condition, put inside of this function just because they have to share elements (left slide, middle slide connection)
-    //should hide all the other slides first, 
+    //should hide all the other slides first,
     function showOnMiddle() {
 
         //always have to keep the last clicekd slide >> show it to user.
         lastClicked_LeftSlide = leftSlide;
         lastClicked_MiddleSlide = middleSlide;
         flag_focusingElem = "slide";
-    
+
         // make invisible all the slides
         hideAllSlides();
         middleSlide.style.visibility = "visible";
@@ -43,4 +43,3 @@ function makeNewSlide() {
     }
 
 }
-
