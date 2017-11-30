@@ -88,7 +88,6 @@ function allSlide_zoomIn() {
             slide_zoomIn(childNodes[i]);
         }
     }
-    
 }
 
 //user exit presentation mode >> makeall zoomOut(make it back to original size)
@@ -105,6 +104,7 @@ function allSlide_zoomOut() {
     }
 }
 function slide_zoomIn(input) {
+    
     input.style.width = "100%";
     input.style.height = "100%";
     input.style.top = "0%";
