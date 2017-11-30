@@ -59,6 +59,6 @@ function keyEvent(e) {
         }
     }
     else {
-        console.log("unregistered key event");
+        // console.log("unregistered key event");
     }
 }

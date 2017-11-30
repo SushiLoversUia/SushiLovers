@@ -18,3 +18,18 @@ function getMaxZ(inputSquare) {
     }
     return maxZ;
 }
+
+function getSlideSquares(curSlide) {
+
+    let curSlide_childNodes = curSlide.childNodes;
+    let rtvSquares = [];
+
+    for (let i = 0; i < curSlide_childNodes.length; i++) {
+        let curSquare = curSlide_childNodes[i];
+        if (curSquare.id === 'square') {
+            rtvSquares.push(curSquare);
+        }
+    }
+
+    return rtvSquares;
+}

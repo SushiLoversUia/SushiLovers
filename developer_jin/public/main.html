@@ -14,7 +14,6 @@
   <script src="..\js\extra-tool.js"></script>
   <!-- <script src="..\js\read-write.js"></script> -->
 
-
   <script src="..\js\add-image.js"></script>
   <script src="..\js\new-square.js"></script>
   <script src="..\js\new-slide.js"></script>
@@ -51,8 +50,7 @@
     <button id="btnSignup">Sign Up</button>
 
     <input id="btnLoadImage" type="file" multiple name="images">
-    <!-- <input id="btnBackgroundTheme" type="file" multiple name="theme"> -->
-
+    <input id="btnBackgroundTheme" type="file" name="theme">
   </div>
   <!-- middle row -->
 
@@ -128,20 +126,20 @@
   btnDelete_slide.onclick = deleteSlide_html;
 
   //working on it
-  // btnBackgroundTheme.onclick = addPresentationTheme;
+  btnBackgroundTheme.onclick = addPresentationTheme;
 
 
 
   //need one at least one slide always
   makeNewSlide();
   makeNewSquare();
-  makeNewSquare();
-  makeNewSquare();
+  // makeNewSquare();
+  // makeNewSquare();
 
-  makeNewSlide();
-  makeNewSquare();
-  makeNewSquare();
-  makeNewSquare();
+  // makeNewSlide();
+  // makeNewSquare();
+  // makeNewSquare();
+  // makeNewSquare();
 
   hideAllSlides();
   makeVisible_NthSlide(0);

@@ -22,6 +22,8 @@ let slideMiddleTop_ori = null;
 
 let fullscreenIdx = 0;
 
+let slidesSqsInfo = [];
+
 
 function presentationMode() {
     let slide = getNthMiddleSlide(0);
@@ -43,30 +45,37 @@ function presentationMode() {
         if (document.fullscreenEnabled || document.webkitFullscreenEnabled ||
             document.mozFullScreenEnabled || document.msFullscreenEnabled) {
 
-
             //make all slides fit into bigger size(presentation size)
-            allSlide_zoomIn();
 
             if ("requestFullscreen" in slide) {
+                saveSquaresRelativePos();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 slide.requestFullscreen();
+                allSlide_zoomIn();
             }
             else if ("webkitRequestFullscreen" in slide) {
-                //begin with first slide.
+                saveSquaresRelativePos();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 midColCenter.webkitRequestFullscreen();
+                allSlide_zoomIn();
             }
             else if ("mozRequestFullScreen" in slide) {
+                saveSquaresRelativePos();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 slide.mozRequestFullScreen();
+                allSlide_zoomIn();
+                
             }
             else if ("msRequestFullscreen" in slide) {
+                saveSquaresRelativePos();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 slide.msRequestFullscreen();
+                allSlide_zoomIn();
+                
             }
         }
     }
@@ -76,20 +85,113 @@ function presentationMode() {
 
 }
 
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 
-//user enter presentation mode >> make all zoomIn
-function allSlide_zoomIn() {
+
+//should reposition all the squares inside of slides
+function saveSquaresRelativePos() {
+
+    //clean up info before saving
+    slidesSqsInfo = [];
+
     let colMiddle = document.getElementById("midColCenter");
     let childNodes = colMiddle.childNodes;
 
     for (let i = 0; i < childNodes.length; i++) {
-        if (childNodes[i].id === "slideMiddle") {
-            slide_zoomIn(childNodes[i]);
+        let curSlide = childNodes[i];
+        if (curSlide.id === "slideMiddle") {
+            let slideSqsInfo = getSlideSquaresInfo(curSlide);
+            slidesSqsInfo.push(slideSqsInfo);
         }
     }
-    
+
 }
+
+//user enter presentation mode >> make all zoomIn
+function allSlide_zoomIn() {
+
+    let midSlides = getAllMiddleSlide();
+
+    for (let i = 0; i < midSlides.length; i++) {
+        if (midSlides[i].id === "slideMiddle") {
+            slide_zoomIn(midSlides[i]);
+            slideSquares_zoomIn(midSlides[i], slidesSqsInfo[i]);
+
+        }
+    }
+}
+function slideSquares_zoomIn(inputSlide, inputSlideInfo) {
+
+    let curSlide = inputSlide;
+    let curSlideIdx = getCurSlideIdx(curSlide);
+
+    let curSlideInfo = inputSlideInfo;
+    let curSquares = getSlideSquares(curSlide);
+
+    for (let i = 0; i < curSquares.length; i++) {
+        let curSquare = curSquares[i];
+        console.log(curSlideInfo[i]);
+        curSquare.style.left = curSlideInfo[i].left;
+        curSquare.style.top = curSlideInfo[i].top;
+        curSquare.style.zIndex = curSlideInfo[i].zIndex;
+    }
+}
+function getSlideSquaresInfo(inputSlide) {
+    let curSquares = getSlideSquares(inputSlide);
+
+    let curSlideSquaresPosInfo = [];
+    for (let i = 0; i < curSquares.length; i++) {
+        let curSquare = curSquares[i];
+
+        let squareOriPos = {
+            "left": "",
+            "top": "",
+            "zIndex": ""
+        }
+
+        // let slideMiddleWidth_ori = null;
+        // let slideMiddleHeight_ori = null;
+        let squareLeft = (curSquare.offsetLeft / slideMiddleWidth_ori) * 100 + "%";
+        let squareTop = (curSquare.offsetTop / slideMiddleHeight_ori) * 100 + "%";
+        let squareZidx = curSquare.style.zIndex;
+
+        squareOriPos.left = squareLeft;
+        squareOriPos.top = squareTop;
+        squareOriPos.zIndex = squareZidx;
+
+        curSlideSquaresPosInfo.push(squareOriPos);
+    }
+    return curSlideSquaresPosInfo;
+}
+
+
+function repositionSquares_zoomOut() {
+
+}
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+
+
+
+
+
 
 //user exit presentation mode >> makeall zoomOut(make it back to original size)
 function allSlide_zoomOut() {

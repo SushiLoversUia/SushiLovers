@@ -129,6 +129,7 @@ a:active {
     height: 70%;
 }
 
+
 #square {
     position: absolute;
     background-color: rgb(255, 255, 255);
@@ -157,3 +158,4 @@ a:active {
     background-color: red;
     /* visibility: visible; */
 }
+
