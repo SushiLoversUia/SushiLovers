@@ -96,6 +96,27 @@ function getNthMiddleSlide(nth) {
     return returnSlide;
 }
 
+function getAllMiddleSlide() {
+    let midColCenter = document.getElementById("midColCenter");
+    if (midColCenter === null) {
+        return "getNthMiddleSlide error";
+    }
+    let middleSlides = midColCenter.childNodes;
+
+    let rtvSlides = [];
+
+    let returnSlide = null;
+    for (let i = 0; i < middleSlides.length; i++) {
+        let middleSlide = middleSlides[i];
+        if (middleSlide.id === 'slideMiddle') {
+            rtvSlides.push(middleSlide);
+        }
+    }
+
+    return rtvSlides;
+}
+
+
 function getCurSlideIdx(inputSlide) {
     let idxCnt = 0;
     let midColCenter = inputSlide.parentNode;

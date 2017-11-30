@@ -26,8 +26,13 @@ function dragElement(elmnt, parentDiv) {
         elmnt.style.zIndex = newZindex;
 
         lastClickedElem = elmnt;
+
+        //sync left and middle slide focus
         let parentSlide = elmnt.parentNode;
         lastClicked_MiddleSlide = parentSlide;
+        let curSlideIdx = getCurSlideIdx(parentSlide);
+        lastClicked_LeftSlide = getNthLeftSlide(curSlideIdx);
+
         flag_focusingElem = "figure";
 
 

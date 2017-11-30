@@ -1,6 +1,5 @@
 'use strict';
 
-
 /*************************************************************/
 // currently storing all the slides in each local storage file
 // ex) a user has 5 diff slides
@@ -41,7 +40,6 @@ function save() {
     presentationInfo.numOfSlides = slideCnt;
     localStorage.setItem('presentationInfo', JSON.stringify(presentationInfo));
 }
-
 
 
 //input : slide(based on html slide), output : all the slide info of input in json format
@@ -118,7 +116,7 @@ function getSquares(square, parentDiv) {
     /**** put info just got above in the structure ************ */
     /*********************************************************** */
 
-    
+
     figureInfo.type = "square";
     figureInfo.size.height = figureHeight;
     figureInfo.size.width = figureWidth;
