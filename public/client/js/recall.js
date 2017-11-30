@@ -40,67 +40,32 @@ function recallPresentation() {
         //should hide all the slides before making new slides
         hideAllSlides();
 
-
         function showOnMiddle_recall() {
-            // make invisible all the slides
             hideAllSlides();
-
             newSlideMiddle.style.visibility = "visible";
-            // make visible only one slide, user clicked last time
-
         }
-
         slideCnt++;
     }
 
     //make all the square(figures) draggable
     makeDragaable();
-
-    //make first presentation visible
     hideAllSlides();
-    firstSlideVisible();
+    makeVisible_NthSlide(0);
 }
 
-//should change this to get nth left slide, nth middle slide >> and change
-function firstSlideVisible() {
-
-    let firstMiddleSlide = getNthMiddleSlide(0);
-    firstMiddleSlide.style.visibility = "visible";
-}
-
-function makeDragaable() {
-    let midColCenter = document.getElementById("midColCenter");
-    let slides = midColCenter.childNodes;
-    for (let j = 0; j < slides.length; j++) {
-
-        if (slides[j].id === "slideMiddle") {
-            let curSlide = slides[j];
-            let curSlide_childNodes = curSlide.childNodes;
-
-            for (let i = 0; i < curSlide_childNodes.length; i++) {
-
-                if (curSlide_childNodes[i].id === "square") {
-                    let curSquare = curSlide_childNodes[i];
-                    dragElement(curSquare, curSlide);
-                }
-            }
-        }
-    }
-
-}
 
 //make new slide with retrived data and return that slide
 function recallSlide(slideInfo) {
-    // let figures_string = localStorage.getItem("storage_figures");
-    // let figures_json = JSON.parse(figures_string);
-    // console.log(parentDiv);
-    // console.log(figures_json);
+
     let newSlide = document.createElement("div");
     newSlide.setAttribute("id", "slideMiddle");
+    newSlide.style.backgroundImage = slideInfo.slideTheme;
 
-    for (let i = 0; i < slideInfo.length; i++) {
-        if (slideInfo[i].type == "square") {
-            let curSquare = recallSquare(slideInfo[i]);
+    let curSlideFigInfo_string = slideInfo.slideFigureInfo;
+    let curSlideFigInfo = JSON.parse(curSlideFigInfo_string);
+    for (let i = 0; i < curSlideFigInfo.length; i++) {
+        if (curSlideFigInfo[i].type == "square") {
+            let curSquare = recallSquare(curSlideFigInfo[i]);
             newSlide.appendChild(curSquare);
             // dragElement(curSquare, newSlide);
         }
@@ -160,3 +125,33 @@ function recallSquare(squareInfo) {
     return square;
 }
 
+
+//should change this to get nth left slide, nth middle slide >> and change
+function firstSlideVisible() {
+
+    if (getNthMiddleSlide(0)) {
+        let firstMiddleSlide = getNthMiddleSlide(0);
+        firstMiddleSlide.style.visibility = "visible";
+    }
+}
+
+function makeDragaable() {
+    let midColCenter = document.getElementById("midColCenter");
+    let slides = midColCenter.childNodes;
+    for (let j = 0; j < slides.length; j++) {
+
+        if (slides[j].id === "slideMiddle") {
+            let curSlide = slides[j];
+            let curSlide_childNodes = curSlide.childNodes;
+
+            for (let i = 0; i < curSlide_childNodes.length; i++) {
+
+                if (curSlide_childNodes[i].id === "square") {
+                    let curSquare = curSlide_childNodes[i];
+                    dragElement(curSquare, curSlide);
+                }
+            }
+        }
+    }
+
+}

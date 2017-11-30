@@ -1,9 +1,11 @@
 'use strict';
 
+let btnLoadImage = document.getElementById('btnLoadImage');
+btnLoadImage.addEventListener('change', putImageFiles);
 
 //to put image data inside of figure(currently only square)
 function putImageFiles() {
-    let files = document.querySelector('input[type=file]').files;
+    let files = document.getElementById("btnLoadImage").files;
 
     function readAndPreview(file) {
         // Make sure `file.name` matches our extensions criteria

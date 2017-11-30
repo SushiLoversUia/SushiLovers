@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-  <title>ABC</title>
+  <title>Sushilovers</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="..\css\main.css">
+
   <script src="..\js\drag.js"></script>
   <script src="..\js\slide-tool.js"></script>
   <script src="..\js\square-tool.js"></script>
   <script src="..\js\extra-tool.js"></script>
 
-  <script src="..\js\add-image.js"></script>
   <script src="..\js\new-slide.js"></script>
   <script src="..\js\new-square.js"></script>
 
@@ -23,7 +23,7 @@
   <script src="..\js\full-screen.js"></script>
   <script src="..\js\key-control.js"></script>
 
-  <script src="..\js/buttons.js"></script>
+  <script src="..\js\buttons.js"></script>
 
 </head>
 
@@ -40,7 +40,7 @@
     <div class="right tools section">
 
       <button id="btnNewtextbox">create text box</button>
-      <button id="btnDelete_square">delete square</button>
+      <button id="btnDelete_square">delete text box</button>
       <button id="btnDelete_slide">delete slide</button>
 
       <input id="btnLoadImage" type="file" multiple name="images" accept=".jpg, .jpeg, .png">
@@ -116,7 +116,7 @@
     </div>
   </div>
 </body>
-
+<script src="..\js\add-image.js"></script>
 <script src="..\js\background-theme.js"></script>
 
 <script>
@@ -150,9 +150,19 @@
 
   makeNewSlide();
   makeNewSquare();
+
+  makeNewSlide();
+  makeNewSquare();
+  makeNewSquare();
+
+  makeNewSlide();
+  makeNewSquare();
+  makeNewSquare();
+  makeNewSquare();
+
+
   hideAllSlides();
   makeVisible_NthSlide(0);
-
 
 
 </script>

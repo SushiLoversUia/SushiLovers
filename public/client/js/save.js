@@ -34,25 +34,37 @@ function save() {
     let presentationInfo = {
         "prName": "",
         "numOfSlides": ""
+
     };
     presentationInfo.prName = "awesomeSlide"
     presentationInfo.numOfSlides = slideCnt;
     localStorage.setItem('presentationInfo', JSON.stringify(presentationInfo));
 }
 
-
 //input : slide(based on html slide), output : all the slide info of input in json format
 function getSlide(curSlide) {
     //currently childNodes are only squares
     let childNodes = curSlide.childNodes;
 
-    let slideInfo = [];
+    let slideInfo = {
+        "slideTheme": "",
+        "slideFigureInfo": ""
+    };
+    slideInfo.slideTheme = curSlide.style.backgroundImage;
+
+    let slideFigureInfo_temp = [];
     for (let i = 0; i < childNodes.length; i++) {
         if (childNodes[i].id === "square") {
+
             let curSquare = getSquares(childNodes[i], curSlide);
-            slideInfo.push(curSquare);
+
+            slideFigureInfo_temp.push(curSquare);
         }
     }
+    // console.log(slideFigureInfo_temp);
+    slideInfo.slideFigureInfo = JSON.stringify(slideFigureInfo_temp);
+    console.log(slideInfo);
+
     return slideInfo;
 }
 

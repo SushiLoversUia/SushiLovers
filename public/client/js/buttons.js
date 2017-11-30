@@ -2,6 +2,7 @@ window.addEventListener("load", function () {
 
 
 
+
     boldButton.addEventListener("click", function () {
         document.execCommand("Bold", false, null)
     })
@@ -75,9 +76,6 @@ window.addEventListener("load", function () {
     })
 
 
-    let themeInput = document.getElementById('btnChangeTheme');
-    themeInput.addEventListener('change', changeBackgroundTheme);
-
 
 
     //save all the information currently the user is using, seeing
@@ -98,8 +96,6 @@ window.addEventListener("load", function () {
     btnNewtextbox.addEventListener('click', makeNewSquare);
 
     //put image file from local dir inside of square(that user clicked last time)
-    let btnLoadImage = document.getElementById('btnLoadImage');
-    btnLoadImage.addEventListener('click', putImageFiles);
 
 
     //presentation mode button, full-screen.js
@@ -121,6 +117,4 @@ window.addEventListener("load", function () {
 
     let btnDelete_wholeSlideTheme = document.getElementById('btnDelete_wholeSlideTheme');
     btnDelete_wholeSlideTheme.addEventListener('click', deleteWholeSlide_theme);
-
-
 })
