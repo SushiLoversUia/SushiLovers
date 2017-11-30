@@ -1,98 +1,97 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>Presentation application</title>
-        <meta charset="utf-8"/>
-        <link rel="stylesheet" href="css/stylelog.css"/>
-        <script src="superfetch2.js"></script>
-    </head>
 
-    <body>
-        <div class="login-page">
-            <div class="form">
-                <h1 id="title-regis">Presentation Application Account</h1>
-                    <input id="inpLoginname" type="text" placeholder="username"/>
-                    <input id="inpPassword" type="password" placeholder="password" onkeypress="isItEnter(event)"/>
-                    <div id="wrongcreds"></div>
-                    <button onClick="login()">login</button>
-                    <p class="message">Not registered? <a href="signup.html">Create an account</a></p>
-            </div>
+<head>
+    <title>Presentation application</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/stylelog.css" />
+    <script src="superfetch2.js"></script>
+</head>
+
+<body>
+    <div class="login-page">
+        <div class="form">
+            <h1 id="title-regis">Presentation Application Account</h1>
+            <input id="inpLoginname" type="text" placeholder="username" />
+            <input id="inpPassword" type="password" placeholder="password" onkeypress="isItEnter(event)" />
+            <div id="wrongcreds"></div>
+            <button onClick="login()">login</button>
+            <p class="message">Not registered?
+                <a href="signup.html">Create an account</a>
+            </p>
         </div>
-    </body>
-    
-    <script>
-        
-        
-        var inpLoginname = document.getElementById("inpLoginname");
-        var inpPassword = document.getElementById("inpPassword");
-        var users = {};
-        
-        if(localStorage.getItem('logindata') != null)
-            users = JSON.parse(localStorage.getItem('logindata'));
-        
-        //isItEnter : function to login the user if he press enter on the field input password
-        function isItEnter(e) {
-            if(e.keyCode == 13)
-                login();
-            return;
-        }
-        //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
-        function isFieldsOk() {
-            var regUsername = new RegExp('^[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])+$');
-            var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
-            
-            if(regUsername.test(inpLoginname.value) && regPassw.test(inpPassword.value))
-                return true;
-        }
-        //button click ---------------------------------
-        function login() {
-            
-            if(isFieldsOk())
-            {
-                var upload = JSON.stringify({
-                    loginname: inpLoginname.value, 
-                    password: inpPassword.value
-                });
+    </div>
+</body>
 
-                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/auth";
+<script>
 
-                var cfg = {
-                    method: "POST",            
-                    body: upload,
-                }
-                superfetch(url, "json", succ, error, cfg);
+
+    var inpLoginname = document.getElementById("inpLoginname");
+    var inpPassword = document.getElementById("inpPassword");
+    var users = {};
+
+    if (localStorage.getItem('logindata') != null)
+        users = JSON.parse(localStorage.getItem('logindata'));
+
+    //isItEnter : function to login the user if he press enter on the field input password
+    function isItEnter(e) {
+        if (e.keyCode == 13)
+            login();
+        return;
+    }
+    //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
+    function isFieldsOk() {
+        var regUsername = new RegExp('^[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])+$');
+        var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
+
+        if (regUsername.test(inpLoginname.value) && regPassw.test(inpPassword.value))
+            return true;
+    }
+    //button click ---------------------------------
+    function login() {
+
+        if (isFieldsOk()) {
+            var upload = JSON.stringify({
+                loginname: inpLoginname.value,
+                password: inpPassword.value
+            });
+
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/auth";
+
+            var cfg = {
+                method: "POST",
+                body: upload,
             }
-            else
-            {
-                alert("A required field is empty or you are trying to hack my website");
-            }
+            superfetch(url, "json", succ, error, cfg);
         }
-        //success --------------------------------------
-        function succ(data) {
-            console.log(data);
-            //save logindata/token to localStorage 
-            localStorage.setItem("logindata", JSON.stringify(data));
-            //redirect user to the main page
-            var token = JSON.parse(localStorage.getItem("logindata")).token;
-            window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/api/users/dashboard/?token=" + token;
-                   
+        else {
+            alert("A required field is empty or you are trying to hack my website");
         }
-        //error ----------------------------------------
-        function error(err) {
-            console.log(err);
-            if(err.msg == "Login name does not exists")
-            {
-                document.getElementById("wrongcreds").style.marginBottom = "10%";
-                document.getElementById("wrongcreds").innerHTML = "Your username is incorrect";
-            }
-            else if(err.msg == "Wrong password")
-            {
-                document.getElementById("wrongcreds").style.marginBottom = "10%";
-                document.getElementById("wrongcreds").innerHTML = "Your password is incorrect";
-            }
+    }
+    //success --------------------------------------
+    function succ(data) {
+        console.log(data);
+        //save logindata/token to localStorage 
+        localStorage.setItem("logindata", JSON.stringify(data));
+        //redirect user to the main page
+        var token = JSON.parse(localStorage.getItem("logindata")).token;
+        window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/dashboard/?token=" + token;
+
+    }
+    //error ----------------------------------------
+    function error(err) {
+        console.log(err);
+        if (err.msg == "Login name does not exists") {
+            document.getElementById("wrongcreds").style.marginBottom = "10%";
+            document.getElementById("wrongcreds").innerHTML = "Your username is incorrect";
         }
-        
-    </script>
+        else if (err.msg == "Wrong password") {
+            document.getElementById("wrongcreds").style.marginBottom = "10%";
+            document.getElementById("wrongcreds").innerHTML = "Your password is incorrect";
+        }
+    }
+
+</script>
+
 </html>
-

@@ -1,5 +1,7 @@
 window.addEventListener("load", function () {
 
+
+
     boldButton.addEventListener("click", function () {
         document.execCommand("Bold", false, null)
     })
@@ -71,5 +73,54 @@ window.addEventListener("load", function () {
     alignRight.addEventListener("click", function (event) {
         document.execCommand("justifyRight", false, null)
     })
+
+
+    let themeInput = document.getElementById('btnChangeTheme');
+    themeInput.addEventListener('change', changeBackgroundTheme);
+
+
+
+    //save all the information currently the user is using, seeing
+    let btnSave = document.getElementById('btnSave');
+    btnSave.addEventListener('click', save);
+
+    //open(retrive) information that user stored previously
+    let btnRecall = document.getElementById('btnRecall');
+    btnRecall.addEventListener('click', recall);
+
+
+    //making new example squares on our slide(in the middle)
+    //make new slides
+    let btnNewSlide = document.getElementById('btnNewSlide');
+    btnNewSlide.addEventListener('click', makeNewSlide);
+
+    let btnNewtextbox = document.getElementById('btnNewtextbox');
+    btnNewtextbox.addEventListener('click', makeNewSquare);
+
+    //put image file from local dir inside of square(that user clicked last time)
+    let btnLoadImage = document.getElementById('btnLoadImage');
+    btnLoadImage.addEventListener('click', putImageFiles);
+
+
+    //presentation mode button, full-screen.js
+    let btnPresentation = document.getElementById('btnPresentation');
+    btnPresentation.addEventListener('click', presentationMode);
+
+    //left, down arrow >> previous slide, right,up arrow >> next slide, delete >> delete slide or square(figure)
+    document.onkeydown = keyEvent;
+
+    //backspace delete or delete last clicked square or slide
+    let btnDelete_square = document.getElementById('btnDelete_square');
+    btnDelete_square.addEventListener('click', deleteSquare_html);
+    let btnDelete_slide = document.getElementById('btnDelete_slide');
+    btnDelete_slide.addEventListener('click', deleteSlide_html);
+
+    let btnDelete_curSlideTheme = document.getElementById('btnDelete_curSlideTheme');
+    btnDelete_curSlideTheme.addEventListener('click', deleteCurSlide_theme);
+
+
+    let btnDelete_wholeSlideTheme = document.getElementById('btnDelete_wholeSlideTheme');
+    btnDelete_wholeSlideTheme.addEventListener('click', deleteWholeSlide_theme);
+
 
 })

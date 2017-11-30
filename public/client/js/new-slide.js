@@ -20,7 +20,12 @@ function makeNewSlide() {
     let parentDiv_midColCenter = document.getElementById("midColCenter");
     let middleSlide = document.createElement("div");
     middleSlide.setAttribute("id", "slideMiddle");
+    if (currentTheme != null) {
+        middleSlide.style.backgroundImage = `url(${currentTheme})`;
+    }
+
     parentDiv_midColCenter.appendChild(middleSlide);
+
     // console.log(middleSlide);
 
     lastClicked_LeftSlide = leftSlide;

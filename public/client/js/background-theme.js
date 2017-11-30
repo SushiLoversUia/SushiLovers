@@ -1,52 +1,44 @@
 'use strict';
 
-function addPresentationTheme() {
-
-
-    // let files = document.querySelector('input[type=file]').files;
-
-    // let files = document.getElementById("btnBackgroundTheme").files;
-    let files = document.querySelector('input[type=file]').files;
-    
-    
-    function readAndPreview(file) {
-        // Make sure `file.name` matches our extensions criteria
-        if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
-
-            let reader = new FileReader();
-            reader.addEventListener("load", function () {
-                let image = new Image();
-                image.title = file.name;
-                image.src = this.result;
-
-                // let slidesMiddle = getAllMiddleSlide();
-                // for (let i = 0; i < slidesMiddle.length; i++) {
-                //     slidesMiddle[i].style.backgroundImage = `url(${image.src})`;
-                // }
-
-
-                // let midColCenter = document.getElementById("midColCenter");
-                // if (midColCenter === null) {
-                //     return "getNthMiddleSlide error";
-                // }
-                // let middleSlides = midColCenter.childNodes;
-                // for (let i = 0; i < middleSlides.length; i++) {
-                //     let middleSlide = middleSlides[i];
-                //     if (middleSlide.id === 'slideMiddle') {
-                //         middleSlide.style.backgroundImage = `url(${image.src})`;
-                //     }
-                // }
 
 
 
-            }, false);
-            reader.readAsDataURL(file);
+//somehow, putImageFiles(add-image.js) has some bugs when try to use two inputs suppose this method is more secure and cleaner
+function changeBackgroundTheme() {
+    let curFiles = themeInput.files;
+    //case your didn't select anything
+    if (curFiles.length === 0) {
+        let para = document.createElement('p');
+        para.textContent = 'No files currently selected for upload';
+        preview.appendChild(para);
+    } else {
+        for (let i = 0; i < curFiles.length; i++) {
+            if (validFileType(curFiles[i])) {
+                let image = document.createElement('img');
+                image.src = window.URL.createObjectURL(curFiles[i]);
+
+                //save current theme, new slide >> new theme will be applied
+                currentTheme = image.src;
+                let slidesMiddle = getAllMiddleSlide();
+                for (let i = 0; i < slidesMiddle.length; i++) {
+                    slidesMiddle[i].style.backgroundImage = `url(${image.src})`;
+                }
+            }
         }
     }
-    //don't need it now, case of user clicked several images
-    if (files) {
-        [].forEach.call(files, readAndPreview);
+}
+
+let fileTypes = [
+    'image/jpeg',
+    'image/pjpeg',
+    'image/png'
+]
+
+function validFileType(file) {
+    for (var i = 0; i < fileTypes.length; i++) {
+        if (file.type === fileTypes[i]) {
+            return true;
+        }
     }
-
-
+    return false;
 }

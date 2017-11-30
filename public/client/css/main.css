@@ -125,7 +125,8 @@ body{
   border-width:5px;  
   border-style:dotted;
   border-color: rgb(118, 109, 109);
-
+  background-size: 100% 100%;
+  
 
 }
 
