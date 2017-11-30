@@ -10,7 +10,6 @@
   <script src="..\js\slide-tool.js"></script>
   <script src="..\js\square-tool.js"></script>
   <script src="..\js\extra-tool.js"></script>
-  <!-- <script src="..\js\read-write.js"></script> -->
 
   <script src="..\js\add-image.js"></script>
   <script src="..\js\new-slide.js"></script>
@@ -24,7 +23,6 @@
   <script src="..\js\full-screen.js"></script>
   <script src="..\js\key-control.js"></script>
 
-  <script src="..\js\background-theme.js"></script>
   <script src="..\js/buttons.js"></script>
 
 </head>
@@ -44,8 +42,12 @@
       <button id="btnNewtextbox">create text box</button>
       <button id="btnDelete_square">delete square</button>
       <button id="btnDelete_slide">delete slide</button>
-      <input id="btnLoadImage" type="file" multiple name="images">
-      
+
+      <input id="btnLoadImage" type="file" multiple name="images" accept=".jpg, .jpeg, .png">
+      <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
+      <button id="btnDelete_curSlideTheme">delete current slide theme</button>
+      <button id="btnDelete_wholeSlideTheme">delete whole slide theme</button>
+
     </div>
     <div class="column side" id="midColLeft">
       <button id="btnNewSlide" style="width:100%; ">New Slide</button>
@@ -107,13 +109,15 @@
     <div class="column middle" id="midColCenter">
 
     </div>
-    <div id="footer" style="paddig:auto">
+    <div id="footer" style="padding:auto">
       <label for="Comment"></label> Comments:
       <input type="text" id="comment" style="resize: none; width: 70%; height: 70%;  background-color : #9d9d9d;">
       </input>
     </div>
   </div>
 </body>
+
+<script src="..\js\background-theme.js"></script>
 
 <script>
   'use strict';
@@ -137,53 +141,15 @@
 
   //style.zIndex max : 2147483648(32bit) >> assume no bug
   let flag_zIndex = 0;
+  let currentTheme = "";
   /********************************************************************/
   /********************************************************************/
   /********************************************************************/
 
 
-  //save all the information currently the user is using, seeing
-  btnSave.onclick = save;
-
-  //open(retrive) information that user stored previously
-  btnRecall.onclick = recall;
-
-  //making new example squares on our slide(in the middle)
-  //make new slides
-  btnNewSlide.onclick = makeNewSlide;
-  btnNewtextbox.onclick = makeNewSquare;
-
-  //put image file from local dir inside of square(that user clicked last time)
-  btnLoadImage.onchange = putImageFiles;
-
-
-  //presentation mode button, full-screen.js
-  btnPresentation.onclick = presentationMode;
-
-  //left, down arrow >> previous slide, right,up arrow >> next slide, delete >> delete slide or square(figure)
-  document.onkeydown = keyEvent;
-
-
-  //backspace delete or delete last clicked square or slide
-  btnDelete_square.onclick = deleteSquare_html;
-  btnDelete_slide.onclick = deleteSlide_html;
-
-  //working on it
-  // btnBackgroundTheme.onclick = addPresentationTheme;
 
   makeNewSlide();
   makeNewSquare();
-  // makeNewSquare();
-  // makeNewSquare();
-  // makeNewSquare();
-  // makeNewSquare();
-  // makeNewSquare();
-
-  // makeNewSlide();
-  // makeNewSquare();
-  // makeNewSquare();
-
-
   hideAllSlides();
   makeVisible_NthSlide(0);
 

@@ -1,6 +1,6 @@
 //delete all left, middle slides 
 function deletePresentation_html() {
-    console.log("clean up the previous pr")
+    // console.log("clean up the previous pr")
 
     let midColCenter = document.getElementById("midColCenter");
     let midColLeft = document.getElementById("midColLeft");
@@ -86,3 +86,19 @@ function resetFlags() {
     slideCnt = 0;
 }
 
+function deleteCurSlide_theme() {
+
+    if (lastClicked_MiddleSlide) {
+        lastClicked_MiddleSlide.style.backgroundImage = "";
+    }
+}
+
+function deleteWholeSlide_theme() {
+    let midSlides = getAllMiddleSlide();
+
+    for (let i = 0; i < midSlides.length; i++) {
+        let curSlide = midSlides[i]; 
+        curSlide.style.backgroundImage = "";
+    }
+    currentTheme = "";
+}
