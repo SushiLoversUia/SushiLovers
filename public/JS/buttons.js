@@ -6,8 +6,8 @@
 window.addEventListener("load", function(){
 
 
-  btnSave.addEventListener("click", save)
-  btnOpen.addEventListener("click", open)
+  btnSave.addEventListener("click", save())
+  btnOpen.addEventListener("click", open())
 
 
   boldButton.addEventListener("click", function(){
@@ -82,6 +82,6 @@ window.addEventListener("load", function(){
     document.execCommand("justifyRight", false, null)
   })
 
-  addImg.addEventListener("change", addImage)
+  addImg.addEventListener("change", addImage())
 
 })
