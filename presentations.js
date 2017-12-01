@@ -99,7 +99,7 @@ app.delete('/', function(req,res) {
 });
 
 app.get('/edit', function(req,res) {
-    res.redirect('main.html');
+    res.redirect('https://app-presentation-sushi-lovers.herokuapp.com/main.html');
 });
 
 //export module -------------------------------------
