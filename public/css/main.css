@@ -28,7 +28,7 @@ select{
 .header {
     grid-column: 1 / 21;
     grid-row: 1 / 2;
-    background-color: #151615;
+    background-color: #34495e;
     color: white;
     border-bottom: 3px solid black ;
     padding: 10px;
@@ -113,7 +113,7 @@ select{
 }
 
 #midColLeft{
-  background: #025403;
+  background: #242b28;
   grid-column: 1 / 3;
   grid-row: 2 / 15;
   margin: 0;
@@ -175,7 +175,8 @@ select{
 
   grid-column: 1 / 21;
   grid-row: 15 /16;
-  background-color: #151615;
+  background-color: #34495e;
+  /*background-color: #242b28;*/
   color: white;
   border-top: 3px solid black ;
 
