@@ -152,7 +152,7 @@ function getSquares(square, parentDiv) {
 //savePresDb : function to save the presentation in the database
 function savePresDb() {
     var token = JSON.parse(localStorage.getItem('logindata')).token;
-    var url = "http://localhost:8080/api/presentations/?token=" + token;
+    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + token;
     var upload = JSON.stringify({
         idp: JSON.parse(localStorage.getItem('presentationInfo')).idp,
         namepres: JSON.parse(localStorage.getItem('presentationInfo')).prName,
@@ -179,7 +179,7 @@ function errorSavePres(err) {
 function delSlidesDb() {
     var token = JSON.parse(localStorage.getItem('logindata')).token;
     var idp = JSON.parse(localStorage.getItem('presentationInfo')).idp;
-    var url = "http://localhost:8080/api/slides/?token=" + token + "&idp=" + idp;
+    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + token + "&idp=" + idp;
     var cfg = { method: "DELETE" };
     
     superfetch(url, "json", succDelSlides, errorDelSlides, cfg);
@@ -198,7 +198,7 @@ function errorDelSlides(err) {
 //saveSlidesDb : function to save all slides in the database
 function saveSlidesDb(num) {
     var token = JSON.parse(localStorage.getItem('logindata')).token;
-    var url = "http://localhost:8080/api/slides/?token=" + token;
+    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + token;
     var upload = JSON.stringify({
         content: localStorage.getItem('slide' + num),
         idp: JSON.parse(localStorage.getItem('presentationInfo')).idp
