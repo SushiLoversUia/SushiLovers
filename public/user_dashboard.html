@@ -324,7 +324,7 @@
                 idp: selected.options[selected.selectedIndex].value
             })
             localStorage.setItem('presentationInfo', info);
-            localStorage.setItem('newOne', "false");
+            localStorage.setItem('newOne', JSON.stringify({isPresNew: "false"}));
             for(i=0; i<data.length; i++)
                 localStorage.setItem('slide' + i, data[i].content);
             window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
@@ -393,7 +393,7 @@
                 idp: data
             })
             localStorage.setItem('presentationInfo', info);
-            localStorage.setItem('newOne', "true");
+            localStorage.setItem('newOne', JSON.stringify({isPresNew: "true"}));
             window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
         }
         //Error creating new presentation
