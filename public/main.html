@@ -33,8 +33,7 @@
       <button id="btnSave">Save</button>
       <button id="btnRecall">open</button>
       <button id="btnPresentation">Presentation Mode</button>
-      <button id="btnLogin">Login</button>
-      <button id="btnSignup">Sign Up</button>
+      <button id="btnLogin" onclick="goToDashboard()">My Dashboard</button>
     </div>
 
     <div class="right tools section">
@@ -161,6 +160,11 @@
   makeVisible_NthSlide(0);
   lastClicked_MiddleSlide = getNthMiddleSlide(0);
   lastClicked_LeftSlide = getNthLeftSlide(0);
+    
+//goToDashboard : function to redirect to user's dashboard
+function goToDashboard() {
+    window.location.href = "http://localhost:8080/user_dashboard.html";
+}
 
 </script>
 

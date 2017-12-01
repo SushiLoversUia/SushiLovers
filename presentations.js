@@ -75,13 +75,13 @@ function dateFormat() {
     return today;
 }
 
-app.put('/', function(req,res) {
+app.put('/', bodyParser, function(req,res) {
     var upload = JSON.parse(req.body);
-    var ida = upload.idp;
+    var idp = upload.idp;
     var namepres = upload.namepres;
     var nbSlides = upload.nbSlides;
-    
-    var strquery = 'UPDATE presentation SET namepres=\'' + namepres + '\', nbSlides=\'' + nbSlides + '\' WHERE idp=' + upload.ipd + ';';
+
+    var strquery = 'UPDATE presentation SET namepres=\'' + namepres + '\', nbSlides=\'' + nbSlides + '\' WHERE idp=' + idp + ';';
 
     client.query(strquery, (err, resu) => {
         if (err) throw err;
