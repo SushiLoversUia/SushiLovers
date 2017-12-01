@@ -35,29 +35,31 @@
     <div class="header">
       <input id="presName" type="text" value="click here to edit title" />
       <button id="btnSave">Save</button>
-      <button id="btnRecall">open</button>
+      <button id="btnRecall">Open</button>
       <button id="btnPresentation">Presentation Mode</button>
       <button id="btnLogin" onclick="goToDashboard()">My Dashboard</button>
       <button id="btnExport">Export</button>
+      <label id="labelImport" for="btnImport">Import</label>
+      <input id="btnImport" type="file"/></div>
     </div>
 
     <div class="right tools section">
 
-      <button id="btnNewtextbox">create text box</button>
-      <button id="btnDelete_square">delete text box</button>
-      <button id="btnDelete_curSlide">delete current slide</button>
-
-
+      <button id="btnNewtextbox">Create text box</button>
+      <button id="btnDelete_square">Delete text box</button>
+      <button id="btnDelete_curSlide">Delete current slide</button>
       <br>
       <br>
-      <label id="btnLoadImageLabel" for="btnLoadImage">upload images</label>
+      <label id="btnLoadImageLabel" for="btnLoadImage">Upload images</label>
       <input id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
       <br>
-      <label id="btnChangeThemeLabel" for="btnChangeTheme">change theme</label>
+      <br>
+      <label id="btnChangeThemeLabel" for="btnChangeTheme">Change theme</label>
       <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
       <br>
-      <button id="btnDelete_curSlideTheme">delete current slide theme</button>
-      <button id="btnDelete_wholeSlideTheme">delete whole slide theme</button>
+      <br>
+      <button id="btnDelete_curSlideTheme">Delete current slide theme</button>
+      <button id="btnDelete_wholeSlideTheme">Delete whole slide theme</button>
 
     </div>
     <div class="column side" id="midColLeft">
@@ -121,9 +123,7 @@
 
     </div>
     <div id="footer" style="padding:auto">
-      <label for="Comment"></label> Comments:
-      <input type="text" id="comment" style="resize: none; width: 70%; height: 70%;  background-color : #9d9d9d;">
-      </input>
+
     </div>
   </div>
 </body>
