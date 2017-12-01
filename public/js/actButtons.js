@@ -76,10 +76,6 @@ window.addEventListener("load", function () {
     let btnSave = document.getElementById('btnSave');
     btnSave.addEventListener('click', save);
 
-    //open(retrive) information that user stored previously
-    let btnRecall = document.getElementById('btnRecall');
-    btnRecall.addEventListener('click', recall);
-
     //export in flat file
     let btnExport = document.getElementById('btnExport');
     btnExport.addEventListener('click', exportMyFile);
