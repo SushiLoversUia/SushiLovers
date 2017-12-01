@@ -72,9 +72,6 @@ window.addEventListener("load", function () {
         document.execCommand("justifyRight", false, null)
     })
 
-
-
-
     //save all the information currently the user is using, seeing
     let btnSave = document.getElementById('btnSave');
     btnSave.addEventListener('click', save);
@@ -86,6 +83,10 @@ window.addEventListener("load", function () {
     //export in flat file
     let btnExport = document.getElementById('btnExport');
     btnExport.addEventListener('click', exportMyFile);
+    
+    //import a presentation
+    let btnImport = document.getElementById('btnImport');
+    btnImport.addEventListener('change', importMyFile);
 
     //making new example squares on our slide(in the middle)
     //make new slides
@@ -109,7 +110,6 @@ window.addEventListener("load", function () {
 
     let btnDelete_curSlideTheme = document.getElementById('btnDelete_curSlideTheme');
     btnDelete_curSlideTheme.addEventListener('click', deleteCurSlide_theme);
-
 
     let btnDelete_wholeSlideTheme = document.getElementById('btnDelete_wholeSlideTheme');
     btnDelete_wholeSlideTheme.addEventListener('click', deleteWholeSlide_theme);
