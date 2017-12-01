@@ -9,9 +9,9 @@ function putImageFiles() {
     let files = document.getElementById("btnLoadImage").files;
     
     function readAndPreview(file) {
-        if(file.size > 100000)
+        if(file.size > 100000* 10000)
         {
-            alert("File too large (max: 100KB)");
+            alert("File too large (max: 100* 10000KB)");
             return;
         }
         // Make sure `file.name` matches our extensions criteria

@@ -1,7 +1,5 @@
 //delete all left, middle slides 
 function deletePresentation_html() {
-    // console.log("clean up the previous pr")
-
     let midColCenter = document.getElementById("midColCenter");
     let midColLeft = document.getElementById("midColLeft");
 
@@ -46,13 +44,13 @@ function deleteSquare_html() {
     }
 }
 
-//delete lastClicked_LeftSlide & lastClicked_MiddleSlide
 function deleteSlide_html() {
 
+    let deleMiddleSlide = getVisibleSlide();
     
-    let deleLeftSlide = lastClicked_LeftSlide;
-    let deleMiddleSlide = lastClicked_MiddleSlide;
     let deleMiddleSlide_idx = getCurSlideIdx(deleMiddleSlide)
+    
+    let deleLeftSlide = getNthLeftSlide(deleMiddleSlide_idx);
 
     if (deleLeftSlide.parentNode && deleMiddleSlide.parentNode) {
         deleLeftSlide.parentNode.removeChild(deleLeftSlide);
@@ -88,16 +86,16 @@ function resetFlags() {
 
 function deleteCurSlide_theme() {
 
-    if (lastClicked_MiddleSlide) {
-        lastClicked_MiddleSlide.style.backgroundImage = "";
+    let visibleSlide = getVisibleSlide();
+    if (visibleSlide) {
+        visibleSlide.style.backgroundImage = "";
     }
 }
 
 function deleteWholeSlide_theme() {
     let midSlides = getAllMiddleSlide();
-
     for (let i = 0; i < midSlides.length; i++) {
-        let curSlide = midSlides[i]; 
+        let curSlide = midSlides[i];
         curSlide.style.backgroundImage = "";
     }
     currentTheme = "";
