@@ -1,11 +1,18 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
 body{
   color: #3d3939;
-  font-family: 'Nunito Semibold';
+  font-family: "Roboto";
   text-align: center;
   margin: 0;
   overflow: hidden;
   height: 100%;
-  width: 100%;
+}
+
+select{
+    border: none;
+    color: white;
+    background-color: transparent;
 }
 
 #main{
@@ -19,32 +26,41 @@ body{
 }
 
 .header {
-
     grid-column: 1 / 21;
     grid-row: 1 / 2;
     background-color: #151615;
     color: white;
     border-bottom: 3px solid black ;
-
     padding: 10px;
     z-index: 100;
+}
 
+.header > button{
+    color: white;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    font-size: 13px;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
 
+.header > button:hover, .right > button:hover{
+  transition: all 0.2s linear 0s;
+  background-color:#546f5b;
 }
 
 #ribbon {
-
   grid-column: 3 / 19;
   grid-row: 2 / 3;
-
   background-color: #242b28;
   color: white;
   border-bottom: 2px solid black;
-
   padding: 5px;
   z-index: 100;
-
-
 }
 
 #ribbon > button{
@@ -70,15 +86,10 @@ body{
   padding: 0;
   display: flex;
   flex-direction: column;
-
-
-
 }
 
-
-
 .right{
-    background: #025403;
+    background: #242b28;
     grid-column: 19 / 21;
     grid-row: 2 / 15;
     margin: 0;
@@ -86,7 +97,30 @@ body{
     border-left: 3px solid black ;
 }
 
+.right > button{
+    color: white;
+    border-radius: 0%;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 20%;
+}
 
+.right > input{
+    display: none;
+}
+
+.label-file{
+    font-family: "Roboto";
+    color: white;
+    border-radius: 0%;
+    background-color: transparent;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+}
 
 #midColLeft{
   background: #025403;
@@ -113,21 +147,30 @@ body{
     border: 5px solid rgb(17, 16, 16);
 }
 
+#btnNewSlide{
+    color: white;
+    border: solid 1px #242b28;
+    border-radius: 0%;
+    border-bottom: solid black 2px;
+    background-color: #242b28;
+    outline: none;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 9.5px;
+}
+
+#btnNewSlide:hover{
+    transition: all 0.2s linear 0s;
+    background-color:#546f5b;
+}
+
 #slideMiddle{
 
   background: white;
   border: 2px solid black;
 
-  /* top:15%;
-  left:15%;
-
-  right:15%;
-  bottom:15%; */
   height: 70%;
-  width:70%; 
-
-  /* grid-column : 7/10; */
-  /* grid-row : 7/10; */
+  width:70%;
   align-self: center;
   position: absolute;
   
@@ -141,6 +184,8 @@ body{
 
 #footer{
 
+  grid-column: 1 / 21;
+  grid-row: 15 /16;
   background-color: #151615;
   color: white;
   border-top: 3px solid black ;
@@ -178,11 +223,12 @@ body{
     /* visibility: visible; */
 }
 
-#btnChangeThemeLabel {
-    background-color: rgb(216, 22, 22);
-}
-
-
-#btnLoadImageLabel {
-    background-color: rgb(236, 14, 14);
+#presName{
+    width: 100%;
+    border: none;
+    padding: 1%;
+    background-color: transparent;
+    color: #bdc3c7;
+    text-align: center;
+    font-size: 17px;
 }

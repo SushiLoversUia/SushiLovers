@@ -1,425 +1,437 @@
+
 <!DOCTYPE html>
 
 <html>
+    <head>
+        <title>Presentation application</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="css/styledashboard.css"/>
+        <script src="js/superfetch2.js"></script>
+    </head>
 
-<head>
-    <title>Presentation application</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/styledashboard.css" />
-    <script src="superfetch2.js"></script>
-</head>
-
-<body>
-    <div class="dashboard-page">
-        <div class="form">
-            <span id="logout" onclick="logout()">Sushi out [->]</span>
-            <h1 id="title-dashboard">Your Dashboard</h1>
-            <div id="my-profil">
-                <h2 id="title-myprofil">My Profil</h2>
-                <div id="my-profil-settings">
-                    <div id="my-profil-settings-labels">
-                        <p id="my-profil-settings-label-p">Username: </p>
-                        <p id="my-profil-settings-label-p">Fullname: </p>
-                        <p id="my-profil-settings-label-p">Password: </p>
-                        <p id="my-profil-settings-label-p">Confirm password: </p>
-                        <p id="my-profil-settings-label-p">Email: </p>
-                        <p id="my-profil-settings-label-p">Avatar: </p>
-                    </div>
-                    <div id="my-profil-settings-data">
-                        <p id="username"></p>
-                        <input id="inpFullname" placeholder="*It can not be empty*" onchange="isFieldsOk()" maxlength="100" />
-                        <input id="inpPassword" type="password" placeholder="*5 characters minimum*" onchange="isFieldsOk()" maxlength="15" />
-                        <input id="inpConfPassword" type="password" placeholder="*The same password is required*" onchange="isFieldsOk()" maxlength="15"
-                        />
-                        <input id="inpEmail" placeholder="*It can not be empty*" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"
-                        />
-                        <input id="inpAvatar" type="file" onchange="getMyFile()" />
-                        <canvas id="image"></canvas>
+    <body>
+        <div class="dashboard-page">
+            <div class="form">
+                <span id="logout" onclick="logout()">Sushi out [->]</span>
+                <h1 id="title-dashboard">Your Dashboard</h1>
+                <div id="my-profil">
+                    <h2 id="title-myprofil">My Profil</h2>
+                    <div id="my-profil-settings">
+                        <div id="my-profil-settings-labels">
+                            <p id="my-profil-settings-label-p">Username: </p>
+                            <p id="my-profil-settings-label-p">Fullname: </p>
+                            <p id="my-profil-settings-label-p">Password: </p>
+                            <p id="my-profil-settings-label-p">Confirm password: </p>
+                            <p id="my-profil-settings-label-p">Email: </p>
+                            <p id="my-profil-settings-label-p">Avatar: </p>
+                        </div>
+                        <div id="my-profil-settings-data">
+                            <p id="username"></p>
+                            <input id="inpFullname" placeholder="*It can not be empty*" onchange="isFieldsOk()" maxlength="100"/>
+                            <input id="inpPassword" type="password" placeholder="*5 characters minimum*" onchange="isFieldsOk()" maxlength="15"/>
+                            <input id="inpConfPassword" type="password" placeholder="*The same password is required*" onchange="isFieldsOk()" maxlength="15"/>
+                            <input id="inpEmail" placeholder="*It can not be empty*" onkeypress="isItEnter(event)" onchange="isFieldsOk()" maxlength="255"/>
+                            <input id="inpAvatar" type="file" onchange="getMyFile()"/>
+                            <canvas id="image"></canvas>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="wrongmail"></div>
-            <button onClick="checkEmail()">Save settings</button>
+                    <div id="wrongmail"></div>
+                    <button onClick="checkEmail()">Save settings</button>
 
-            <div id="my-presentations">
-                <h1 id="title-dashboard">My presentations</h1>
-                <div id="presentation-table">
-                    <h1>Here is all my prezzzz</h1>
-                </div>
-                <button id="newPres" onclick="newPresentation()">Create a new presentation!</button>
+                    <div id="my-presentations">
+                        <h1 id="title-dashboard">My presentations</h1>
+                        <div id="presentation-table">
+                            <h1>You don't have any presentation yet, try to create a new one!</h1>
+                        </div>
+                        <button id="newPres" onclick="newPresentation()">Create a new presentation!</button>
+                    </div>
+                    <button id="deleteBtn" onClick="deleteUserAccount()">Delete my account</button>
             </div>
-            <button id="deleteBtn" onClick="deleteUserAccount()">Delete my account</button>
         </div>
-    </div>
-</body>
-
-<script>
-    // Restrict the webpage to a user who is already logged
-    if (JSON.parse(localStorage.getItem("logindata")) == null)
-        window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/errornotfound.html";
-
-    var username = document.getElementById("username");
-    username.innerHTML = JSON.parse(localStorage.getItem("logindata")).loginname;
-    var fullname = document.getElementById("inpFullname");
-    fullname.value = JSON.parse(localStorage.getItem("logindata")).fullname;
-    var password = document.getElementById("inpPassword");
-    var confpass = document.getElementById("inpConfPassword");
-    var email = document.getElementById("inpEmail");
-    email.value = JSON.parse(localStorage.getItem("logindata")).email;
-    var img = new Image();
-    getMyAvatar();
-    displayMyPres();
-    //getMyAvatar : function to retrieve avatar data in database
-    function getMyAvatar() {
-        var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/avatar/?userid=" + username.textContent;
-
-        superfetch(url, "json", succAvatar, errorAvatar);
-    }
-    //Success avatar
-    function succAvatar(data) {
-        document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value + "               <img id=\"avatar\" src=\"" + data.avatar + "\" width=\"30px\">";
-    }
-    //Error avatar
-    function errorAvatar(data) {
-        document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value + "               <img src=\"pictures/avatardefault.jpeg\" width=\"30px\">";
-    }
-    //getMyFile : function to get the image which is loaded in the input file
-    function getMyFile() {
-        var file = document.getElementById("inpAvatar").files[0];
-        var reader = new FileReader();
-
-        reader.onload = function () {
-            showMyPic(reader.result);
+    </body>
+    
+    <script>
+        // Restrict the webpage to a user who is already logged
+        if(JSON.parse(localStorage.getItem("logindata")) == null)
+            window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/errornotfound.html";
+        
+        var username = document.getElementById("username");
+        username.innerHTML = JSON.parse(localStorage.getItem("logindata")).loginname;
+        var fullname = document.getElementById("inpFullname");
+        fullname.value = JSON.parse(localStorage.getItem("logindata")).fullname;
+        var password = document.getElementById("inpPassword");
+        var confpass = document.getElementById("inpConfPassword");
+        var email = document.getElementById("inpEmail");
+        email.value = JSON.parse(localStorage.getItem("logindata")).email;
+        var img = new Image();
+        getMyAvatar();
+        displayMyPres();
+        //getMyAvatar : function to retrieve avatar data in database
+        function getMyAvatar() {
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/avatar/?userid=" + username.textContent;
+            
+            superfetch(url, "json", succAvatar, errorAvatar);
         }
-
-        reader.readAsDataURL(file);
-    }
-    //showMyPic : function to display a preview of the avatar selected
-    function showMyPic(result) {
-
-        img.onload = function () {
-            var can = document.getElementById("image");
-            var ctx = can.getContext("2d");
-            can.style.display = "inline";
-            ctx.drawImage(img, 0, 0, 270, 150);
-            imgData = ctx.getImageData(0, 0, can.width, can.height);
-            dataurl = can.toDataURL();
-        };
-        img.src = result;
-    }
-    //isItEnter : function to login the user if he press enter on the field input password
-    function isItEnter(e) {
-        if (e.keyCode == 13)
-            save();
-        return;
-    }
-    //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
-    function isFieldsOk() {
-        var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
-        var regFullname = new RegExp('^[a-zA-Z]+[-\\s]?[a-zA-Z]+$');
-        var regEmail = new RegExp('^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])*\.[a-z]{2,5}$');
-        mailuser = JSON.parse(localStorage.getItem("logindata")).email;
-
-        if (password.value == "")
-            password.style.background = "";
-        else if (!regPassw.test(password.value) || password.value.length < 5)
-            password.style.background = "#e74c3c";
-        else {
-            password.style.background = "#2ecc71";
-            if (password.value != confpass.value)
-                confpass.style.background = "#e74c3c";
+        //Success avatar
+        function succAvatar(data) {
+            document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value + "               <img id=\"avatar\" src=\"" + data.avatar + "\" width=\"30px\">";
         }
-        if (confpass.value == "")
-            confpass.style.background = "";
-        else if (confpass.value != password.value)
-            confpass.style.background = "#e74c3c";
-        else
-            confpass.style.background = "#2ecc71";
-        if (fullname.value == "" || fullname.value == JSON.parse(localStorage.getItem("logindata")).fullname)
-            fullname.style.background = "";
-        else if (!regFullname.test(fullname.value))
-            fullname.style.background = "#e74c3c";
-        else
-            fullname.style.background = "#2ecc71";
-        if (email.value == "" || email.value == mailuser)
-            email.style.background = "";
-        else if (!regEmail.test(email.value))
-            email.style.background = "#e74c3c";
-        else
-            email.style.background = "#2ecc71";
-    }
-    //isFieldsColorOk() : function to check the background color of each field return true if all are green
-    function isFieldsColorOk() {
-        if (fullname.style.background == "rgb(231, 76, 60)" || password.style.background == "rgb(231, 76, 60)" || confpass.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(241, 196, 15)")
-            return false;
-        return true;
-    }
-    //isFieldsOk : function check if the user doesn't put an empty string on email field or on fullname field
-    function isFieldEmpty() {
-        if (fullname.value == "")
-            return false;
-        else if (email.value == "")
-            return false;
-        return true;
-    }
-    //isFieldsFullWhite : function check if all the fields have a white background
-    function isFieldsFullWhite() {
-        if (fullname.style.background == "" && password.style.background == "" && confpass.style.background == "" && email.style.background == "")
-            return true;
-        return false;
-    }
-    //isAvatar : function check if the user want to update his avatar
-    function isAvatar() {
-        var file = document.getElementById("inpAvatar").files[0];
-
-        if (file == undefined)
-            return false;
-        return true;
-    }
-    //checkUser : function to check if the email respect the regex and if it is not already in the database
-    function checkEmail() {
-        if (email.style.background == "rgb(46, 204, 113)") {
-            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?email=" + email.value;
-
-            superfetch(url, "json", succCheckEmail, errorCheckEmail);
+        //Error avatar
+        function errorAvatar(data) {
+            document.getElementById("title-dashboard").innerHTML = "Hello " + fullname.value + "               <img src=\"pictures/avatardefault.jpeg\" width=\"30px\">";
         }
-        else
-            save();
-    }
-    //Success check email
-    function succCheckEmail(data) {
-        console.log(data);
-        email.style.background = "rgb(241, 196, 15)";
-        document.getElementById("wrongmail").style.marginBottom = "2%";
-        document.getElementById("wrongmail").innerHTML = "The email adress already exist, pick a new one!";
-    }
-    //Error check email
-    function errorCheckEmail(data) {
-        console.log(data);
-        document.getElementById("wrongmail").style.marginBottom = "0%";
-        document.getElementById("wrongmail").innerHTML = "";
-        save();
-    }
-    //save : saving settings
-    function save() {
-        if (isFieldsColorOk() && isFieldEmpty() && !isFieldsFullWhite()) {
-            var upload = JSON.stringify({
-                loginname: username.textContent,
-                fullname: fullname.value,
-                password: password.value,
-                email: email.value
-            });
-            var token = JSON.parse(localStorage.getItem("logindata")).token;
-            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?token=" + token;
+        //getMyFile : function to get the image which is loaded in the input file
+        function getMyFile() {
+            var file = document.getElementById("inpAvatar").files[0];
+            var reader = new FileReader();
 
-            var cfg = {
-                method: "PUT",
-                body: upload,
+            reader.onload = function() {
+                showMyPic(reader.result);
             }
-
-            superfetch(url, "json", succ, error, cfg);
+            
+            reader.readAsDataURL(file);
         }
-        else if (!isFieldsFullWhite()) {
-            alert("A required fiedl is empty or you made something wrong and extremly bad!");
+        //showMyPic : function to display a preview of the avatar selected
+        function showMyPic(result) {
+            
+            img.onload = function() {
+                var can = document.getElementById("image");
+                var ctx = can.getContext("2d");
+                can.style.display = "inline";
+                ctx.drawImage(img,0,0,270,150);
+                imgData = ctx.getImageData(0,0,can.width,can.height);
+                dataurl = can.toDataURL();
+            };
+            img.src = result;
+        }
+        //isItEnter : function to login the user if he press enter on the field input password
+        function isItEnter(e) {
+            if(e.keyCode == 13)
+                save();
+            return;
+        }
+        //isFieldsOK : function to run regex on each field, it changes the background color if the regex is not matching
+        function isFieldsOk() {
+            var regPassw = new RegExp('^([a-zA-Z0-9Ø#@&\(§!\)-_\$\*€\^%£=\+\/:\.;,\?])+$');
+            var regFullname = new RegExp('^[a-zA-Z]+[-\\s]?[a-zA-Z]+$');
+            var regEmail = new RegExp('^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@[a-zA-Z0-9]+([-_]?[a-zA-Z0-9])*\.[a-z]{2,5}$');
+            mailuser = JSON.parse(localStorage.getItem("logindata")).email;
+
+            if(password.value == "")
+                password.style.background = "";
+            else if(!regPassw.test(password.value) || password.value.length < 5)
+                password.style.background = "#e74c3c";
+            else
+            {
+                password.style.background = "#2ecc71";
+                if(password.value != confpass.value)
+                        confpass.style.background = "#e74c3c";
+            }
+            if(confpass.value == "")
+                confpass.style.background = "";
+            else if(confpass.value != password.value)
+                confpass.style.background = "#e74c3c";
+            else
+                confpass.style.background = "#2ecc71";
+            if(fullname.value == "" || fullname.value == JSON.parse(localStorage.getItem("logindata")).fullname)
+                fullname.style.background = "";
+            else if(!regFullname.test(fullname.value))
+                fullname.style.background = "#e74c3c";
+            else
+                fullname.style.background = "#2ecc71";
+            if(email.value == "" || email.value == mailuser)
+                email.style.background = "";
+            else if(!regEmail.test(email.value))
+                email.style.background = "#e74c3c";
+            else
+                email.style.background = "#2ecc71";
+        }
+        //isFieldsColorOk() : function to check the background color of each field return true if all are green
+        function isFieldsColorOk() {
+            if(fullname.style.background == "rgb(231, 76, 60)" || password.style.background == "rgb(231, 76, 60)" || confpass.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(231, 76, 60)" || email.style.background == "rgb(241, 196, 15)")
+                return false;
+            return true;
+        }
+        //isFieldsOk : function check if the user doesn't put an empty string on email field or on fullname field
+        function isFieldEmpty() {
+            if(fullname.value == "")
+                return false;
+            else if(email.value == "")
+                return false;
+            return true;
+        }
+        //isFieldsFullWhite : function check if all the fields have a white background
+        function isFieldsFullWhite() {
+            if(fullname.style.background == "" && password.style.background == "" && confpass.style.background == "" && email.style.background == "")
+                return true;
+            return false;
+        }
+        //isAvatar : function check if the user want to update his avatar
+        function isAvatar() {
+            var file = document.getElementById("inpAvatar").files[0];
+
+            if(file == undefined)
+                return false;
+            return true;
+        }
+        //checkUser : function to check if the email respect the regex and if it is not already in the database
+        function checkEmail() {
+            if(email.style.background == "rgb(46, 204, 113)")
+            {
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?email=" + email.value;
+            
+                superfetch(url, "json", succCheckEmail, errorCheckEmail);
+            }
+            else
+                save();
+        }
+        //Success check email
+        function succCheckEmail(data) {
+            console.log(data);
+            email.style.background = "rgb(241, 196, 15)";
+            document.getElementById("wrongmail").style.marginBottom = "2%";
+            document.getElementById("wrongmail").innerHTML = "The email adress already exist, pick a new one!";
+        }
+        //Error check email
+        function errorCheckEmail(data) {
+            console.log(data);
             document.getElementById("wrongmail").style.marginBottom = "0%";
             document.getElementById("wrongmail").innerHTML = "";
+            save();
         }
-        if (isAvatar()) {
-            var regImg = new RegExp('\.(jpe?g|png|gif)$');
-            if (regImg.test(document.getElementById("inpAvatar").files[0].name)) {
+        //save : saving settings
+        function save() {
+            if(isFieldsColorOk() && isFieldEmpty() && !isFieldsFullWhite())
+            {
                 var upload = JSON.stringify({
-                    loginname: username.textContent,
-                    avatar: img.src
-                })
+                    loginname:username.textContent,
+                    fullname:fullname.value, 
+                    password:password.value,
+                    email:email.value
+                });
                 var token = JSON.parse(localStorage.getItem("logindata")).token;
-                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/avatar/";
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/?token=" + token;
+
                 var cfg = {
-                    method: "PUT",
-                    body: upload
+                    method: "PUT",            
+                    body: upload,
                 }
-                superfetch(url, "json", succAv, errorAv, cfg);
+                
+                superfetch(url, "json", succ, error, cfg);
             }
-            else {
-                alert("Only png, jpg, jpeg and gif files can be uploaded");
+            else if(!isFieldsFullWhite())
+            {
+                alert("A required fiedl is empty or you made something wrong and extremly bad!");
+                document.getElementById("wrongmail").style.marginBottom = "0%";
+                document.getElementById("wrongmail").innerHTML = "";
+            }
+            if(isAvatar())
+            {
+                var regImg = new RegExp('\.(jpe?g|png|gif)$');
+                if(regImg.test(document.getElementById("inpAvatar").files[0].name))
+                {
+                    var upload = JSON.stringify({
+                        loginname:username.textContent,
+                        avatar:img.src
+                    })
+                    var token = JSON.parse(localStorage.getItem("logindata")).token;
+                    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/avatar/";
+                    var cfg = {
+                        method: "PUT",
+                        body: upload
+                    }
+                    superfetch(url, "json", succAv, errorAv, cfg);
+                }
+                else
+                {
+                    alert("Only png, jpg, jpeg and gif files can be uploaded");
+                }
             }
         }
-    }
-    //Success avatar
-    function succAv(data) {
-        console.log(data);
-        window.location.reload(true);
-    }
-    //Error avatar
-    function errorAv(err) {
-        console.log(err);
-        alert("Your avatar is too large, please select another or resize it");
-    }
-    //success --------------------------------------
-    function succ(data) {
-        console.log(data);
-        // Change the localstorage informations
-        localStorage.setItem('logindata', JSON.stringify(data));
-        // Inform user
-        alert("Your settings have changed");
-        window.location.reload(true);
-    }
-    //error ----------------------------------------
-    function error(err) {
-        console.log(err.msg);
-    }
-    //Logout
-    function logout() {
-        localStorage.clear();
-        window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/";
-    }
-    //displayMyPres : function to retrieve all presentations from a user
-    function displayMyPres() {
-        var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&ida=" + JSON.parse(localStorage.getItem('logindata')).ida;
-
-        superfetch(url, "json", succDis, errorDis);
-    }
-    //Success displaying
-    function succDis(data) {
-        console.log(data);
-        var pres = document.getElementById("presentation-table")
-        var html = "<select id=\"pres-selector\">";
-        var btn1 = "<button id=\"show-pres-selected\" onclick=\"showMyPres()\">Show it!</button>";
-        var btn2 = "<button id=\"delete-pres-selected\" onclick=\"deleteMyPres()\">Delete</button>";
-
-        for (i = 0; i < data.length; i++) {
-            html += "<option value=\"" + data[i].idp + "\">" + data[i].namepres + "</option>";
+        //Success avatar
+        function succAv(data) {
+            console.log(data);
+            window.location.reload(true);
         }
-        html += "</select>";
-        pres.innerHTML = html;
-        pres.innerHTML += "<div id=\"btn-pres\">" + btn1 + btn2 + "</div>";
-    }
-    //Error displaying
-    function errorDis(err) {
-        console.log(err);
-    }
-    //showMyPres = function to show the presentation selected by the user
-    function showMyPres() {
-        var selected = document.getElementById("pres-selector");
-        var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&idp=" + selected.options[selected.selectedIndex].value;
-
-        superfetch(url, "json", succShow, errorShow);
-    }
-    //Success showing presentation
-    function succShow(data) {
-        var selected = document.getElementById("pres-selector");
-        console.log(data);
-        localStoClean();
-        var info = JSON.stringify({
-            prName: selected.options[selected.selectedIndex].text,
-            numOfSlides: data.length,
-            idp: selected.options[selected.selectedIndex].value
-        })
-        localStorage.setItem('presentationInfo', info);
-        for (i = 0; i < data.length; i++)
-            localStorage.setItem('slide' + i, JSON.stringify(data[i].content));
-        window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/editor.html";
-    }
-    //Error showing presentation
-    function errorShow(err) {
-        console.log(err);
-    }
-    //deleteMyPres : function to delete the presentation selected
-    function deleteMyPres() {
-        var selected = document.getElementById("pres-selector");
-        var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&idp=" + selected.options[selected.selectedIndex].value;
-        console.log(url);
-        var cfg = { method: "DELETE" };
-
-        superfetch(url, "json", succDelSlides, errorDelSlides, cfg);
-    }
-    //Success deleting slides
-    function succDelSlides(data) {
-        console.log(data);
-        var selected = document.getElementById("pres-selector");
-        var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&idp=" + selected.options[selected.selectedIndex].value;
-        var cfg = { method: "DELETE" };
-
-        superfetch(url, "json", succDelPres, errorDelPres, cfg);
-    }
-    //Error deleting slides
-    function errorDelSlides(err) {
-        console.log(err);
-    }
-    //Success deleting presentation
-    function succDelPres(data) {
-        console.log(data);
-        window.location.reload(true);
-    }
-    //Error deleting presentation
-    function errorDelPres(err) {
-        console.log(err);
-    }
-    //newPresentation : function to create new presentation
-    function newPresentation() {
-        var token = JSON.parse(localStorage.getItem('logindata')).token;
-        var ida = JSON.parse(localStorage.getItem('logindata')).ida;
-        var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + token;
-        var upload = JSON.stringify({
-            ida: ida,
-            fullname: JSON.parse(localStorage.getItem('logindata')).fullname,
-            namepres: "My presentation"
-        });
-
-        var cfg = {
-            method: "POST",
-            body: upload
-        };
-
-        superfetch(url, "json", succNew, errorNew, cfg);
-    }
-    //Success creating new presentation
-    function succNew(data) {
-        console.log(data);
-        localStoClean();
-        var info = JSON.stringify({
-            prName: "My presentation",
-            numOfSlides: 1,
-            idp: data
-        })
-        localStorage.setItem('presentationInfo', info);
-        window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/editor.html";
-    }
-    //Error creating new presentation
-    function errorNew(err) {
-        console.log(err);
-    }
-    //localStorClean : function to clean presentation data
-    function localStoClean() {
-        if (localStorage.getItem('presentationInfo') != null) {
-            var nbSlide = JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides;
-            for (i = 0; i < nbSlide; i++)
-                localStorage.removeItem('slide' + i);
+        //Error avatar
+        function errorAv(err) {
+            console.log(err);
+            alert("Your avatar is too large, please select another or resize it (max: 100KB)");
         }
-    }
-    //Delete User Account
-    function deleteUserAccount() {
-        if (confirm("You are about to delete your account, this operation can not be canceled, are you sure ?")) {
-            var upload = JSON.stringify({
-                loginname: username.textContent
+        //success --------------------------------------
+        function succ(data) {
+            console.log(data);
+            // Change the localstorage informations
+            localStorage.setItem('logindata', JSON.stringify(data));
+            // Inform user
+            alert("Your settings have changed");
+            window.location.reload(true);
+        }
+        //error ----------------------------------------
+        function error(err) {
+            console.log(err.msg);
+        }
+        //Logout
+        function logout() {
+            localStorage.clear();
+            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/";
+        }
+        //displayMyPres : function to retrieve all presentations from a user
+        function displayMyPres() {
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&ida=" + JSON.parse(localStorage.getItem('logindata')).ida;
+            
+            superfetch(url, "json", succDis, errorDis);
+        }
+        //Success displaying
+        function succDis(data) {
+            console.log(data);
+            if(data == "")
+                return;
+            var pres = document.getElementById("presentation-table")
+            var html = "<select id=\"pres-selector\">";
+            var btn1 = "<button id=\"show-pres-selected\" onclick=\"showMyPres()\">Show it!</button>";
+            var btn2 = "<button id=\"delete-pres-selected\" onclick=\"deleteMyPres()\">Delete</button>";
+
+            for(i=0; i<data.length; i++)
+            {
+                html += "<option value=\"" + data[i].idp + "\">" + data[i].namepres + "</option>"; 
+            }
+            html += "</select>";
+            pres.innerHTML = html;
+            pres.innerHTML += "<div id=\"btn-pres\">" + btn1 + btn2 + "</div>";
+        }
+        //Error displaying
+        function errorDis(err) {
+            console.log(err);
+        }
+        //showMyPres = function to show the presentation selected by the user
+        function showMyPres() {
+            var selected = document.getElementById("pres-selector");
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&idp=" + selected.options[selected.selectedIndex].value;
+            
+            superfetch(url, "json", succShow, errorShow);
+        }
+        //Success showing presentation
+        function succShow(data) {
+            console.log(data);
+            var selected = document.getElementById("pres-selector");
+            var token = JSON.parse(localStorage.getItem('logindata')).token;
+            localStoClean();
+            var info = JSON.stringify({
+                prName: selected.options[selected.selectedIndex].text,
+                numOfSlides: data.length,
+                idp: selected.options[selected.selectedIndex].value
             })
-            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/";
-            var cfg = {
-                method: "DELETE",
-                body: upload,
-            }
-
-            superfetch(url, "json", succDelete, errorDelete, cfg);
+            localStorage.setItem('presentationInfo', info);
+            for(i=0; i<data.length; i++)
+                localStorage.setItem('slide' + i, data[i].content);
+            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
         }
-    }
-    //Success delete account
-    function succDelete(data) {
-        console.log(data);
-        logout();
-    }
-    //Error delete account
-    function errorDelete(data) {
-        console.log(data);
-    }
-</script>
+        //Error showing presentation
+        function errorShow(err) {
+            console.log(err);
+        }
+        //deleteMyPres : function to delete the presentation selected
+        function deleteMyPres() {
+            var selected = document.getElementById("pres-selector");
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&idp=" + selected.options[selected.selectedIndex].value;
+            console.log(url);
+            var cfg = { method : "DELETE" };
+            
+            superfetch(url, "json", succDelSlides, errorDelSlides, cfg);
+        }
+        //Success deleting slides
+        function succDelSlides(data) {
+            console.log(data);
+            var selected = document.getElementById("pres-selector");
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + JSON.parse(localStorage.getItem('logindata')).token + "&idp=" + selected.options[selected.selectedIndex].value;
+            var cfg = { method : "DELETE" };
+            
+            superfetch(url, "json", succDelPres, errorDelPres, cfg);
+        }
+        //Error deleting slides
+        function errorDelSlides(err) {
+            console.log(err);
+        }
+        //Success deleting presentation
+        function succDelPres(data) {
+            console.log(data);
+            window.location.reload(true);
+        }
+        //Error deleting presentation
+        function errorDelPres(err) {
+            console.log(err);
+        }
+        //newPresentation : function to create new presentation
+        function newPresentation() {
+            var token = JSON.parse(localStorage.getItem('logindata')).token;
+            var ida = JSON.parse(localStorage.getItem('logindata')).ida;
+            var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + token;
+            var upload = JSON.stringify({
+                ida: ida,
+                fullname: JSON.parse(localStorage.getItem('logindata')).fullname,
+                namepres: "My presentation"
+            });
 
+            var cfg = {
+                method: "POST",
+                body: upload
+            };
+
+            superfetch(url, "json", succNew, errorNew, cfg);
+        }
+        //Success creating new presentation
+        function succNew(data) {
+            console.log(data);
+            var token = JSON.parse(localStorage.getItem('logindata')).token;
+            localStoClean();
+            var info = JSON.stringify({
+                prName: "My presentation",
+                numOfSlides: 1,
+                idp: data
+            })
+            localStorage.setItem('presentationInfo', info);
+            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
+        }
+        //Error creating new presentation
+        function errorNew(err) {
+            console.log(err);
+        }
+        //localStorClean : function to clean presentation data
+        function localStoClean() {
+            if(localStorage.getItem('presentationInfo') != null)
+            {
+                var nbSlide = JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides;
+                for(i=0; i<nbSlide; i++)
+                    localStorage.removeItem('slide' + i);
+            }
+        }
+        //Delete User Account
+        function deleteUserAccount() {
+            if(confirm("You are about to delete your account, this operation can not be canceled, are you sure ?"))
+            {
+                var upload = JSON.stringify({
+                    loginname: username.textContent
+                })
+                var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/users/user/";
+                var cfg = {
+                    method: "DELETE",
+                    body: upload,
+                }
+                
+                superfetch(url, "json", succDelete, errorDelete, cfg);
+            }
+        }
+        //Success delete account
+        function succDelete(data) {
+            console.log(data);
+            logout();
+        }
+        //Error delete account
+        function errorDelete(data) {
+            console.log(data);
+        }
+    </script>
 </html>
+

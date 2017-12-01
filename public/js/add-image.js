@@ -7,8 +7,13 @@ btnLoadImage.style.opacity = 0;
 //to put image data inside of figure(currently only square)
 function putImageFiles() {
     let files = document.getElementById("btnLoadImage").files;
-
+    
     function readAndPreview(file) {
+        if(file.size > 100000)
+        {
+            alert("File too large (max: 100KB)");
+            return;
+        }
         // Make sure `file.name` matches our extensions criteria
         if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
 

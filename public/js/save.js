@@ -33,12 +33,14 @@ function save() {
 
     let presentationInfo = {
         "prName": "",
-        "numOfSlides": ""
-
+        "numOfSlides": "",
+        "idp": ""
     };
-    presentationInfo.prName = "awesomeSlide"
+    presentationInfo.prName = document.getElementById("presName").value;
     presentationInfo.numOfSlides = slideCnt;
+    presentationInfo.idp = JSON.parse(localStorage.getItem('presentationInfo')).idp;
     localStorage.setItem('presentationInfo', JSON.stringify(presentationInfo));
+    savePresDb();
 }
 
 //input : slide(based on html slide), output : all the slide info of input in json format
@@ -145,4 +147,75 @@ function getSquares(square, parentDiv) {
 
     // slideInfo.push(figureInfo);
     return figureInfo;
+}
+
+//savePresDb : function to save the presentation in the database
+function savePresDb() {
+    var token = JSON.parse(localStorage.getItem('logindata')).token;
+    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/?token=" + token;
+    var upload = JSON.stringify({
+        idp: JSON.parse(localStorage.getItem('presentationInfo')).idp,
+        namepres: JSON.parse(localStorage.getItem('presentationInfo')).prName,
+        nbSlides: JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides
+    });
+
+    var cfg = {
+        method: "PUT",
+        body: upload
+    };
+    
+    superfetch(url, "json", succSavePres, errorSavePres, cfg);
+}
+//Success saving presentation into database
+function succSavePres(data) {
+    console.log(data);
+    delSlidesDb();
+}
+//Error saving presentation into database
+function errorSavePres(err) {
+    console.log(err);
+}
+//delSlidesDb : function to delete all the slides in the database
+function delSlidesDb() {
+    var token = JSON.parse(localStorage.getItem('logindata')).token;
+    var idp = JSON.parse(localStorage.getItem('presentationInfo')).idp;
+    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + token + "&idp=" + idp;
+    var cfg = { method: "DELETE" };
+    
+    superfetch(url, "json", succDelSlides, errorDelSlides, cfg);
+}
+//Success deleting slides
+function succDelSlides(data) {
+    console.log(data);
+    var i=0;
+    for(i=0; i<JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides; i++)
+        saveSlidesDb(i);
+}
+//Error deleting slides
+function errorDelSlides(err) {
+    console.log(err);
+}
+//saveSlidesDb : function to save all slides in the database
+function saveSlidesDb(num) {
+    var token = JSON.parse(localStorage.getItem('logindata')).token;
+    var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + token;
+    var upload = JSON.stringify({
+        content: localStorage.getItem('slide' + num),
+        idp: JSON.parse(localStorage.getItem('presentationInfo')).idp
+    });
+
+    var cfg = {
+        method: "POST",
+        body: upload
+    };
+    
+    superfetch(url, "json", succSaveSlides, errorSaveSlides, cfg);
+}
+//Success saving slides into database
+function succSaveSlides(data) {
+    console.log(data);
+}
+//Error saving slides into database
+function errorSaveSlides(err) {
+    console.log(err);
 }

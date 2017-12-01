@@ -88,10 +88,8 @@ function resetFlags() {
 
 function deleteCurSlide_theme() {
 
-
     if (lastClicked_MiddleSlide) {
         lastClicked_MiddleSlide.style.backgroundImage = "";
-
     }
 }
 

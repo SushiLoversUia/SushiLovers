@@ -5,35 +5,41 @@
   <title>Sushilovers</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="..\css\main.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
 
-  <script src="..\js\drag.js"></script>
-  <script src="..\js\slide-tool.js"></script>
-  <script src="..\js\square-tool.js"></script>
-  <script src="..\js\extra-tool.js"></script>
+  <script src="js/drag.js"></script>
+  <script src="js/slide-tool.js"></script>
+  <script src="js/square-tool.js"></script>
+  <script src="js/extra-tool.js"></script>
 
-  <script src="..\js\new-slide.js"></script>
-  <script src="..\js\new-square.js"></script>
+  <script src="js/new-slide.js"></script>
+  <script src="js/new-square.js"></script>
 
-  <script src="..\js\delete.js"></script>
+  <script src="js/delete.js"></script>
 
-  <script src="..\js\save.js"></script>
-  <script src="..\js\recall.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/recall.js"></script>
 
-  <script src="..\js\key-control.js"></script>
+  <script src="js/full-screen.js"></script>
+  <script src="js/key-control.js"></script>
 
-  <script src="..\js\buttons.js"></script>
+  <script src="js/actButtons.js"></script>
+    
+  <script src="js/superfetch2.js"></script>
+    
+  <script src="js/exportFile.js"></script>
 
 </head>
 
 <body>
   <div id="main">
     <div class="header">
+      <input id="presName" type="text"/>
       <button id="btnSave">Save</button>
       <button id="btnRecall">open</button>
       <button id="btnPresentation">Presentation Mode</button>
-      <button id="btnLogin">Login</button>
-      <button id="btnSignup">Sign Up</button>
+      <button id="btnLogin" onclick="goToDashboard()">My Dashboard</button>
+      <button id="btnExport">Export</button>
     </div>
 
     <div class="right tools section">
@@ -45,10 +51,10 @@
 
       <br>
       <br>
-      <label id="btnLoadImageLabel" for="btnLoadImage">upload images</label>
+      <label id ="btnLoadImageLabel" for="btnLoadImage">upload images</label>
       <input id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
       <br>
-      <label id="btnChangeThemeLabel" for="btnChangeTheme">change theme</label>
+      <label id ="btnChangeThemeLabel" for="btnChangeTheme">change theme</label>
       <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
       <br>
       <button id="btnDelete_curSlideTheme">delete current slide theme</button>
@@ -56,7 +62,7 @@
 
     </div>
     <div class="column side" id="midColLeft">
-      <button id="btnNewSlide" style="width:100%; ">New Slide</button>
+      <button id="btnNewSlide" style="width:100%; ">+ New Slide </button>
     </div>
 
     <div id="ribbon">
@@ -115,17 +121,15 @@
     <div class="column middle" id="midColCenter">
 
     </div>
-    <!-- <div id="footer" style="padding:auto">
+    <div id="footer" style="padding:auto">
       <label for="Comment"></label> Comments:
       <input type="text" id="comment" style="resize: none; width: 70%; height: 70%;  background-color : #9d9d9d;">
       </input>
-    </div> -->
+    </div>
   </div>
 </body>
-
 <script src="..\js\add-image.js"></script>
 <script src="..\js\background-theme.js"></script>
-<script src="..\js\full-screen.js"></script>
 
 <script>
   'use strict';
@@ -153,15 +157,18 @@
   /********************************************************************/
   /********************************************************************/
   /********************************************************************/
-
-
-
-  makeNewSlide();
+  document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
+  recall();
 
   hideAllSlides();
   makeVisible_NthSlide(0);
   lastClicked_MiddleSlide = getNthMiddleSlide(0);
   lastClicked_LeftSlide = getNthLeftSlide(0);
+    
+//goToDashboard : function to redirect to user's dashboard
+function goToDashboard() {
+    window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html";
+}
 
 </script>
 

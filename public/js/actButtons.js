@@ -1,8 +1,5 @@
 window.addEventListener("load", function () {
 
-
-
-
     boldButton.addEventListener("click", function () {
         document.execCommand("Bold", false, null)
     })
@@ -85,7 +82,10 @@ window.addEventListener("load", function () {
     //open(retrive) information that user stored previously
     let btnRecall = document.getElementById('btnRecall');
     btnRecall.addEventListener('click', recall);
-
+    
+    //export in flat file
+    let btnExport = document.getElementById('btnExport');
+    btnExport.addEventListener('click', exportMyFile);
 
     //making new example squares on our slide(in the middle)
     //make new slides
@@ -98,6 +98,9 @@ window.addEventListener("load", function () {
     //put image file from local dir inside of square(that user clicked last time)
 
 
+    //presentation mode button, full-screen.js
+    let btnPresentation = document.getElementById('btnPresentation');
+    btnPresentation.addEventListener('click', presentationMode);
 
     //left, down arrow >> previous slide, right,up arrow >> next slide, delete >> delete slide or square(figure)
     document.onkeydown = keyEvent;
