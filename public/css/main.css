@@ -105,21 +105,11 @@ select{
     outline: none;
     cursor: pointer;
     font-size: 14px;
-    padding: 20%;
+    padding: 15%;
 }
 
 .right > input{
     display: none;
-}
-
-.label-file{
-    font-family: "Roboto";
-    color: white;
-    border-radius: 0%;
-    background-color: transparent;
-    font-size: 14px;
-    cursor: pointer;
-    width: 100%;
 }
 
 #midColLeft{
@@ -137,6 +127,9 @@ select{
     height: 8%;
     width: 60%;
     margin: 10% auto;
+    list-style-type: none;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 #leftSlide:hover{
@@ -231,4 +224,21 @@ select{
     color: #bdc3c7;
     text-align: center;
     font-size: 17px;
+}
+
+label{
+    color: white;
+    background-color: transparent;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+label:hover{
+    transition: all 0.2s linear 0s;
+    background-color:#546f5b;
+}
+
+#btnImport{
+    display: none;
+    font-family: "Roboto";
 }
