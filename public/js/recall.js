@@ -31,7 +31,7 @@ function recallPresentation() {
         //making left slide
         let leftSlide = document.createElement("div");
         leftSlide.setAttribute("id", "leftSlide");
-        leftSlide.innerHTML = `${slideCnt}`;
+        leftSlide.innerHTML = `${slideCnt+1}`;
         midColLeft.appendChild(leftSlide);
         leftSlide.onclick = showOnMiddle_recall;
 

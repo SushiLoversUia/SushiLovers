@@ -206,7 +206,6 @@ select{
     background-size: 100% 100%;
 }
 
-
 #handleResize {
     /* background-color: #f1f1f1; */
     width: 20px;
@@ -231,4 +230,7 @@ select{
     color: #bdc3c7;
     text-align: center;
     font-size: 17px;
+}
+#text{
+    margin: 0;
 }
