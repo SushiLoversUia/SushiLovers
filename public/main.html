@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Sushilovers</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+
+  <script src="js/drag.js"></script>
+  <script src="js/slide-tool.js"></script>
+  <script src="js/square-tool.js"></script>
+  <script src="js/extra-tool.js"></script>
+
+  <script src="js/new-slide.js"></script>
+  <script src="js/new-square.js"></script>
+
+  <script src="js/delete.js"></script>
+
+  <script src="js/save.js"></script>
+  <script src="js/recall.js"></script>
+
+  <script src="js/key-control.js"></script>
+
+  <script src="js/actButtons.js"></script>
+
+  <script src="js/superfetch2.js"></script>
+
+  <script src="js/exportFile.js"></script>
+
+</head>
+
+<body>
+  <div id="main">
+    <div class="header">
+      <input id="presName" type="text" value = "click here to edit title"/>
+      <button id="btnSave">Save</button>
+      <button id="btnRecall">open</button>
+      <button id="btnPresentation">Presentation Mode</button>
+      <button id="btnLogin" onclick="goToDashboard()">My Dashboard</button>
+      <button id="btnExport">Export</button>
+    </div>
+
+    <div class="right tools section">
+
+      <button id="btnNewtextbox">create text box</button>
+      <button id="btnDelete_square">delete text box</button>
+      <button id="btnDelete_curSlide">delete current slide</button>
+
+
+      <br>
+      <br>
+      <label id="btnLoadImageLabel" for="btnLoadImage">upload images</label>
+      <input id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
+      <br>
+      <label id="btnChangeThemeLabel" for="btnChangeTheme">change theme</label>
+      <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
+      <br>
+      <button id="btnDelete_curSlideTheme">delete current slide theme</button>
+      <button id="btnDelete_wholeSlideTheme">delete whole slide theme</button>
+
+    </div>
+    <div class="column side" id="midColLeft">
+      <button id="btnNewSlide" style="width:100%; ">+ New Slide </button>
+    </div>
+
+    <div id="ribbon">
+
+      <button id="boldButton" title="Bold">
+        <strong>B</strong>
+      </button>
+      <button id="italicButton" title="Italic">
+        <em>I</em>
+      </button>
+      <button id="underLine" name="button" style="text-decoration: underline">U</button>
+      <button id="supButton" title="SuperScript">X
+        <sup>2</sup>
+      </button>
+      <button id="subButton" title="SubScript">X
+        <sub>2</sub>
+      </button>
+      <select id="fontChange">
+        <optgroup id="fonts" label="Font Style">
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Helvetica">Helvetica</option>
+          <option value="Calibri">Calibri</option>
+          <option value="Lucida Sans">Lucida Sans</option>
+          <option value="Optima">Optima</option>
+          <option value="Bodoni">Bodoni</option>
+          <option value="Futura">Futura</option>
+          <option value="Comic Sans">Comic Sans</option>
+        </optgroup>
+      </select>
+      <select id="fontSize">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+      </select>
+      <input type="color" id="fontColorButton" style="width: 20px;">
+      <input type="color" id="hightlightButton" value="#ffffff" style="width: 20px;">
+      <button id="unorderedListButton">&bull;</button>
+      <button id="orderedListButton">123</button>
+      <button id="linkButton">Link</button>
+      <button id="unlinkButton">Unlink</button>
+      <button id="undoButton">&larr;</button>
+      <button id="redoButton">&rarr;</button>
+      <button id="alignLeft">Left</button>
+      <button id="alignCenter">Center</i>
+      </button>
+      <button id="alignRight">Right</i>
+      </button>
+    </div>
+
+
+    <div class="column middle" id="midColCenter">
+
+    </div>
+    <div id="footer" style="padding:auto">
+      <label for="Comment"></label> Comments:
+      <input type="text" id="comment" style="resize: none; width: 70%; height: 70%;  background-color : #9d9d9d;">
+      </input>
+    </div>
+  </div>
+</body>
+<script src="js\add-image.js"></script>
+<script src="js\background-theme.js"></script>
+<script src="js/full-screen.js"></script>
+
+<!-- C:\Users\Samsung\Documents\GitHub\SushiLovers\SushiLovers\public\JS -->
+<!-- C:\Users\Samsung\Documents\GitHub\SushiLovers\SushiLovers\public -->
+<script>
+  'use strict';
+
+  /*******************************************************************/
+  // all the flags, they have to match with resetFlags function
+  /*******************************************************************/
+
+  let lastClickedElem = null;
+
+  //make it clear what slide you are working on
+  let lastClicked_LeftSlide = null;
+  let lastClicked_MiddleSlide = null;
+
+  let squareCnt = 0;
+  let slideCnt = 0;
+
+  //when we delete, need to decide what to delete >> ex) slide or figures
+  // ex) figure, slide ..
+  let flag_focusingElem = null;
+
+  //style.zIndex max : 2147483648(32bit) >> assume no bug
+  let flag_zIndex = 0;
+  let currentTheme = "";
+  /********************************************************************/
+  /********************************************************************/
+  /********************************************************************/
+  // document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
+  makeNewSlide();
+  hideAllSlides();
+  makeVisible_NthSlide(0);
+  lastClicked_MiddleSlide = getNthMiddleSlide(0);
+  lastClicked_LeftSlide = getNthLeftSlide(0);
+
+  //goToDashboard : function to redirect to user's dashboard
+  function goToDashboard() {
+    window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html";
+  }
+
+
+</script>
+
+</html>
