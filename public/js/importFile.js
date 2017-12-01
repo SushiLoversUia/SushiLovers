@@ -1,21 +1,25 @@
 
 function importMyFile() {
-    var f = document.getElementById("btnImport").files[0];
-    var text;
+    var file = document.getElementById("btnImport").files[0];
     
-    if (f) 
+    if(/\.(txt)$/i.test(file.name))
     {
-        var r = new FileReader();
-        r.onload = function(e) { 
-            var contents = e.target.result;
-            showMyPres(contents);
+        if (file) 
+        {
+            var fr = new FileReader();
+            fr.onload = function(evt) { 
+                var text = evt.target.result;
+                showMyPres(text);
+            }
+            fr.readAsText(file);
+        } 
+        else 
+        { 
+            alert("Failed to load file");
         }
-        r.readAsText(f);
-    } 
-    else 
-    { 
-        alert("Failed to load file");
     }
+    else
+        alert("The file must be a .txt");
 }
 
 function showMyPres(myText) {
