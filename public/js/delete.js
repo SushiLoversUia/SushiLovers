@@ -19,6 +19,7 @@ function deletePresentation_html() {
             midColCenter.removeChild(middleSlide);
         }
     }
+    
 
     //clean up all the flags
     resetFlags();
@@ -47,9 +48,9 @@ function deleteSquare_html() {
 function deleteSlide_html() {
 
     let deleMiddleSlide = getVisibleSlide();
-    
+
     let deleMiddleSlide_idx = getCurSlideIdx(deleMiddleSlide)
-    
+
     let deleLeftSlide = getNthLeftSlide(deleMiddleSlide_idx);
 
     if (deleLeftSlide.parentNode && deleMiddleSlide.parentNode) {
@@ -71,8 +72,21 @@ function deleteSlide_html() {
             makeVisible_NthSlide(deleMiddleSlide_idx - 1);
         }
     }
+
+    resetLeftSlideNumbers();
+
 }
 
+function resetLeftSlideNumbers() {
+    let numOfSlides = getNumOfSlides();
+    let leftSlides = getAllLeftSlide();
+
+    for (let i = 0; i < numOfSlides; i++) {
+        let leftSlideNum = i + 1;
+        leftSlides[i].innerHTML = `${leftSlideNum}`;
+    }
+
+}
 
 
 function resetFlags() {
@@ -81,7 +95,6 @@ function resetFlags() {
     lastClicked_LeftSlide = null;
     lastClicked_MiddleSlide = null;
     flag_focusingElem = null;
-    slideCnt = 0;
 }
 
 function deleteCurSlide_theme() {

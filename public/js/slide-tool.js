@@ -20,12 +20,12 @@ function hideAllSlides() {
 //numOfLeftSlide === numOfRightSlide  
 function getNumOfSlides() {
 
-    let slideCnt = null;
+    let slideCnt = 0;
 
     let midColLeft = document.getElementById("midColLeft");
 
     if (midColLeft === null) {
-        slideCnt = "slideCnt error";
+        return "slideCnt error"
     } else {
         let leftSlides = midColLeft.childNodes;
 
@@ -69,6 +69,7 @@ function getNthLeftSlide(nth) {
     return returnSlide;
 
 }
+
 
 
 function getNthMiddleSlide(nth) {
@@ -115,7 +116,25 @@ function getAllMiddleSlide() {
 
     return rtvSlides;
 }
+function getAllLeftSlide() {
+    let rtvSlides = [];
 
+    let midColLeft = document.getElementById("midColLeft");
+    if (midColLeft === null) {
+        return "getNthLeftSlide error";
+    }
+    let leftSlides = midColLeft.childNodes;
+
+    for (let i = 0; i < leftSlides.length; i++) {
+        let leftSlide = leftSlides[i];
+        if (leftSlide.id === 'leftSlide') {
+            rtvSlides.push(leftSlide);
+        }
+    }
+
+    return rtvSlides;
+
+}
 
 function getCurSlideIdx(inputSlide) {
 
@@ -145,8 +164,7 @@ function getVisibleSlide() {
     let returnSlide = null;
     for (let i = 0; i < middleSlides.length; i++) {
         let middleSlide = middleSlides[i];
-        if (middleSlide.id === 'slideMiddle' && middleSlide.style.visibility === 'visible') {
-
+        if (middleSlide.id == 'slideMiddle' && middleSlide.style.visibility == 'visible') {
             returnSlide = middleSlide;
 
             break;

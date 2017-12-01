@@ -17,7 +17,7 @@ function recall() {
 function recallPresentation() {
     let midColCenter = document.getElementById("midColCenter");
     let midColLeft = document.getElementById("midColLeft");
-    slideCnt = 0;
+    let slideCnt = 0;
 
     while (localStorage.getItem(`slide${slideCnt}`)) {
 
