@@ -1,34 +1,27 @@
 'use strict';
 
-//making new squares, it's just temporary information to test other functions, info that we are putting inside is not important
 function makeNewSquare() {
     let parentDiv = getVisibleSlide();
-
     let square = document.createElement("div");
-    square.setAttribute("id", `square`);
-    square.style.width = "20%";
+    square.id = 'square';
+    square.style.backgroundColor = "transparent";
+    square.style.zIndex = flag_zIndex;
+    flag_zIndex++;
+
+    square.style.width = "30%";
     square.style.height = "30%";
+
+    square.style.left = "35%";
+    square.style.top = "35%";
 
     square.style.left = `${generateRanNum()}%`;
     square.style.top = `${generateRanNum()}%`;
 
-    square.style.fontSize = "30px";
-    square.style.color = "rgb(255, 0, 0)";
-    square.style.textAlign = "center";
-    square.style.zIndex = flag_zIndex;
-    flag_zIndex++;
-
-    // square.style.backgroundImage = "url('image/tree.jpg')";
     let resizeHandle_square = document.createElement("div")
     resizeHandle_square.setAttribute("id", "handleResize");
     square.appendChild(resizeHandle_square);
 
-    let textP = document.createElement("p");
-    textP.setAttribute("id", "text");
-    // textP.contentEditable = "true";
-    // textP.innerHTML = `debug cnt :${squareCnt}`;
     squareCnt++;
-    square.appendChild(textP);
 
     parentDiv.appendChild(square);
     dragElement(square, parentDiv);
@@ -36,40 +29,60 @@ function makeNewSquare() {
     return square;
 }
 
-//making new squares, it's just temporary information to test other functions, info that we are putting inside is not important
 function newTextbox() {
-    let parentDiv = getVisibleSlide();
 
-    let square = document.createElement("div");
-    square.setAttribute("id", `square`);
-    square.style.width = "20%";
-    square.style.height = "30%";
-
-
-    // square.style.left = "10%";
-    // square.style.top = "10%";
-    square.style.left = `${generateRanNum()}%`;
-    square.style.top = `${generateRanNum()}%`;
-
-
-    square.style.fontSize = "30px";
-    square.style.color = "rgb(0, 0, 0)";
-    square.style.textAlign = "center";
-
-    square.style.backgroundColor = "transparent";
-    // square.style.backgroundImage = "url('image/tree.jpg')";
-    let resizeHandle_square = document.createElement("div")
-    resizeHandle_square.setAttribute("id", "handleResize");
-    square.appendChild(resizeHandle_square);
+    let square = makeNewSquare()
 
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
+    textP.style.width = "100%";
+    textP.style.height = "100%";
     textP.contentEditable = "true";
-    textP.innerHTML = `click to edit`;
-    squareCnt++;
+    textP.innerHTML = 'Click to edit';
+
     square.appendChild(textP);
 
-    parentDiv.appendChild(square);
-    dragElement(square, parentDiv);
+    return square;
+}
+
+function slideDefault() {
+
+    let header = makeNewSquare()
+
+    header.style.width = "86%";
+    header.style.height = "20%";
+
+    header.style.left = "7%";;
+    header.style.top = "6%";;
+    header.style.textAlign = "center";
+
+    let textP = document.createElement("p");
+    textP.setAttribute("id", "text");
+    textP.style.width = "100%";
+    textP.style.height = "100%";
+    textP.contentEditable = "true";
+    textP.innerHTML = 'Heading';
+
+    header.appendChild(textP);
+
+    let body = makeNewSquare()
+
+    body.style.width = "86%";
+    body.style.height = "55%";
+
+    body.style.left = "7%";
+    body.style.top = "30%";
+    body.style.textAlign = "center";
+
+    let textP2 = document.createElement("p");
+    textP2.setAttribute("id", "text");
+    textP2.style.width = "100%";
+    textP2.style.height = "100%";
+    textP2.contentEditable = "true";
+    textP2.innerHTML = 'Enter text';
+
+    body.appendChild(textP2);
+
+    return 0;
 }
 

@@ -21,7 +21,7 @@ function save() {
     let midColCenter = document.getElementById("midColCenter");
     let slideCnt = 0;
     //storing square figures
-    let slides = midColCenter.childNodes;
+    let slides = getAllMiddleSlide();
     for (let i = 0; i < slides.length; i++) {
         if (slides[i].id === "slideMiddle") {
             let curSlide = getSlide(slides[i]);
@@ -95,9 +95,9 @@ function getSquares(square, parentDiv) {
             "textAlign": ""
         },
         "image": {
-            "src": ""
+            "src": "",
+            "backgroundColor": ""
         }
-
     };
 
     let figure = square;
@@ -117,7 +117,7 @@ function getSquares(square, parentDiv) {
     //figure text info
     let figureText = figure.querySelector("#text");
     let figureText_content = figureText.innerHTML;
-    
+
     //figure text css
     let figureText_fontSize = figure.style.fontSize;
     let figureText_color = figure.style.color;
@@ -125,6 +125,7 @@ function getSquares(square, parentDiv) {
 
     //figure backgroud image
     let figureImg_src = figure.style.backgroundImage;
+    let figureImg_backgroundColor = figure.style.backgroundColor;
     /*********************************************************** */
     /**** put info just got above in the structure ************ */
     /*********************************************************** */
@@ -144,6 +145,7 @@ function getSquares(square, parentDiv) {
     figureInfo.text.textAlign = figureText_Align;
 
     figureInfo.image.src = figureImg_src;
+    figureInfo.image.backgroundColor = figureImg_backgroundColor;
 
     // slideInfo.push(figureInfo);
     return figureInfo;
@@ -163,7 +165,7 @@ function savePresDb() {
         method: "PUT",
         body: upload
     };
-    
+
     superfetch(url, "json", succSavePres, errorSavePres, cfg);
 }
 //Success saving presentation into database
@@ -181,14 +183,14 @@ function delSlidesDb() {
     var idp = JSON.parse(localStorage.getItem('presentationInfo')).idp;
     var url = "https://app-presentation-sushi-lovers.herokuapp.com/api/slides/?token=" + token + "&idp=" + idp;
     var cfg = { method: "DELETE" };
-    
+
     superfetch(url, "json", succDelSlides, errorDelSlides, cfg);
 }
 //Success deleting slides
 function succDelSlides(data) {
     console.log(data);
-    var i=0;
-    for(i=0; i<JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides; i++)
+    var i = 0;
+    for (i = 0; i < JSON.parse(localStorage.getItem('presentationInfo')).numOfSlides; i++)
         saveSlidesDb(i);
 }
 //Error deleting slides
@@ -208,7 +210,7 @@ function saveSlidesDb(num) {
         method: "POST",
         body: upload
     };
-    
+
     superfetch(url, "json", succSaveSlides, errorSaveSlides, cfg);
 }
 //Success saving slides into database

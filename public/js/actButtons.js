@@ -90,7 +90,7 @@ window.addEventListener("load", function () {
     //making new example squares on our slide(in the middle)
     //make new slides
     let btnNewSlide = document.getElementById('btnNewSlide');
-    btnNewSlide.addEventListener('click', makeNewSlide);
+    btnNewSlide.addEventListener('click', defaultNewSlide);
 
     let btnNewtextbox = document.getElementById('btnNewtextbox');
     btnNewtextbox.addEventListener('click', newTextbox);
