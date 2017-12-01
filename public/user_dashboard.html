@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -313,8 +314,9 @@
         }
         //Success showing presentation
         function succShow(data) {
-            var selected = document.getElementById("pres-selector");
             console.log(data);
+            var selected = document.getElementById("pres-selector");
+            var token = JSON.parse(localStorage.getItem('logindata')).token;
             localStoClean();
             var info = JSON.stringify({
                 prName: selected.options[selected.selectedIndex].text,
@@ -324,7 +326,7 @@
             localStorage.setItem('presentationInfo', info);
             for(i=0; i<data.length; i++)
                 localStorage.setItem('slide' + i, JSON.stringify(data[i].content));
-            window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/main.html";
+            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/edit/?token=" + token;
         }
         //Error showing presentation
         function errorShow(err) {
@@ -382,6 +384,7 @@
         //Success creating new presentation
         function succNew(data) {
             console.log(data);
+            var token = JSON.parse(localStorage.getItem('logindata')).token;
             localStoClean();
             var info = JSON.stringify({
                 prName: "My presentation",
@@ -389,7 +392,7 @@
                 idp: data
             })
             localStorage.setItem('presentationInfo', info);
-            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
+            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/api/presentations/edit/?token=" + token;
         }
         //Error creating new presentation
         function errorNew(err) {
