@@ -98,8 +98,8 @@ app.delete('/', function(req,res) {
     });
 });
 
-app.get('/new', function(req,res) {
-    res.redirect('presentation.html');
+app.get('/edit', function(req,res) {
+    res.redirect('main.html');
 });
 
 //export module -------------------------------------
