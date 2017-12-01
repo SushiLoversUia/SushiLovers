@@ -98,9 +98,6 @@ window.addEventListener("load", function () {
     //put image file from local dir inside of square(that user clicked last time)
 
 
-    //presentation mode button, full-screen.js
-    let btnPresentation = document.getElementById('btnPresentation');
-    btnPresentation.addEventListener('click', presentationMode);
 
     //left, down arrow >> previous slide, right,up arrow >> next slide, delete >> delete slide or square(figure)
     document.onkeydown = keyEvent;

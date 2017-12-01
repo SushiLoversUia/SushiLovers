@@ -13,6 +13,8 @@ document.addEventListener("mozfullscreenerror", function () { console.log("Full 
 document.addEventListener("MSFullscreenError", function () { console.log("Full screen failed"); });
 
 
+let midColCenter = null;
+
 //keep the original size information (editable mode)
 let slideMiddle = null;
 let slideMiddleWidth_ori = null;
@@ -20,20 +22,29 @@ let slideMiddleHeight_ori = null;
 let slideMiddleLeft_ori = null;
 let slideMiddleTop_ori = null;
 
-let fullscreenIdx = 0;
-
 let slidesSqsInfo = [];
 
+let fullscreenIdx = null;
+
+//presentation mode button, full-screen.js
+let btnPresentation = document.getElementById('btnPresentation');
+btnPresentation.addEventListener('click', presentationMode);
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    let bodyWidth = document.body.offsetWidth;
+    let bodyHeight = document.body.offsetHeight;
+
+    slideMiddle = document.getElementById("slideMiddle");
+    slideMiddleWidth_ori = "70%";
+    slideMiddleHeight_ori = "70%";
+    slideMiddleLeft_ori = (slideMiddle.offsetLeft / bodyWidth) * 100 + "%";
+    slideMiddleTop_ori = (slideMiddle.offsetTop / bodyHeight) * 100 + "%";
+}, false);
 
 function presentationMode() {
     let slide = getNthMiddleSlide(0);
-
-    //need to fill this info to use it for zoom out function
-    let slideMiddle = document.getElementById("slideMiddle");
-    slideMiddleWidth_ori = slideMiddle.offsetWidth;
-    slideMiddleHeight_ori = slideMiddle.offsetHeight;
-    slideMiddleLeft_ori = slideMiddle.offsetLeft;
-    slideMiddleTop_ori = slideMiddle.offsetTop;
+    midColCenter = document.getElementById("midColCenter");
 
     // check if user allows full screen of elements. This can be enabled or disabled in browser config. By default its enabled.
 
@@ -46,35 +57,34 @@ function presentationMode() {
             document.mozFullScreenEnabled || document.msFullscreenEnabled) {
 
             //make all slides fit into bigger size(presentation size)
-
             if ("requestFullscreen" in slide) {
-                saveSquaresRelativePos();
+                allSquares_zoomIn();
+                allSlide_zoomIn();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 slide.requestFullscreen();
-                allSlide_zoomIn();
             }
             else if ("webkitRequestFullscreen" in slide) {
-                saveSquaresRelativePos();
+                allSquares_zoomIn();
+                allSlide_zoomIn();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 midColCenter.webkitRequestFullscreen();
-                allSlide_zoomIn();
+
             }
             else if ("mozRequestFullScreen" in slide) {
-                saveSquaresRelativePos();
+                allSquares_zoomIn();
+                allSlide_zoomIn();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 slide.mozRequestFullScreen();
-                allSlide_zoomIn();
-
             }
             else if ("msRequestFullscreen" in slide) {
-                saveSquaresRelativePos();
+                allSquares_zoomIn();
+                allSlide_zoomIn();
                 hideAllSlides();
                 makeVisible_NthSlide(0);
                 slide.msRequestFullscreen();
-                allSlide_zoomIn();
 
             }
         }
@@ -86,24 +96,6 @@ function presentationMode() {
 }
 
 
-//should reposition all the squares inside of slides
-function saveSquaresRelativePos() {
-
-    //clean up info before saving
-    slidesSqsInfo = [];
-
-    let colMiddle = document.getElementById("midColCenter");
-    let childNodes = colMiddle.childNodes;
-
-    for (let i = 0; i < childNodes.length; i++) {
-        let curSlide = childNodes[i];
-        if (curSlide.id === "slideMiddle") {
-            let slideSqsInfo = getSlideSquaresInfo(curSlide);
-            slidesSqsInfo.push(slideSqsInfo);
-        }
-    }
-
-}
 
 //user enter presentation mode >> make all zoomIn
 function allSlide_zoomIn() {
@@ -113,72 +105,50 @@ function allSlide_zoomIn() {
     for (let i = 0; i < midSlides.length; i++) {
         if (midSlides[i].id === "slideMiddle") {
             slide_zoomIn(midSlides[i]);
-            slideSquares_zoomIn(midSlides[i], slidesSqsInfo[i]);
 
         }
     }
 }
-function slideSquares_zoomIn(inputSlide, inputSlideInfo) {
+
+function allSquares_zoomIn() {
+
+    let midSlides = getAllMiddleSlide();
+    for (let i = 0; i < midSlides.length; i++) {
+        if (midSlides[i].id === "slideMiddle") {
+            //just replace value to percentage and do nothing else.
+            slideSquares_posValReplace(midSlides[i]);
+        }
+    }
+}
+
+function slideSquares_posValReplace(inputSlide) {
 
     let curSlide = inputSlide;
     let curSlideIdx = getCurSlideIdx(curSlide);
 
-    let curSlideInfo = inputSlideInfo;
     let curSquares = getSlideSquares(curSlide);
 
     for (let i = 0; i < curSquares.length; i++) {
         let curSquare = curSquares[i];
-        // console.log(curSlideInfo[i]);
-        curSquare.style.left = curSlideInfo[i].left;
-        curSquare.style.top = curSlideInfo[i].top;
-        curSquare.style.zIndex = curSlideInfo[i].zIndex;
-    }
-}
-function getSlideSquaresInfo(inputSlide) {
-    let curSquares = getSlideSquares(inputSlide);
 
-    let curSlideSquaresPosInfo = [];
-    for (let i = 0; i < curSquares.length; i++) {
-        let curSquare = curSquares[i];
+        let slideMiddleOffsetWidth = slideMiddle.offsetWidth;
+        let slideMiddleOffsetHeight = slideMiddle.offsetHeight;
 
-        let squareOriPos = {
-            "left": "",
-            "top": "",
-            "zIndex": ""
-        }
+        let squareLeft = (curSquare.offsetLeft / slideMiddleOffsetWidth) * 100 + "%";
+        let squareTop = (curSquare.offsetTop / slideMiddleOffsetHeight) * 100 + "%";
+        let squareWidth = (curSquare.offsetWidth / slideMiddleOffsetWidth) * 100 + "%";
+        let squareHeight = (curSquare.offsetHeight / slideMiddleOffsetHeight) * 100 + "%";
 
-        // let slideMiddleWidth_ori = null;
-        // let slideMiddleHeight_ori = null;
-        let squareLeft = (curSquare.offsetLeft / slideMiddleWidth_ori) * 100 + "%";
-        let squareTop = (curSquare.offsetTop / slideMiddleHeight_ori) * 100 + "%";
         let squareZidx = curSquare.style.zIndex;
 
-        squareOriPos.left = squareLeft;
-        squareOriPos.top = squareTop;
-        squareOriPos.zIndex = squareZidx;
+        curSquare.style.left = squareLeft;
+        curSquare.style.top = squareTop;
+        curSquare.style.width = squareWidth;
+        curSquare.style.height = squareHeight;
 
-        curSlideSquaresPosInfo.push(squareOriPos);
+        curSquare.style.zIndex = squareZidx;
     }
-    return curSlideSquaresPosInfo;
 }
-
-
-function repositionSquares_zoomOut() {
-
-}
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-
-
-
-
 
 
 
@@ -203,13 +173,10 @@ function slide_zoomIn(input) {
 }
 
 function slide_zoomOut(inputSlide) {
-    inputSlide.style.width = slideMiddleWidth_ori + "px";
-    inputSlide.style.height = slideMiddleHeight_ori + "px";
-    inputSlide.style.left = slideMiddleLeft_ori + "px";
-    inputSlide.style.top = slideMiddleTop_ori + "px";
-
-
-
+    inputSlide.style.width = slideMiddleWidth_ori;
+    inputSlide.style.height = slideMiddleHeight_ori;
+    inputSlide.style.left = slideMiddleLeft_ori;
+    inputSlide.style.top = slideMiddleTop_ori;
 }
 
 function screen_change() {
@@ -227,6 +194,7 @@ function screen_change() {
         else if ("webkitExitFullscreen" in document) {
             allSlide_zoomOut();
             document.webkitExitFullscreen();
+
         }
         else if ("mozCancelFullScreen" in document) {
             allSlide_zoomOut();
@@ -236,6 +204,8 @@ function screen_change() {
             allSlide_zoomOut();
             document.msExitFullscreen();
         }
+
+
     }
 
 }
