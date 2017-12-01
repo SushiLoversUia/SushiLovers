@@ -1,8 +1,5 @@
 window.addEventListener("load", function () {
 
-
-
-
     boldButton.addEventListener("click", function () {
         document.execCommand("Bold", false, null)
     })
@@ -74,9 +71,6 @@ window.addEventListener("load", function () {
     alignRight.addEventListener("click", function (event) {
         document.execCommand("justifyRight", false, null)
     })
-
-
-
 
     //save all the information currently the user is using, seeing
     let btnSave = document.getElementById('btnSave');
