@@ -35,11 +35,11 @@ app.use('/api/presentations/', presentations);
 var slides = require('./slides.js');
 app.use('/api/slides/', slides);
 
-/* Default adress 
+/* Default adress */
 
 app.use(function (req, res, next) {
     res.redirect('https://app-presentation-sushi-lovers.herokuapp.com/errornotfound.html');
-});*/
+});
 
 /* Listening PORT */
 
