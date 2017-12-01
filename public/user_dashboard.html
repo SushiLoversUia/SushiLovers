@@ -325,7 +325,7 @@
             })
             localStorage.setItem('presentationInfo', info);
             for(i=0; i<data.length; i++)
-                localStorage.setItem('slide' + i, JSON.stringify(data[i].content));
+                localStorage.setItem('slide' + i, data[i].content);
             window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
         }
         //Error showing presentation
