@@ -160,9 +160,10 @@
   /********************************************************************/
   document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
 
-  recall();
   if(localStorage('newOne'))
     defaultNewSlide();
+  else
+    recall();
 
   hideAllSlides();
   makeVisible_NthSlide(0);
