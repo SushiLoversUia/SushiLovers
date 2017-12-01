@@ -20,13 +20,12 @@
   <script src="js/save.js"></script>
   <script src="js/recall.js"></script>
 
-  <script src="js/full-screen.js"></script>
   <script src="js/key-control.js"></script>
 
   <script src="js/actButtons.js"></script>
-    
+
   <script src="js/superfetch2.js"></script>
-    
+
   <script src="js/exportFile.js"></script>
 
 </head>
@@ -34,7 +33,7 @@
 <body>
   <div id="main">
     <div class="header">
-      <input id="presName" type="text"/>
+      <input id="presName" type="text" value = "click here to edit title"/>
       <button id="btnSave">Save</button>
       <button id="btnRecall">open</button>
       <button id="btnPresentation">Presentation Mode</button>
@@ -51,10 +50,10 @@
 
       <br>
       <br>
-      <label id ="btnLoadImageLabel" for="btnLoadImage">upload images</label>
+      <label id="btnLoadImageLabel" for="btnLoadImage">upload images</label>
       <input id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
       <br>
-      <label id ="btnChangeThemeLabel" for="btnChangeTheme">change theme</label>
+      <label id="btnChangeThemeLabel" for="btnChangeTheme">change theme</label>
       <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
       <br>
       <br>
@@ -129,9 +128,12 @@
     </div>
   </div>
 </body>
-<script src="..\js\add-image.js"></script>
-<script src="..\js\background-theme.js"></script>
+<script src="js\add-image.js"></script>
+<script src="js\background-theme.js"></script>
+<script src="js/full-screen.js"></script>
 
+<!-- C:\Users\Samsung\Documents\GitHub\SushiLovers\SushiLovers\public\JS -->
+<!-- C:\Users\Samsung\Documents\GitHub\SushiLovers\SushiLovers\public -->
 <script>
   'use strict';
 
@@ -158,18 +160,18 @@
   /********************************************************************/
   /********************************************************************/
   /********************************************************************/
-  document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
-  recall();
-
+  // document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
+  makeNewSlide();
   hideAllSlides();
   makeVisible_NthSlide(0);
   lastClicked_MiddleSlide = getNthMiddleSlide(0);
   lastClicked_LeftSlide = getNthLeftSlide(0);
-    
-//goToDashboard : function to redirect to user's dashboard
-function goToDashboard() {
+
+  //goToDashboard : function to redirect to user's dashboard
+  function goToDashboard() {
     window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html";
-}
+  }
+
 
 </script>
 

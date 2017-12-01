@@ -119,12 +119,19 @@ function getAllMiddleSlide() {
 
 function getCurSlideIdx(inputSlide) {
 
-    let idxCnt = 0;
-    let midColCenter = inputSlide.parentNode;
-    let slides = midColCenter.children;
-    idxCnt = Array.from(slides).indexOf(inputSlide)
+    let idxCnt = -1;
+
+    if (inputSlide) {
+        let midColCenter = inputSlide.parentNode;
+        let slides = midColCenter.children;
+        idxCnt = Array.from(slides).indexOf(inputSlide)
+
+    } else {
+        alert("there is no such slide");
+    }
 
     return idxCnt;
+
 }
 
 function getVisibleSlide() {
@@ -139,6 +146,10 @@ function getVisibleSlide() {
     for (let i = 0; i < middleSlides.length; i++) {
         let middleSlide = middleSlides[i];
         if (middleSlide.id === 'slideMiddle' && middleSlide.style.visibility === 'visible') {
+
+            returnSlide = middleSlide;
+
+            break;
         }
     }
 

@@ -2,7 +2,7 @@
 
 //making new squares, it's just temporary information to test other functions, info that we are putting inside is not important
 function makeNewSquare() {
-    let parentDiv = lastClicked_MiddleSlide;
+    let parentDiv = getVisibleSlide();
 
     let square = document.createElement("div");
     square.setAttribute("id", `square`);
@@ -19,6 +19,7 @@ function makeNewSquare() {
     square.style.textAlign = "center";
     square.style.zIndex = flag_zIndex;
     flag_zIndex++;
+
     // square.style.backgroundImage = "url('image/tree.jpg')";
     let resizeHandle_square = document.createElement("div")
     resizeHandle_square.setAttribute("id", "handleResize");
@@ -26,7 +27,7 @@ function makeNewSquare() {
 
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
-    textP.contentEditable = "true";
+    // textP.contentEditable = "true";
     // textP.innerHTML = `debug cnt :${squareCnt}`;
     squareCnt++;
     square.appendChild(textP);
@@ -40,7 +41,7 @@ function makeNewSquare() {
 
 //making new squares, it's just temporary information to test other functions, info that we are putting inside is not important
 function newTextbox() {
-    let parentDiv = lastClicked_MiddleSlide;
+    let parentDiv = getVisibleSlide();
 
     let square = document.createElement("div");
     square.setAttribute("id", `square`);
