@@ -161,7 +161,8 @@
   document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
 
   recall();
-  defaultNewSlide();
+  if(localStorage('newOne'))
+    defaultNewSlide();
 
   hideAllSlides();
   makeVisible_NthSlide(0);
