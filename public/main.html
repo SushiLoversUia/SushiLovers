@@ -163,7 +163,9 @@
   if(JSON.parse(localStorage.getItem('newOne')).isPresNew = "true")
     defaultNewSlide();
   else
-    recall();
+  {
+      console.log("yep");
+    recall(); }
 
   hideAllSlides();
   makeVisible_NthSlide(0);
