@@ -1,6 +1,6 @@
 'use strict';
 
-//handle all the event, drag, resize .. 
+//handle all the event, drag, resize ..
 function dragElement(elmnt, parentDiv) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
@@ -11,6 +11,11 @@ function dragElement(elmnt, parentDiv) {
     let parentDivWidth = parseInt(parentDiv.offsetWidth);
     let parentDivHeight = parseInt(parentDiv.offsetHeight);
 
+    var startX;
+    var startY;
+
+
+
     //resize handler
     let handle = document.getElementById('handleResize');
     let handleResizeWidth = handle.clientWidth;
@@ -20,6 +25,10 @@ function dragElement(elmnt, parentDiv) {
 
     //decision to drag or resize or rotate or write something
     function mouseDown(e) {
+
+        startX =elmnt.clientWidth;
+        startY =elmnt.clientHeight;
+
 
         let slideHighestZ = getMaxZ(elmnt);
         let newZindex = slideHighestZ + 1;
@@ -32,7 +41,7 @@ function dragElement(elmnt, parentDiv) {
         lastClicked_MiddleSlide = parentSlide;
         let curSlideIdx = getCurSlideIdx(parentSlide);
         lastClicked_LeftSlide = getNthLeftSlide(curSlideIdx);
-        
+
         flag_focusingElem = "figure";
 
 
@@ -68,6 +77,8 @@ function dragElement(elmnt, parentDiv) {
             //mouse move >> begin dragging element
             document.onmousemove = elementDrag_move;
         }
+
+    
     }
 
     //resize element funtion
@@ -75,16 +86,14 @@ function dragElement(elmnt, parentDiv) {
         e = e || window.event;
         // calculate the new cursor position:
         //pos1, pos2 are new cursor position diff
-        pos1 = e.clientX - pos3;
-        pos2 = e.clientY - pos4;
+
+
 
         //have to make pos3,pos4 as startup pos
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+        elmnt.style.width = (startX + e.clientX )-pos3 + 'px';
+        elmnt.style.height = (startY + e.clientY)- pos4 + 'px';
 
 
-        elmnt.style.width = (elmnt.offsetWidth + pos1) + 'px';
-        elmnt.style.height = (elmnt.offsetHeight + pos2) + 'px';
     }
 
 
@@ -93,7 +102,7 @@ function dragElement(elmnt, parentDiv) {
         document.onmousemove = null;
     }
 
-    //drag element function 
+    //drag element function
     function elementDrag_move(e) {
         e = e || window.event;
         // calculate the new cursor position:

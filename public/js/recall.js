@@ -103,7 +103,7 @@ function recallSquare(squareInfo) {
 
     //square background
     square.style.backgroundImage = squareInfo.image.src;
-
+    square.style.backgroundColor = squareInfo.image.backgroundColor;
     //making handle for resizing and put it inside of square div we are making now
     let resizeHandle_square = document.createElement("div")
     resizeHandle_square.setAttribute("id", "handleResize");

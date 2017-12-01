@@ -58,7 +58,9 @@ function keyEvent(e) {
             flag_focusingElem = null;
         }
     }
+
     else {
         // console.log("unregistered key event");
+
     }
 }

@@ -10,7 +10,7 @@ function makeNewSlide() {
     leftSlide.setAttribute("id", "leftSlide");
 
     let previousSlideNum = getNumOfSlides();
-    let newSlideNum = previousSlideNum+1;
+    let newSlideNum = previousSlideNum + 1;
     leftSlide.innerHTML = `${newSlideNum}`;
     parentDiv_midColLeft.appendChild(leftSlide);
     leftSlide.onclick = showOnMiddle;
@@ -27,7 +27,6 @@ function makeNewSlide() {
     }
 
     parentDiv_midColCenter.appendChild(middleSlide);
-
     // console.log(middleSlide);
 
     lastClicked_LeftSlide = leftSlide;
@@ -52,4 +51,9 @@ function makeNewSlide() {
 
     }
 
+}
+
+function defaultNewSlide() {
+    makeNewSlide();
+    slideDefault();
 }

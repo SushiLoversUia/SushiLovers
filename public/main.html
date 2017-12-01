@@ -160,18 +160,7 @@
   /********************************************************************/
   document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
 
-  makeNewSlide();
-  makeNewSquare();
-
-  makeNewSlide();
-  makeNewSquare();
-  makeNewSquare();
-
-  makeNewSlide();
-  makeNewSquare();
-  makeNewSquare();
-  makeNewSquare();
-
+  defaultNewSlide();
 
   hideAllSlides();
   makeVisible_NthSlide(0);
