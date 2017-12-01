@@ -4,10 +4,12 @@
 function recall() {
     //need to ask user to clean up the current presentation.
     let txt;
-    if (confirm("to open other presentation you have to discard current presentation") === true) {
+    /*if (confirm("to open other presentation you have to discard current presentation") === true) {
         deletePresentation_html();
         recallPresentation();
-    }
+    }*/
+    deletePresentation_html();
+    recallPresentation();
     //if you open stored presentation, all the clicked flags have to be reset
     lastClickedElem = null;
     lastClicked_LeftSlide = null;
