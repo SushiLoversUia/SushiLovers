@@ -161,6 +161,7 @@
   /********************************************************************/
   document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
 
+  recall();
   defaultNewSlide();
 
   hideAllSlides();
@@ -172,7 +173,6 @@
   function goToDashboard() {
     window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html";
   }
-  // console.log(getAllLeftSlide());
 
 </script>
 

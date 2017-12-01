@@ -68,10 +68,10 @@ function slideDefault() {
     let body = makeNewSquare()
 
     body.style.width = "86%";
-    body.style.height = "55%";
+    body.style.height = "60%";
 
     body.style.left = "7%";
-    body.style.top = "30%";
+    body.style.top = "33%";
     body.style.textAlign = "center";
 
     let textP2 = document.createElement("p");
