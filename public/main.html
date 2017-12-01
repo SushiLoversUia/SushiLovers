@@ -21,12 +21,13 @@
   <script src="js/recall.js"></script>
 
   <script src="js/key-control.js"></script>
+    
+  <script src="js/exportFile.js"></script>
+  <script src="js/importFile.js"></script>
 
   <script src="js/actButtons.js"></script>
 
   <script src="js/superfetch2.js"></script>
-
-  <script src="js/exportFile.js"></script>
 
 </head>
 
@@ -50,11 +51,11 @@
       <button id="btnDelete_curSlide">Delete current slide</button>
       <br>
       <br>
-      <label id="btnLoadImageLabel" for="btnLoadImage">Upload images</label>
+      <label class="label-file" id="btnLoadImageLabel" for="btnLoadImage">Upload images</label>
       <input id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
       <br>
       <br>
-      <label id="btnChangeThemeLabel" for="btnChangeTheme">Change theme</label>
+      <label class="label-file" id="btnChangeThemeLabel" for="btnChangeTheme">Change theme</label>
       <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
       <br>
       <br>
