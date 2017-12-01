@@ -28,30 +28,59 @@ select{
 .header {
     grid-column: 1 / 21;
     grid-row: 1 / 2;
-    background-color: #34495e;
+    background-color: #16412a;
     color: white;
     border-bottom: 3px solid black ;
-    padding: 10px;
+    padding: 7px;
     z-index: 100;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
 }
 
-.header > button{
+
+
+.header > .nav{
     color: white;
     border: none;
     background-color: transparent;
     outline: none;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
+    margin:auto;
+    padding: inherit;
+    font-family: inherit;
+
+    /*
     padding-right: 4%;
     padding-left: 4%;
     padding-top: 1%;
-    padding-bottom: 1%;
+    padding-bottom: 1%;*/
 }
+ #btnLogin{
+     grid-column: 1 / 2;
+ }
+ #btnSave{
+     grid-column: 2 / 3;
+ }
+ #btnPresentation{
+     grid-column: 3 / 4;
+ }
+ #btnExport{
+     grid-column: 4 / 5;
+ }
+ #labelImport{
+     grid-column: 5 / 6;
+ }
 
-.header > button:hover, .right > button:hover{
+
+
+
+.header > button:hover, .right > button:hover, #labelImport:hover{
   transition: all 0.2s linear 0s;
   background-color:#546f5b;
 }
+
+
 
 #ribbon {
   grid-column: 3 / 19;
@@ -63,7 +92,7 @@ select{
   z-index: 100;
 }
 
-#ribbon > button{
+#ribbon > button, #ribbon > input{
   color:white;
   border: none;
   background-color: transparent;
@@ -95,27 +124,31 @@ select{
     margin: 0;
     z-index: 100;
     border-left: 3px solid black ;
+    display: grid;
+    grid-auto-rows: repeat(7, 1fr)
 }
 
-.right > button{
-    color: white;
-    border-radius: 0%;
-    border: none;
-    background-color: transparent;
-    outline: none;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 15%;
+.right > .rightTool{
+  color: white;
+  border-radius: 0%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 15%;
+  border-bottom: 2px solid black;
 }
 
-.right > input{
+.right > input, #btnImport{
     display: none;
 }
 
 #midColLeft{
   background: #242b28;
   grid-column: 1 / 3;
-  grid-row: 2 / 15;
+  grid-row: 3 / 15;
   margin: 0;
   z-index: 100;
   border-right: 3px solid black ;
@@ -133,7 +166,7 @@ select{
 }
 
 #leftSlide:hover{
-    outline: 5px solid rgb(0, 0, 255);
+    outline: 5px solid #0d4a15;
 }
 
 #leftSlide:focus{
@@ -150,6 +183,10 @@ select{
     cursor: pointer;
     font-size: 13px;
     padding: 9.5px;
+    grid-row: 2 / 3;
+    grid-column: 1 / 3;
+    border-right:  3px solid black ;
+
 }
 
 #btnNewSlide:hover{
@@ -164,7 +201,7 @@ select{
   width:70%;
   align-self: center;
   position: absolute;
-  border-width: 2px;  
+  border-width: 2px;
   border-style: solid;
   border-color: rgb(118, 109, 109);
   background-size: 100% 100%;
@@ -175,7 +212,7 @@ select{
 
   grid-column: 1 / 21;
   grid-row: 15 /16;
-  background-color: #34495e;
+  background-color: #16412a;
   /*background-color: #242b28;*/
   color: white;
   border-top: 3px solid black ;
@@ -223,22 +260,13 @@ select{
     font-size: 17px;
 }
 
-label{
-    color: white;
-    background-color: transparent;
-    font-size: 13px;
-    cursor: pointer;
+
+#btnLoadImageLabel:hover, #btnChangeThemeLabel:hover{
+
+  transition: all 0.2s linear 0s;
+  background-color:#546f5b;
 }
 
-label:hover{
-    transition: all 0.2s linear 0s;
-    background-color:#546f5b;
-}
-
-#btnImport{
-    display: none;
-    font-family: "Roboto";
-}
 
 #text{
     margin: 0;

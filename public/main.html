@@ -21,7 +21,7 @@
   <script src="js/recall.js"></script>
 
   <script src="js/key-control.js"></script>
-    
+
   <script src="js/exportFile.js"></script>
   <script src="js/importFile.js"></script>
 
@@ -34,36 +34,32 @@
 <body>
   <div id="main">
     <div class="header">
-      <button id="btnSave">Save</button>
-      <button id="btnPresentation">Presentation Mode</button>
-      <button id="btnLogin" onclick="goToDashboard()">My Dashboard</button>
-      <button id="btnExport">Export</button>
-      <label id="labelImport" for="btnImport">Import</label>
-      <input id="btnImport" type="file"/>
+      <button class="nav" id="btnLogin" onclick="goToDashboard()">My Dashboard</button>
+      <button class="nav" id="btnSave">Save</button>
+      <button class="nav" id="btnPresentation">Presentation Mode</button>
+      <button class="nav" id="btnExport">Export</button>
+      <label class="nav" id="labelImport" for="btnImport">Import</label>
+      <input id="btnImport" type="file" />
     </div>
 
     <div class="right tools section">
 
-      <button id="btnNewtextbox">Create text box</button>
-      <button id="btnDelete_square">Delete text box</button>
-      <button id="btnDelete_curSlide">Delete current slide</button>
-      <br>
-      <br>
-      <label class="label-file" id="btnLoadImageLabel" for="btnLoadImage">Upload images</label>
-      <input id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
-      <br>
-      <br>
-      <label class="label-file" id="btnChangeThemeLabel" for="btnChangeTheme">Change theme</label>
-      <input id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
-      <br>
-      <br>
-      <button id="btnDelete_curSlideTheme">Delete current slide theme</button>
-      <button id="btnDelete_wholeSlideTheme">Delete whole slide theme</button>
+      <button class="rightTool" id="btnNewtextbox">Create text box</button>
+      <button class="rightTool" id="btnDelete_square">Delete text box</button>
+      <button class="rightTool" id="btnDelete_curSlide">Delete current slide</button>
+
+      <label class="rightTool" class="label-file" id="btnLoadImageLabel" for="btnLoadImage">Upload images</label>
+      <input class="rightTool" id="btnLoadImage" type="file" name="btnLoadImage" accept=".jpg, .jpeg, .png" multiple>
+
+      <label class="rightTool" class="label-file" id="btnChangeThemeLabel" for="btnChangeTheme">Change theme</label>
+      <input class="rightTool" id="btnChangeTheme" type="file" name="btnChangeTheme" accept=".jpg, .jpeg, .png">
+
+      <button class="rightTool" id="btnDelete_curSlideTheme">Delete current slide theme</button>
+      <button class="rightTool" id="btnDelete_wholeSlideTheme">Delete whole slide theme</button>
 
     </div>
-    <div class="column side" id="midColLeft">
-      <button id="btnNewSlide" style="width:100%; ">+ New Slide </button>
-    </div>
+    <button id="btnNewSlide" style="width:100%; ">+ New Slide </button>
+    <div class="column side" id="midColLeft"></div>
 
     <div id="ribbon">
 
@@ -84,7 +80,6 @@
         <optgroup id="fonts" label="Font Style">
           <option value="Times New Roman">Times New Roman</option>
           <option value="Helvetica">Helvetica</option>
-          <option value="Calibri">Calibri</option>
           <option value="Lucida Sans">Lucida Sans</option>
           <option value="Optima">Optima</option>
           <option value="Bodoni">Bodoni</option>
@@ -122,7 +117,7 @@
 
     </div>
     <div id="footer" style="padding:auto">
-        <input id="presName" type="text"/>
+      <input id="presName" type="text" />
     </div>
   </div>
 </body>
@@ -159,13 +154,16 @@
   /********************************************************************/
   document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
 
-  if(JSON.parse(localStorage.getItem('newOne')).isPresNew == "true")
+  if (JSON.parse(localStorage.getItem('newOne')).isPresNew == "true")
     defaultNewSlide();
   else
     recall();
 
+
+  defaultNewSlide();
   hideAllSlides();
   makeVisible_NthSlide(0);
+
   lastClicked_MiddleSlide = getNthMiddleSlide(0);
   lastClicked_LeftSlide = getNthLeftSlide(0);
 

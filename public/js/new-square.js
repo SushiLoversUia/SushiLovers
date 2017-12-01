@@ -21,7 +21,9 @@ function makeNewSquare() {
     resizeHandle_square.setAttribute("id", "handleResize");
     square.appendChild(resizeHandle_square);
 
-    squareCnt++;
+    let textP = document.createElement("p");
+    textP.setAttribute("id", "text");
+    square.appendChild(textP);
 
     parentDiv.appendChild(square);
     dragElement(square, parentDiv);
@@ -31,7 +33,25 @@ function makeNewSquare() {
 
 function newTextbox() {
 
-    let square = makeNewSquare()
+    let parentDiv = getVisibleSlide();
+    let square = document.createElement("div");
+    square.id = 'square';
+    square.style.backgroundColor = "transparent";
+    square.style.zIndex = flag_zIndex;
+    flag_zIndex++;
+
+    square.style.width = "30%";
+    square.style.height = "30%";
+
+    square.style.left = "35%";
+    square.style.top = "35%";
+
+    square.style.left = `${generateRanNum()}%`;
+    square.style.top = `${generateRanNum()}%`;
+
+    let resizeHandle_square = document.createElement("div")
+    resizeHandle_square.setAttribute("id", "handleResize");
+    square.appendChild(resizeHandle_square);
 
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
@@ -39,22 +59,36 @@ function newTextbox() {
     textP.style.height = "100%";
     textP.contentEditable = "true";
     textP.innerHTML = 'Click to edit';
-
     square.appendChild(textP);
+
+    parentDiv.appendChild(square);
+    dragElement(square, parentDiv);
 
     return square;
 }
 
-function slideDefault() {
+function headerSquare() {
+    let parentDiv = getVisibleSlide();
 
-    let header = makeNewSquare()
 
-    header.style.width = "86%";
-    header.style.height = "20%";
+    let square = document.createElement("div");
+    square.id = 'square';
+    square.style.backgroundColor = "transparent";
+    square.style.zIndex = flag_zIndex;
+    flag_zIndex++;
 
-    header.style.left = "7%";;
-    header.style.top = "6%";;
-    header.style.textAlign = "center";
+    square.style.width = "86%";
+    square.style.height = "20%";
+
+    square.style.left = "7%";
+    square.style.top = "6%";
+    square.style.fontSize = "3em";
+    
+    square.style.textAlign = "center";
+
+    let resizeHandle_square = document.createElement("div")
+    resizeHandle_square.setAttribute("id", "handleResize");
+    square.appendChild(resizeHandle_square);
 
     let textP = document.createElement("p");
     textP.setAttribute("id", "text");
@@ -62,26 +96,53 @@ function slideDefault() {
     textP.style.height = "100%";
     textP.contentEditable = "true";
     textP.innerHTML = 'Heading';
+    square.appendChild(textP);
 
-    header.appendChild(textP);
+    parentDiv.appendChild(square);
+    dragElement(square, parentDiv);
 
-    let body = makeNewSquare()
+    // return square;
+}
 
-    body.style.width = "86%";
-    body.style.height = "60%";
+function subHeaderSquare(){
 
-    body.style.left = "7%";
-    body.style.top = "33%";
-    body.style.textAlign = "center";
+    let parentDiv = getVisibleSlide();
 
-    let textP2 = document.createElement("p");
-    textP2.setAttribute("id", "text");
-    textP2.style.width = "100%";
-    textP2.style.height = "100%";
-    textP2.contentEditable = "true";
-    textP2.innerHTML = 'Enter text';
+    let square = document.createElement("div");
+    square.id = 'square';
+    square.style.backgroundColor = "transparent";
+    square.style.zIndex = flag_zIndex;
+    flag_zIndex++;
 
-    body.appendChild(textP2);
+    square.style.width = "86%";
+    square.style.height = "60%";
+
+    square.style.left = "7%";
+    square.style.top = "33%";
+
+    square.style.textAlign = "center";
+    square.style.fontSize = "2em";
+    let resizeHandle_square = document.createElement("div")
+    resizeHandle_square.setAttribute("id", "handleResize");
+    square.appendChild(resizeHandle_square);
+
+    let textP = document.createElement("p");
+    textP.setAttribute("id", "text");
+    textP.style.width = "100%";
+    textP.style.height = "100%";
+    textP.contentEditable = "true";
+    textP.innerHTML = 'Enter text';
+    square.appendChild(textP);
+
+    parentDiv.appendChild(square);
+    dragElement(square, parentDiv);
+
+}
+function slideDefault() {
+
+
+    headerSquare();
+    subHeaderSquare();
 
     return 0;
 }
