@@ -13,7 +13,6 @@ function exportMyFile() {
 
     hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);
     hiddenElement.target = '_blank';
-    console.log(nameFile.replace(/ /g,"-") + '.txt');
     hiddenElement.download = nameFile.replace(/ /g,"-") + '.txt';
     hiddenElement.click();
 }
