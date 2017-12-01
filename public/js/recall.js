@@ -4,11 +4,12 @@
 function recall() {
     //need to ask user to clean up the current presentation.
     let txt;
-    if (confirm("to open other presentation you have to discard current presentation") === true) {
+    /*if (confirm("to open other presentation you have to discard current presentation") === true) {
         deletePresentation_html();
         recallPresentation();
-    } else { }
-
+    }*/
+    deletePresentation_html();
+    recallPresentation();
     //if you open stored presentation, all the clicked flags have to be reset
     lastClickedElem = null;
     lastClicked_LeftSlide = null;
@@ -24,7 +25,6 @@ function recallPresentation() {
 
         let curSlide_string = localStorage.getItem(`slide${slideCnt}`);
         let curSlide_json = JSON.parse(curSlide_string);
-
         //making middle slide
         let slideInfo = curSlide_json;
         let newSlideMiddle = recallSlide(slideInfo);
@@ -63,6 +63,7 @@ function recallSlide(slideInfo) {
 
     let curSlideFigInfo_string = slideInfo.slideFigureInfo;
     let curSlideFigInfo = JSON.parse(curSlideFigInfo_string);
+    
     for (let i = 0; i < curSlideFigInfo.length; i++) {
         if (curSlideFigInfo[i].type == "square") {
             let curSquare = recallSquare(curSlideFigInfo[i]);

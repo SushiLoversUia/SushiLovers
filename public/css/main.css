@@ -222,3 +222,13 @@ select{
     background-color: #f1f1f1;
     /* visibility: visible; */
 }
+
+#presName{
+    width: 100%;
+    border: none;
+    padding: 1%;
+    background-color: transparent;
+    color: #bdc3c7;
+    text-align: center;
+    font-size: 17px;
+}

@@ -26,16 +26,20 @@
   <script src="js/actButtons.js"></script>
     
   <script src="js/superfetch2.js"></script>
+    
+  <script src="js/exportFile.js"></script>
 
 </head>
 
 <body>
   <div id="main">
     <div class="header">
+      <input id="presName" type="text"/>
       <button id="btnSave">Save</button>
       <button id="btnRecall">open</button>
       <button id="btnPresentation">Presentation Mode</button>
       <button id="btnLogin" onclick="goToDashboard()">My Dashboard</button>
+      <button id="btnExport">Export</button>
     </div>
 
     <div class="right tools section">
@@ -58,7 +62,7 @@
 
     </div>
     <div class="column side" id="midColLeft">
-      <button id="btnNewSlide" style="width:100%; ">New Slide</button>
+      <button id="btnNewSlide" style="width:100%; ">+ New Slide </button>
     </div>
 
     <div id="ribbon">
@@ -153,10 +157,8 @@
   /********************************************************************/
   /********************************************************************/
   /********************************************************************/
-
-
-
-  makeNewSlide();
+  document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
+  recall();
 
   hideAllSlides();
   makeVisible_NthSlide(0);
@@ -165,7 +167,7 @@
     
 //goToDashboard : function to redirect to user's dashboard
 function goToDashboard() {
-    window.location.href = "http://localhost:8080/user_dashboard.html";
+    window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html";
 }
 
 </script>
