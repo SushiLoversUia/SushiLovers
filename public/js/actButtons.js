@@ -82,7 +82,7 @@ window.addEventListener("load", function () {
     //open(retrive) information that user stored previously
     let btnRecall = document.getElementById('btnRecall');
     btnRecall.addEventListener('click', recall);
-    
+
     //export in flat file
     let btnExport = document.getElementById('btnExport');
     btnExport.addEventListener('click', exportMyFile);
@@ -96,9 +96,7 @@ window.addEventListener("load", function () {
     btnNewtextbox.addEventListener('click', newTextbox);
 
     //put image file from local dir inside of square(that user clicked last time)
-
-
-
+    
 
     //left, down arrow >> previous slide, right,up arrow >> next slide, delete >> delete slide or square(figure)
     document.onkeydown = keyEvent;

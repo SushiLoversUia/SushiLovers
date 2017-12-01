@@ -33,7 +33,7 @@
 <body>
   <div id="main">
     <div class="header">
-      <input id="presName" type="text" value = "click here to edit title"/>
+      <input id="presName" type="text" value="click here to edit title" />
       <button id="btnSave">Save</button>
       <button id="btnRecall">open</button>
       <button id="btnPresentation">Presentation Mode</button>
@@ -127,8 +127,8 @@
     </div>
   </div>
 </body>
-<script src="js\add-image.js"></script>
-<script src="js\background-theme.js"></script>
+<script src="js/add-image.js"></script>
+<script src="js/background-theme.js"></script>
 <script src="js/full-screen.js"></script>
 
 <!-- C:\Users\Samsung\Documents\GitHub\SushiLovers\SushiLovers\public\JS -->
@@ -147,7 +147,6 @@
   let lastClicked_MiddleSlide = null;
 
   let squareCnt = 0;
-  let slideCnt = 0;
 
   //when we delete, need to decide what to delete >> ex) slide or figures
   // ex) figure, slide ..
@@ -159,8 +158,21 @@
   /********************************************************************/
   /********************************************************************/
   /********************************************************************/
-  // document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
+  document.getElementById("presName").value = JSON.parse(localStorage.getItem('presentationInfo')).prName;
+
   makeNewSlide();
+  makeNewSquare();
+
+  makeNewSlide();
+  makeNewSquare();
+  makeNewSquare();
+
+  makeNewSlide();
+  makeNewSquare();
+  makeNewSquare();
+  makeNewSquare();
+
+
   hideAllSlides();
   makeVisible_NthSlide(0);
   lastClicked_MiddleSlide = getNthMiddleSlide(0);
@@ -170,7 +182,7 @@
   function goToDashboard() {
     window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/user_dashboard.html";
   }
-
+  // console.log(getAllLeftSlide());
 
 </script>
 

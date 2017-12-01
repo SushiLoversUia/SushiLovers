@@ -9,8 +9,6 @@ function makeNewSquare() {
     square.style.width = "20%";
     square.style.height = "30%";
 
-    // square.style.left = "10%";
-    // square.style.top = "10%";
     square.style.left = `${generateRanNum()}%`;
     square.style.top = `${generateRanNum()}%`;
 
@@ -37,7 +35,6 @@ function makeNewSquare() {
 
     return square;
 }
-
 
 //making new squares, it's just temporary information to test other functions, info that we are putting inside is not important
 function newTextbox() {
