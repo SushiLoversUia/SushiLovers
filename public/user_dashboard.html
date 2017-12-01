@@ -324,6 +324,7 @@
                 idp: selected.options[selected.selectedIndex].value
             })
             localStorage.setItem('presentationInfo', info);
+            localStorage.setItem('newOne', "false");
             for(i=0; i<data.length; i++)
                 localStorage.setItem('slide' + i, data[i].content);
             window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
