@@ -324,7 +324,7 @@
             localStorage.setItem('presentationInfo', info);
             for(i=0; i<data.length; i++)
                 localStorage.setItem('slide' + i, JSON.stringify(data[i].content));
-            window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/client/public/main.html";
+            window.location.href="https://app-presentation-sushi-lovers.herokuapp.com/main.html";
         }
         //Error showing presentation
         function errorShow(err) {
@@ -389,7 +389,7 @@
                 idp: data
             })
             localStorage.setItem('presentationInfo', info);
-            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/client/public/main.html";
+            window.location.href = "https://app-presentation-sushi-lovers.herokuapp.com/main.html";
         }
         //Error creating new presentation
         function errorNew(err) {
